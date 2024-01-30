@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/people_item"
+    android:layout_width="match_parent"
+    android:layout_height="45dp"
+    app:cardCornerRadius="5dp"
+    android:layout_margin="5dp"
+    android:background="@color/md_theme_light_primary">
+
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_gravity="center">
+
+        <ImageButton
+            android:layout_height="match_parent"
+            android:layout_width="wrap_content"
+            android:src="@drawable/baseline_cancel_24"
+            android:contentDescription="@string/app_name"
+            android:background="@color/md_theme_light_primary"/>
+
+        <TextView
+            android:layout_height="match_parent"
+            android:layout_width="0dp"
+            android:layout_weight="3"
+            android:text="نام بازیکن"
+            android:layout_gravity="center"
+            android:textAlignment="center"
+            style="@style/TextAppearance.AppCompat.Title"/>
+
+        <CheckBox
+            android:layout_height="match_parent"
+            android:layout_width="wrap_content" />
+
+    </LinearLayout>
+
+</androidx.cardview.widget.CardView>
