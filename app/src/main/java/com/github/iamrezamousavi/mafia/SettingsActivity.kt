@@ -1,8 +1,8 @@
 package com.github.iamrezamousavi.mafia
 
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.Toast
+import androidx.appcompat.app.AppCompatActivity
 import com.github.iamrezamousavi.mafia.databinding.ActivitySettingsBinding
 
 class SettingsActivity : AppCompatActivity() {

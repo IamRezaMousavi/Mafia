@@ -22,30 +22,20 @@
             app:navigationIcon="@drawable/baseline_settings_24"
             app:title="لیست بازیکن ها"
             app:titleCentered="true" />
+
     </com.google.android.material.appbar.AppBarLayout>
 
-    <LinearLayout
-        android:id="@+id/mainLayout"
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/peopleList"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:orientation="vertical"
+        tools:listitem="@layout/people_item"
+        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
         app:layout_constraintBottom_toTopOf="@+id/linearlayout"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/mainTopBar">
-
-        <include
-            android:id="@+id/people1"
-            layout="@layout/people_item" />
-
-        <include
-            android:id="@+id/people2"
-            layout="@layout/people_item" />
-
-        <include
-            android:id="@+id/people3"
-            layout="@layout/people_item" />
-    </LinearLayout>
+        app:layout_constraintTop_toBottomOf="@+id/mainTopBar" />
 
     <LinearLayout
         android:id="@+id/linearlayout"
