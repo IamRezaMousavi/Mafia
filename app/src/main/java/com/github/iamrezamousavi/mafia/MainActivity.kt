@@ -24,8 +24,17 @@ class MainActivity : AppCompatActivity() {
             Toast.makeText(this, message, Toast.LENGTH_SHORT).show()
         }
 
-        binding.topAppBar.setNavigationOnClickListener {
+        binding.mainToolBar.setNavigationOnClickListener {
             startActivity(Intent(this, SettingsActivity::class.java))
+        }
+
+        binding.people1.checkBox.setOnCheckedChangeListener { _, isChecked ->
+            val message = if (isChecked) "Switch1:ON" else "Switch1:OFF"
+            Toast.makeText(this, message, Toast.LENGTH_SHORT).show()
+        }
+
+        binding.people1.imageButton.setOnClickListener {
+            Toast.makeText(this, "ImageButton clicked", Toast.LENGTH_SHORT).show()
         }
     }
 }

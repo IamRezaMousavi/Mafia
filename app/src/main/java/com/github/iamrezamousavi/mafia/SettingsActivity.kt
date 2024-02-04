@@ -14,7 +14,7 @@ class SettingsActivity : AppCompatActivity() {
         binding = ActivitySettingsBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        binding.settingItem1.settingsItemSwitch.setOnCheckedChangeListener { _, isChecked ->
+        binding.settingsItem1.switch1.setOnCheckedChangeListener { _, isChecked ->
             val message = if (isChecked) "Switch1:ON" else "Switch1:OFF"
             Toast.makeText(this, message, Toast.LENGTH_SHORT).show()
         }

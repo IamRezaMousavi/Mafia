@@ -7,35 +7,44 @@
     tools:context=".MainActivity">
 
     <com.google.android.material.appbar.AppBarLayout
-        android:id="@+id/topbar"
+        android:id="@+id/mainTopBar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintBottom_toTopOf="@+id/mainLayout">
+        app:layout_constraintTop_toTopOf="parent">
+
         <com.google.android.material.appbar.MaterialToolbar
-            android:id="@+id/topAppBar"
+            android:id="@+id/mainToolBar"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:minHeight="?attr/actionBarSize"
+            app:navigationIcon="@drawable/baseline_settings_24"
             app:title="لیست بازیکن ها"
-            app:titleCentered="true"
-            app:navigationIcon="@drawable/baseline_settings_24" />
+            app:titleCentered="true" />
     </com.google.android.material.appbar.AppBarLayout>
 
     <LinearLayout
         android:id="@+id/mainLayout"
-        android:orientation="vertical"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        app:layout_constraintBottom_toTopOf="@id/linearlayout"
+        android:orientation="vertical"
+        app:layout_constraintBottom_toTopOf="@+id/linearlayout"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/topbar">
-        <include layout="@layout/people_item"/>
-        <include layout="@layout/people_item"/>
-        <include layout="@layout/people_item"/>
+        app:layout_constraintTop_toBottomOf="@id/mainTopBar">
+
+        <include
+            android:id="@+id/people1"
+            layout="@layout/people_item" />
+
+        <include
+            android:id="@+id/people2"
+            layout="@layout/people_item" />
+
+        <include
+            android:id="@+id/people3"
+            layout="@layout/people_item" />
     </LinearLayout>
 
     <LinearLayout
@@ -43,6 +52,7 @@
         android:orientation="vertical"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_margin="10dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintBottom_toBottomOf="parent">
@@ -60,8 +70,7 @@
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/textInput"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                />
+                android:layout_height="wrap_content" />
         </com.google.android.material.textfield.TextInputLayout>
 
         <Button
@@ -73,8 +82,8 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintBottom_toBottomOf="parent"
             android:text="انتخاب نقش ها"
-            android:drawableEnd="@drawable/baseline_add_24"
-            android:drawableRight="@drawable/baseline_add_24" />
+            android:drawableEnd="@drawable/baseline_arrow_forward_24"
+            android:drawableRight="@drawable/baseline_arrow_forward_24" />
     </LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
