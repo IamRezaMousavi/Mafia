@@ -19,14 +19,20 @@ class PlayerAdapter(
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
+        val item = playerList[position]
+
         with(holder) {
-            with(playerList[position]) {
+            with(item) {
                 binding.playerName.text = this.name
+                binding.playerCheckBox.isChecked = this.isChecked
                 binding.playerCheckBox.setOnCheckedChangeListener { _, isChecked ->
+                    item.isChecked = isChecked
                     onSelect(position, isChecked)
+                    notifyDataSetChanged()
                 }
                 binding.playerRemoveButton.setOnClickListener {
                     onDelete(position)
+                    notifyDataSetChanged()
                 }
             }
         }

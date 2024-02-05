@@ -27,7 +27,6 @@ class MainActivity : AppCompatActivity() {
             },
             onDelete = { pos ->
                 playerList.removeAt(pos)
-                playerAdapter.notifyDataSetChanged()
                 Toast.makeText(this, "Item $pos Deleted", Toast.LENGTH_SHORT).show()
             }
         )
@@ -43,7 +42,7 @@ class MainActivity : AppCompatActivity() {
             val name = binding.textField.editText?.text.toString()
             if (name.isNotEmpty()) {
                 playerList.add(Player(name))
-                playerAdapter.notifyDataSetChanged()
+                playerAdapter.notifyItemInserted(playerList.lastIndex)
                 binding.textField.editText?.setText("")
                 Toast.makeText(this, name, Toast.LENGTH_SHORT).show()
             }
@@ -51,6 +50,23 @@ class MainActivity : AppCompatActivity() {
 
         binding.mainToolBar.setNavigationOnClickListener {
             startActivity(Intent(this, SettingsActivity::class.java))
+        }
+
+        binding.mainToolBar.setOnMenuItemClickListener { menuItem ->
+            when (menuItem.itemId) {
+                R.id.menuItemSelectAll -> {
+                    playerList.forEachIndexed { index, player ->
+                        player.isChecked = true
+                        playerAdapter.notifyItemChanged(index)
+                    }
+                    Toast.makeText(this, "Select All", Toast.LENGTH_SHORT).show()
+                    true
+                }
+
+                else -> {
+                    false
+                }
+            }
         }
     }
 }

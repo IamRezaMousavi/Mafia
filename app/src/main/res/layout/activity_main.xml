@@ -21,7 +21,8 @@
             android:minHeight="?attr/actionBarSize"
             app:navigationIcon="@drawable/baseline_settings_24"
             app:title="لیست بازیکن ها"
-            app:titleCentered="true" />
+            app:titleCentered="true"
+            app:menu="@menu/top_app_bar"/>
 
     </com.google.android.material.appbar.AppBarLayout>
 
