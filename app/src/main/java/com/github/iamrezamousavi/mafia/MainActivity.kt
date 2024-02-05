@@ -35,7 +35,7 @@ class MainActivity : AppCompatActivity() {
         binding.peopleList.adapter = playerAdapter
 
         binding.button1.setOnClickListener {
-            Toast.makeText(this, "Button Clicked", Toast.LENGTH_SHORT).show()
+            startActivity(Intent(this, RoleActivity::class.java))
         }
 
         binding.textField.setEndIconOnClickListener {
