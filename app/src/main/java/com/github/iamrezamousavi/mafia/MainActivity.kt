@@ -1,5 +1,6 @@
 package com.github.iamrezamousavi.mafia
 
+import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.widget.Toast
@@ -7,8 +8,12 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.github.iamrezamousavi.mafia.databinding.ActivityMainBinding
+import com.google.gson.Gson
+import com.google.gson.reflect.TypeToken
 
 class MainActivity : AppCompatActivity() {
+    private val SP_ID = "shared_prefs"
+    private val SP_RECYCLER_DATA_ID = "recycler_data"
 
     private lateinit var binding: ActivityMainBinding
     private lateinit var playerAdapter: PlayerAdapter
@@ -19,20 +24,6 @@ class MainActivity : AppCompatActivity() {
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        playerList = ArrayList()
-        playerAdapter = PlayerAdapter(
-            playerList,
-            onSelect = { pos, isChecked ->
-                Toast.makeText(this, "$pos is $isChecked", Toast.LENGTH_SHORT).show()
-            },
-            onDelete = { pos ->
-                playerList.removeAt(pos)
-                Toast.makeText(this, "Item $pos Deleted", Toast.LENGTH_SHORT).show()
-            }
-        )
-        val layoutManager: RecyclerView.LayoutManager = LinearLayoutManager(this)
-        binding.peopleList.layoutManager = layoutManager
-        binding.peopleList.adapter = playerAdapter
 
         binding.button1.setOnClickListener {
             startActivity(Intent(this, RoleActivity::class.java))
@@ -68,5 +59,45 @@ class MainActivity : AppCompatActivity() {
                 }
             }
         }
+    }
+
+    override fun onResume() {
+        super.onResume()
+        playerList = loadData()
+        playerAdapter = PlayerAdapter(
+            playerList,
+            onSelect = { pos, isChecked ->
+                Toast.makeText(this, "$pos is $isChecked", Toast.LENGTH_SHORT).show()
+            },
+            onDelete = { pos ->
+                playerList.removeAt(pos)
+                Toast.makeText(this, "Item $pos Deleted", Toast.LENGTH_SHORT).show()
+            }
+        )
+        val layoutManager: RecyclerView.LayoutManager = LinearLayoutManager(this)
+        binding.peopleList.layoutManager = layoutManager
+        binding.peopleList.adapter = playerAdapter
+    }
+
+    override fun onPause() {
+        super.onPause()
+        saveData(playerList)
+    }
+
+    private fun saveData(list: ArrayList<Player>) {
+        val sharedPreference = getSharedPreferences(SP_ID, Context.MODE_PRIVATE)
+        val editor = sharedPreference.edit()
+        val gson = Gson()
+        val json = gson.toJson(list)
+        editor.putString(SP_RECYCLER_DATA_ID, json)
+        editor.apply()
+    }
+
+    private fun loadData(): ArrayList<Player> {
+        val sharedPreference = getSharedPreferences(SP_ID, Context.MODE_PRIVATE)
+        val gson = Gson()
+        val json = sharedPreference.getString(SP_RECYCLER_DATA_ID, null)
+        val type = object : TypeToken<ArrayList<Player>>() {}.type
+        return gson.fromJson(json, type) ?: ArrayList()
     }
 }
