@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_margin="10dp"
-    android:background="@color/md_theme_light_primary"
+    app:cardBackgroundColor="@color/md_theme_secondaryContainer"
     app:cardCornerRadius="5dp">
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -17,6 +17,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="نام بازیکن"
+            android:textColor="@color/md_theme_onSecondaryContainer"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toStartOf="@id/playerCheckBox"
             app:layout_constraintStart_toEndOf="@id/playerRemoveButton"

@@ -6,60 +6,83 @@
     android:layout_height="match_parent"
     tools:context=".RoleActivity">
 
-    <TextView
-        android:id="@+id/textView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="نقش های شهروندان"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <include
-        android:id="@+id/chipGroup"
-        layout="@layout/citizen_chipgroup"
+    <com.google.android.material.appbar.AppBarLayout
+        android:id="@+id/roleTopBar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/textView" />
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
 
-    <TextView
-        android:id="@+id/textView2"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="نقش های مافیا"
-        app:layout_constraintBottom_toTopOf="@id/chipGroup2"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
+        <com.google.android.material.appbar.MaterialToolbar
+            android:id="@+id/roleToolBar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:minHeight="?attr/actionBarSize"
+            app:title="انتخاب نقش ها"
+            app:titleCentered="true" />
 
-    <include
-        android:id="@+id/chipGroup2"
-        layout="@layout/mafia_chipgroup"
+    </com.google.android.material.appbar.AppBarLayout>
+
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <TextView
-        android:id="@+id/textView3"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="نقش های آزاد"
-        app:layout_constraintBottom_toTopOf="@id/chipGroup3"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
-
-    <include
-        android:id="@+id/chipGroup3"
-        layout="@layout/free_chipgroup"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:orientation="vertical"
         app:layout_constraintBottom_toTopOf="@id/button"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/roleTopBar">
+
+        <TextView
+            android:id="@+id/textView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/citizen_md_theme_secondaryContainer"
+            android:gravity="center_horizontal"
+            android:text="نقش های شهروندان"
+            android:textAlignment="center"
+            android:textColor="@color/citizen_md_theme_onSecondaryContainer" />
+
+        <include
+            android:id="@+id/chipGroup"
+            layout="@layout/citizen_chipgroup"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+        <TextView
+            android:id="@+id/textView2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="24dp"
+            android:background="@color/mafia_md_theme_secondaryContainer"
+            android:gravity="center_horizontal"
+            android:text="نقش های مافیا"
+            android:textAlignment="center"
+            android:textColor="@color/mafia_md_theme_onSecondaryContainer" />
+
+        <include
+            android:id="@+id/chipGroup2"
+            layout="@layout/mafia_chipgroup"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+        <TextView
+            android:id="@+id/textView3"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="24dp"
+            android:background="@color/free_md_theme_secondaryContainer"
+            android:gravity="center_horizontal"
+            android:text="نقش های آزاد"
+            android:textAlignment="center"
+            android:textColor="@color/free_md_theme_onSecondaryContainer" />
+
+        <include
+            android:id="@+id/chipGroup3"
+            layout="@layout/free_chipgroup"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+    </LinearLayout>
 
     <Button
         android:id="@+id/button"

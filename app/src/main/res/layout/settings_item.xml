@@ -5,8 +5,8 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_margin="10dp"
+    app:cardBackgroundColor="@color/md_theme_secondaryContainer"
     app:cardCornerRadius="5dp">
-
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
@@ -29,6 +29,7 @@
             android:layout_marginEnd="8dp"
             android:layout_marginRight="8dp"
             android:text="نمایش استعلام وضعیت در صفحه راوی"
+            android:textColor="@color/md_theme_onSecondaryContainer"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
