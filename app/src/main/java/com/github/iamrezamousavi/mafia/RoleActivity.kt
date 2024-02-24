@@ -13,14 +13,8 @@ class RoleActivity : AppCompatActivity() {
         binding = ActivityRoleBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        binding.chip1.setOnCheckedChangeListener { _, isChecked ->
+        binding.chipGroup.chip1.setOnCheckedChangeListener { _, isChecked ->
             Toast.makeText(this, "Chip 1: $isChecked", Toast.LENGTH_SHORT).show()
-        }
-        binding.chip2.setOnCheckedChangeListener { _, isChecked ->
-            Toast.makeText(this, "Chip 2: $isChecked", Toast.LENGTH_SHORT).show()
-        }
-        binding.chip3.setOnCheckedChangeListener { _, isChecked ->
-            Toast.makeText(this, "Chip 3: $isChecked", Toast.LENGTH_SHORT).show()
         }
     }
 }

@@ -4,9 +4,9 @@
     android:id="@+id/people_item"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    app:cardCornerRadius="5dp"
     android:layout_margin="10dp"
-    android:background="@color/md_theme_light_primary">
+    android:background="@color/md_theme_light_primary"
+    app:cardCornerRadius="5dp">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"

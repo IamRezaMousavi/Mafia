@@ -6,259 +6,60 @@
     android:layout_height="match_parent"
     tools:context=".RoleActivity">
 
-    <com.google.android.material.chip.ChipGroup
+    <TextView
+        android:id="@+id/textView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="نقش های شهروندان"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <include
         android:id="@+id/chipGroup"
+        layout="@layout/citizen_chipgroup"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+        app:layout_constraintTop_toBottomOf="@id/textView" />
 
-        <com.google.android.material.chip.Chip
-            android:id="@+id/chip1"
-            style="@style/Widget.Material3.Chip.Filter"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:checked="true"
-            android:text="شهروند" />
+    <TextView
+        android:id="@+id/textView2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="نقش های مافیا"
+        app:layout_constraintBottom_toTopOf="@id/chipGroup2"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
 
-        <com.google.android.material.chip.Chip
-            android:id="@+id/chip2"
-            style="@style/Widget.Material3.Chip.Filter"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="دکتر" />
-
-        <com.google.android.material.chip.Chip
-            android:id="@+id/chip3"
-            style="@style/Widget.Material3.Chip.Filter"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="کاراگاه" />
-
-        <com.google.android.material.chip.Chip
-            android:id="@+id/chip4"
-            style="@style/Widget.Material3.Chip.Filter"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="کشیش" />
-
-        <com.google.android.material.chip.Chip
-            android:id="@+id/chip5"
-            style="@style/Widget.Material3.Chip.Filter"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="روئین‌‌تن" />
-
-        <com.google.android.material.chip.Chip
-            android:id="@+id/chip6"
-            style="@style/Widget.Material3.Chip.Filter"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="اسنایپر" />
-
-        <com.google.android.material.chip.Chip
-            android:id="@+id/chip7"
-            style="@style/Widget.Material3.Chip.Filter"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="محافظ" />
-
-        <com.google.android.material.chip.Chip
-            android:id="@+id/chip8"
-            style="@style/Widget.Material3.Chip.Filter"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="قاضی" />
-
-        <com.google.android.material.chip.Chip
-            android:id="@+id/chip9"
-            style="@style/Widget.Material3.Chip.Filter"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="باکره" />
-
-        <com.google.android.material.chip.Chip
-            android:id="@+id/chip10"
-            style="@style/Widget.Material3.Chip.Filter"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:checked="false"
-            android:text="فراماسون" />
-
-        <com.google.android.material.chip.Chip
-            android:id="@+id/chip11"
-            style="@style/Widget.Material3.Chip.Filter"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:checked="false"
-            android:text="بمبر" />
-
-        <com.google.android.material.chip.Chip
-            android:id="@+id/chip12"
-            style="@style/Widget.Material3.Chip.Filter"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="تفنگ‌دار" />
-
-        <com.google.android.material.chip.Chip
-            android:id="@+id/chip13"
-            style="@style/Widget.Material3.Chip.Filter"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="کابوی" />
-
-        <com.google.android.material.chip.Chip
-            android:id="@+id/chip14"
-            style="@style/Widget.Material3.Chip.Filter"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="کلانتر" />
-
-    </com.google.android.material.chip.ChipGroup>
-
-    <com.google.android.material.chip.ChipGroup
+    <include
         android:id="@+id/chipGroup2"
+        layout="@layout/mafia_chipgroup"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+        app:layout_constraintTop_toTopOf="parent" />
 
-        <com.google.android.material.chip.Chip
-            android:id="@+id/chip21"
-            style="@style/Widget.Material3.Chip.Filter"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:checked="true"
-            android:text="مافیا" />
+    <TextView
+        android:id="@+id/textView3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="نقش های آزاد"
+        app:layout_constraintBottom_toTopOf="@id/chipGroup3"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
 
-        <com.google.android.material.chip.Chip
-            android:id="@+id/chip22"
-            style="@style/Widget.Material3.Chip.Filter"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="گادفادر" />
-
-        <com.google.android.material.chip.Chip
-            android:id="@+id/chip23"
-            style="@style/Widget.Material3.Chip.Filter"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="سایلنسر" />
-
-        <com.google.android.material.chip.Chip
-            android:id="@+id/chip24"
-            style="@style/Widget.Material3.Chip.Filter"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="وکیل" />
-
-        <com.google.android.material.chip.Chip
-            android:id="@+id/chip25"
-            style="@style/Widget.Material3.Chip.Filter"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="تروریست" />
-
-        <com.google.android.material.chip.Chip
-            android:id="@+id/chip26"
-            style="@style/Widget.Material3.Chip.Filter"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="مرد قوی" />
-
-        <com.google.android.material.chip.Chip
-            android:id="@+id/chip27"
-            style="@style/Widget.Material3.Chip.Filter"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="تهمت‌زن" />
-
-        <com.google.android.material.chip.Chip
-            android:id="@+id/chip28"
-            style="@style/Widget.Material3.Chip.Filter"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="افسونگر" />
-
-        <com.google.android.material.chip.Chip
-            android:id="@+id/chip29"
-            style="@style/Widget.Material3.Chip.Filter"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="دزد" />
-
-        <com.google.android.material.chip.Chip
-            android:id="@+id/chip30"
-            style="@style/Widget.Material3.Chip.Filter"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="جاسوس" />
-
-    </com.google.android.material.chip.ChipGroup>
-
-    <com.google.android.material.chip.ChipGroup
+    <include
         android:id="@+id/chipGroup3"
+        layout="@layout/free_chipgroup"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintBottom_toTopOf="@id/button"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/chipGroup2">
-
-        <com.google.android.material.chip.Chip
-            android:id="@+id/chip31"
-            style="@style/Widget.Material3.Chip.Filter"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="ساقی" />
-
-        <com.google.android.material.chip.Chip
-            android:id="@+id/chip32"
-            style="@style/Widget.Material3.Chip.Filter"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="کیلر" />
-
-        <com.google.android.material.chip.Chip
-            android:id="@+id/chip33"
-            style="@style/Widget.Material3.Chip.Filter"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="جوکر" />
-
-        <com.google.android.material.chip.Chip
-            android:id="@+id/chip34"
-            style="@style/Widget.Material3.Chip.Filter"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="دلربا" />
-
-        <com.google.android.material.chip.Chip
-            android:id="@+id/chip35"
-            style="@style/Widget.Material3.Chip.Filter"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="سندیکا" />
-
-        <com.google.android.material.chip.Chip
-            android:id="@+id/chip36"
-            style="@style/Widget.Material3.Chip.Filter"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="گرگ‌نما" />
-
-        <com.google.android.material.chip.Chip
-            android:id="@+id/chip37"
-            style="@style/Widget.Material3.Chip.Filter"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="هزار چهره" />
-
-    </com.google.android.material.chip.ChipGroup>
+        app:layout_constraintStart_toStartOf="parent" />
 
     <Button
         android:id="@+id/button"
@@ -269,33 +70,6 @@
         android:drawableRight="@drawable/baseline_arrow_forward_24"
         android:text="تقسیم نقش ها"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
-
-    <TextView
-        android:id="@+id/textView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="نقش های شهروندان"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <TextView
-        android:id="@+id/textView2"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="نقش های مافیا"
-        app:layout_constraintBottom_toTopOf="@+id/chipGroup2"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
-
-    <TextView
-        android:id="@+id/textView3"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="نقش های آزاد"
-        app:layout_constraintBottom_toTopOf="@+id/chipGroup3"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
 

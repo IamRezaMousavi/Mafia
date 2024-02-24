@@ -35,13 +35,15 @@
 
         <include
             android:id="@+id/settingsItem1"
-            layout="@layout/settings_item"/>
+            layout="@layout/settings_item" />
+
         <include
             android:id="@+id/settingsItem2"
-            layout="@layout/settings_item"/>
+            layout="@layout/settings_item" />
+
         <include
             android:id="@+id/settingsItem3"
-            layout="@layout/settings_item"/>
+            layout="@layout/settings_item" />
     </LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
