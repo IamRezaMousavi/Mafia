@@ -20,10 +20,10 @@
             android:layout_height="wrap_content"
             android:checked="true"
             android:text="ساقی"
-            android:textColor="@color/freechip_text"
-            app:checkedIconTint="@color/freechip_text"
-            app:chipBackgroundColor="@color/freechip_background"
-            app:chipStrokeColor="@color/freechip_stroke" />
+            android:textColor="@color/independentchip_text"
+            app:checkedIconTint="@color/independentchip_text"
+            app:chipBackgroundColor="@color/independentchip_background"
+            app:chipStrokeColor="@color/independentchip_stroke" />
 
         <com.google.android.material.chip.Chip
             android:id="@+id/chip32"
@@ -31,10 +31,10 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="کیلر"
-            android:textColor="@color/freechip_text"
-            app:checkedIconTint="@color/freechip_text"
-            app:chipBackgroundColor="@color/freechip_background"
-            app:chipStrokeColor="@color/freechip_stroke" />
+            android:textColor="@color/independentchip_text"
+            app:checkedIconTint="@color/independentchip_text"
+            app:chipBackgroundColor="@color/independentchip_background"
+            app:chipStrokeColor="@color/independentchip_stroke" />
 
         <com.google.android.material.chip.Chip
             android:id="@+id/chip33"
@@ -42,10 +42,10 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="جوکر"
-            android:textColor="@color/freechip_text"
-            app:checkedIconTint="@color/freechip_text"
-            app:chipBackgroundColor="@color/freechip_background"
-            app:chipStrokeColor="@color/freechip_stroke" />
+            android:textColor="@color/independentchip_text"
+            app:checkedIconTint="@color/independentchip_text"
+            app:chipBackgroundColor="@color/independentchip_background"
+            app:chipStrokeColor="@color/independentchip_stroke" />
 
         <com.google.android.material.chip.Chip
             android:id="@+id/chip34"
@@ -53,10 +53,10 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="دلربا"
-            android:textColor="@color/freechip_text"
-            app:checkedIconTint="@color/freechip_text"
-            app:chipBackgroundColor="@color/freechip_background"
-            app:chipStrokeColor="@color/freechip_stroke" />
+            android:textColor="@color/independentchip_text"
+            app:checkedIconTint="@color/independentchip_text"
+            app:chipBackgroundColor="@color/independentchip_background"
+            app:chipStrokeColor="@color/independentchip_stroke" />
 
         <com.google.android.material.chip.Chip
             android:id="@+id/chip35"
@@ -64,10 +64,10 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="سندیکا"
-            android:textColor="@color/freechip_text"
-            app:checkedIconTint="@color/freechip_text"
-            app:chipBackgroundColor="@color/freechip_background"
-            app:chipStrokeColor="@color/freechip_stroke" />
+            android:textColor="@color/independentchip_text"
+            app:checkedIconTint="@color/independentchip_text"
+            app:chipBackgroundColor="@color/independentchip_background"
+            app:chipStrokeColor="@color/independentchip_stroke" />
 
         <com.google.android.material.chip.Chip
             android:id="@+id/chip36"
@@ -75,10 +75,10 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="گرگ‌نما"
-            android:textColor="@color/freechip_text"
-            app:checkedIconTint="@color/freechip_text"
-            app:chipBackgroundColor="@color/freechip_background"
-            app:chipStrokeColor="@color/freechip_stroke" />
+            android:textColor="@color/independentchip_text"
+            app:checkedIconTint="@color/independentchip_text"
+            app:chipBackgroundColor="@color/independentchip_background"
+            app:chipStrokeColor="@color/independentchip_stroke" />
 
         <com.google.android.material.chip.Chip
             android:id="@+id/chip37"
@@ -86,10 +86,10 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="هزار چهره"
-            android:textColor="@color/freechip_text"
-            app:checkedIconTint="@color/freechip_text"
-            app:chipBackgroundColor="@color/freechip_background"
-            app:chipStrokeColor="@color/freechip_stroke" />
+            android:textColor="@color/independentchip_text"
+            app:checkedIconTint="@color/independentchip_text"
+            app:chipBackgroundColor="@color/independentchip_background"
+            app:chipStrokeColor="@color/independentchip_stroke" />
 
     </com.google.android.material.chip.ChipGroup>
 
