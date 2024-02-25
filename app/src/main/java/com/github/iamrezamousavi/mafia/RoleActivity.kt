@@ -1,5 +1,6 @@
 package com.github.iamrezamousavi.mafia
 
+import android.content.Intent
 import android.os.Bundle
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
@@ -15,6 +16,10 @@ class RoleActivity : AppCompatActivity() {
 
         binding.chipGroup.chip1.setOnCheckedChangeListener { _, isChecked ->
             Toast.makeText(this, "Chip 1: $isChecked", Toast.LENGTH_SHORT).show()
+        }
+
+        binding.button.setOnClickListener {
+            startActivity(Intent(this, PeopleRoleActivity::class.java))
         }
     }
 }
