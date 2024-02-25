@@ -20,7 +20,7 @@
             android:layout_height="wrap_content"
             android:minHeight="?attr/actionBarSize"
             app:menu="@menu/people_role_app_bar"
-            app:title="تقسیم نقش‌ها"
+            app:title="@string/division_roles"
             app:titleCentered="true" />
 
     </com.google.android.material.appbar.AppBarLayout>
@@ -32,7 +32,7 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/peopleRoleTopBar"
+        app:layout_constraintTop_toBottomOf="@id/peopleRoleTopBar"
         app:spanCount="3"
         tools:listitem="@layout/people_role_item" />
 

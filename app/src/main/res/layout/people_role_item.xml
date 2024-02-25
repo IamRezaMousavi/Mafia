@@ -17,7 +17,7 @@
             android:id="@+id/playerName"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="نام بازیکن"
+            android:text="@string/player_name"
             android:textColor="@color/md_theme_onSecondaryContainer"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"

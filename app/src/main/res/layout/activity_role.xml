@@ -19,7 +19,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:minHeight="?attr/actionBarSize"
-            app:title="انتخاب نقش ها"
+            app:title="@string/select_roles"
             app:titleCentered="true" />
 
     </com.google.android.material.appbar.AppBarLayout>
@@ -39,7 +39,7 @@
             android:layout_height="wrap_content"
             android:background="@color/citizen_md_theme_secondaryContainer"
             android:gravity="center_horizontal"
-            android:text="نقش های شهروندان"
+            android:text="@string/citizen_roles"
             android:textAlignment="center"
             android:textColor="@color/citizen_md_theme_onSecondaryContainer" />
 
@@ -56,7 +56,7 @@
             android:layout_marginTop="24dp"
             android:background="@color/mafia_md_theme_secondaryContainer"
             android:gravity="center_horizontal"
-            android:text="نقش های مافیا"
+            android:text="@string/mafia_roles"
             android:textAlignment="center"
             android:textColor="@color/mafia_md_theme_onSecondaryContainer" />
 
@@ -73,7 +73,7 @@
             android:layout_marginTop="24dp"
             android:background="@color/independent_md_theme_secondaryContainer"
             android:gravity="center_horizontal"
-            android:text="نقش های مستقل"
+            android:text="@string/independent_roles"
             android:textAlignment="center"
             android:textColor="@color/independent_md_theme_onSecondaryContainer" />
 
@@ -91,7 +91,7 @@
         android:layout_margin="10dp"
         android:drawableEnd="@drawable/baseline_arrow_forward_24"
         android:drawableRight="@drawable/baseline_arrow_forward_24"
-        android:text="تقسیم نقش ها"
+        android:text="@string/division_roles"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
