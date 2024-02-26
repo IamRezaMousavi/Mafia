@@ -13,16 +13,16 @@
         android:theme="@style/Theme.Mafia"
         tools:targetApi="31">
         <activity
-            android:name=".PeopleRoleActivity"
+            android:name=".ui.view.PeopleRoleActivity"
             android:exported="false" />
         <activity
-            android:name=".RoleActivity"
+            android:name=".ui.view.RoleActivity"
             android:exported="false" />
         <activity
-            android:name=".SettingsActivity"
+            android:name=".ui.view.SettingsActivity"
             android:exported="false" />
         <activity
-            android:name=".MainActivity"
+            android:name=".ui.view.MainActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

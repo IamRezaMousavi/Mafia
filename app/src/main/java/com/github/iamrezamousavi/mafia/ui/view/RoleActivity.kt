@@ -1,4 +1,4 @@
-package com.github.iamrezamousavi.mafia
+package com.github.iamrezamousavi.mafia.ui.view
 
 import android.content.Intent
 import android.os.Bundle

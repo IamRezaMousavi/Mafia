@@ -1,14 +1,16 @@
-package com.github.iamrezamousavi.mafia
+package com.github.iamrezamousavi.mafia.ui.view
 
+import android.annotation.SuppressLint
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
+import com.github.iamrezamousavi.mafia.data.model.Player
 import com.github.iamrezamousavi.mafia.databinding.PeopleItemBinding
 
 class PlayerAdapter(
-    private val playerList: ArrayList<Player>,
-    val onSelect: (Int, Boolean) -> Unit,
-    val onDelete: (Int) -> Unit,
+    private var players: ArrayList<Player>,
+    private val onSelect: (Player, Boolean) -> Unit,
+    private val onDeleteClicked: (Player) -> Unit,
 ) : RecyclerView.Adapter<PlayerAdapter.ViewHolder>() {
 
     inner class ViewHolder(val binding: PeopleItemBinding) : RecyclerView.ViewHolder(binding.root)
@@ -18,20 +20,21 @@ class PlayerAdapter(
         return ViewHolder(binding)
     }
 
+    @SuppressLint("NotifyDataSetChanged")
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        val item = playerList[position]
+        val player = players[position]
 
         with(holder) {
-            with(item) {
+            with(player) {
                 binding.playerName.text = this.name
                 binding.playerCheckBox.isChecked = this.isChecked
                 binding.playerCheckBox.setOnCheckedChangeListener { _, isChecked ->
-                    item.isChecked = isChecked
-                    onSelect(position, isChecked)
+                    player.isChecked = isChecked
+                    onSelect(player, isChecked)
                     notifyDataSetChanged()
                 }
                 binding.playerRemoveButton.setOnClickListener {
-                    onDelete(position)
+                    onDeleteClicked(player)
                     notifyDataSetChanged()
                 }
             }
@@ -39,6 +42,12 @@ class PlayerAdapter(
     }
 
     override fun getItemCount(): Int {
-        return playerList.size
+        return players.size
+    }
+
+    @SuppressLint("NotifyDataSetChanged")
+    fun updatePlayers(newPlayers: ArrayList<Player>) {
+        players = newPlayers
+        notifyDataSetChanged()
     }
 }
