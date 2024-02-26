@@ -20,7 +20,6 @@ class PlayerAdapter(
         return ViewHolder(binding)
     }
 
-    @SuppressLint("NotifyDataSetChanged")
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val player = players[position]
 
@@ -29,13 +28,10 @@ class PlayerAdapter(
                 binding.playerName.text = this.name
                 binding.playerCheckBox.isChecked = this.isChecked
                 binding.playerCheckBox.setOnCheckedChangeListener { _, isChecked ->
-                    player.isChecked = isChecked
-                    onSelect(player, isChecked)
-                    notifyDataSetChanged()
+                    onSelect(this, isChecked)
                 }
                 binding.playerRemoveButton.setOnClickListener {
                     onDeleteClicked(player)
-                    notifyDataSetChanged()
                 }
             }
         }

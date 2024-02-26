@@ -28,7 +28,7 @@ class MainActivity : AppCompatActivity() {
         playerAdapter = PlayerAdapter(
             ArrayList(),
             onSelect = { player, isChecked ->
-                player.isChecked = !player.isChecked
+                player.isChecked = isChecked
                 viewModel.updatePlayer(player)
             },
             onDeleteClicked = { player ->
