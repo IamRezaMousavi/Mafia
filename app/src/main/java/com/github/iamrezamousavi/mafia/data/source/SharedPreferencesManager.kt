@@ -29,29 +29,4 @@ class SharedPreferencesManager(context: Context) {
             ArrayList()
         }
     }
-
-    fun addPlayer(player: Player) {
-        val players = getPlayers()
-        players.add(player)
-        savePlayers(players)
-    }
-
-    fun removePlayer(playerId: Int) {
-        val players = getPlayers()
-        players.removeAll {
-            it.id == playerId
-        }
-        savePlayers(players)
-    }
-
-    fun updatePlayer(updatedPlayer: Player) {
-        val players = getPlayers()
-        val playerIndex = players.indexOfFirst {
-            it.id == updatedPlayer.id
-        }
-        if (playerIndex != -1) {
-            players[playerIndex] = updatedPlayer
-            savePlayers(players)
-        }
-    }
 }

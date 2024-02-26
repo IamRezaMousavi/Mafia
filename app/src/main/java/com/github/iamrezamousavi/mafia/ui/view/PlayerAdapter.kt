@@ -13,7 +13,20 @@ class PlayerAdapter(
     private val onDeleteClicked: (Player) -> Unit,
 ) : RecyclerView.Adapter<PlayerAdapter.ViewHolder>() {
 
-    inner class ViewHolder(val binding: PeopleItemBinding) : RecyclerView.ViewHolder(binding.root)
+    inner class ViewHolder(private val binding: PeopleItemBinding) :
+        RecyclerView.ViewHolder(binding.root) {
+        fun bind(player: Player) {
+            binding.playerName.text = player.name
+            binding.playerCheckBox.setOnCheckedChangeListener(null)
+            binding.playerCheckBox.isChecked = player.isChecked
+            binding.playerCheckBox.setOnCheckedChangeListener { _, isChecked ->
+                onSelect(player, isChecked)
+            }
+            binding.playerRemoveButton.setOnClickListener {
+                onDeleteClicked(player)
+            }
+        }
+    }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val binding = PeopleItemBinding.inflate(LayoutInflater.from(parent.context), parent, false)
@@ -21,20 +34,7 @@ class PlayerAdapter(
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        val player = players[position]
-
-        with(holder) {
-            with(player) {
-                binding.playerName.text = this.name
-                binding.playerCheckBox.isChecked = this.isChecked
-                binding.playerCheckBox.setOnCheckedChangeListener { _, isChecked ->
-                    onSelect(this, isChecked)
-                }
-                binding.playerRemoveButton.setOnClickListener {
-                    onDeleteClicked(player)
-                }
-            }
-        }
+        holder.bind(players[position])
     }
 
     override fun getItemCount(): Int {

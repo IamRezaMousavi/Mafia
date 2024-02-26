@@ -45,7 +45,6 @@ class MainActivity : AppCompatActivity() {
         viewModel.getPlayers().observe(this) { players ->
             playerAdapter.updatePlayers(players ?: ArrayList())
         }
-        viewModel.loadPlayers()
 
         binding.button1.setOnClickListener {
             startActivity(Intent(this, RoleActivity::class.java))
@@ -54,8 +53,7 @@ class MainActivity : AppCompatActivity() {
         binding.textField.setEndIconOnClickListener {
             val name = binding.textField.editText?.text.toString()
             if (name.isNotEmpty()) {
-                val newId = (viewModel.getPlayers().value?.lastIndex?.plus(1)) ?: 0
-                viewModel.addPlayer(Player(newId, name))
+                viewModel.addPlayer(Player(name = name))
                 binding.textField.editText?.setText("")
                 Toast.makeText(this, name, Toast.LENGTH_SHORT).show()
             }
@@ -68,6 +66,7 @@ class MainActivity : AppCompatActivity() {
         binding.mainToolBar.setOnMenuItemClickListener { menuItem ->
             when (menuItem.itemId) {
                 R.id.menuItemSelectAll -> {
+                    viewModel.selectAllPlayer()
                     Toast.makeText(this, "Select All", Toast.LENGTH_SHORT).show()
                     true
                 }

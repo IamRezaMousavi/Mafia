@@ -12,26 +12,43 @@ class PlayerViewModel(private val repository: PlayerRepository) : ViewModel() {
     fun getPlayers(): LiveData<ArrayList<Player>> = players
 
     fun loadPlayers() {
+        // update LiveData
         players.value = repository.getPlayers()
     }
 
     fun addPlayer(player: Player) {
-        repository.addPlayer(player)
-        loadPlayers()
+        val updatedPlayers = ArrayList(players.value ?: ArrayList())
+        val lastIndex = updatedPlayers.lastIndex
+        player.id = lastIndex + 1
+        updatedPlayers.add(player)
+        // update LiveData
+        players.value = updatedPlayers
     }
 
     fun removePlayer(playerId: Int) {
-        repository.removePlayer(playerId)
-        loadPlayers()
+        val updatedPlayers = ArrayList(players.value ?: ArrayList())
+        updatedPlayers.removeAll { it.id == playerId }
+        players.value = updatedPlayers
     }
 
     fun updatePlayer(updatedPlayer: Player) {
-        repository.updatePlayer(updatedPlayer)
-        loadPlayers()
+        val updatedPlayers = ArrayList(players.value ?: ArrayList())
+        val playerIndex = updatedPlayers.indexOfFirst { it.id == updatedPlayer.id }
+        if (playerIndex != -1) {
+            updatedPlayers[playerIndex] = updatedPlayer
+            players.value = updatedPlayers
+        }
+    }
+
+    fun selectAllPlayer() {
+        val updatedPlayers = players.value ?: return
+        updatedPlayers.forEach { player ->
+            player.isChecked = true
+        }
+        players.value = updatedPlayers
     }
 
     fun savePlayers() {
         repository.savePlayers(players.value ?: ArrayList())
-        loadPlayers()
     }
 }

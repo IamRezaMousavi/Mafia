@@ -7,12 +7,6 @@ class PlayerRepository(private val sharedPreferencesManager: SharedPreferencesMa
 
     fun getPlayers(): ArrayList<Player> = sharedPreferencesManager.getPlayers()
 
-    fun addPlayer(player: Player) = sharedPreferencesManager.addPlayer(player)
-
-    fun removePlayer(playerId: Int) = sharedPreferencesManager.removePlayer(playerId)
-
-    fun updatePlayer(updatedPlayer: Player) = sharedPreferencesManager.updatePlayer(updatedPlayer)
-
     fun savePlayers(players: ArrayList<Player>) {
         sharedPreferencesManager.savePlayers(players)
     }
