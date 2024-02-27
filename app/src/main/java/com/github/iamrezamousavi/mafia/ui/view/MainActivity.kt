@@ -47,7 +47,13 @@ class MainActivity : AppCompatActivity() {
         }
 
         binding.button1.setOnClickListener {
-            startActivity(Intent(this, RoleActivity::class.java))
+            val players = viewModel.getPlayers().value ?: return@setOnClickListener
+            val playerCheckedSize = players.filter { it.isChecked }.size
+            if (playerCheckedSize < 3) {
+                Toast.makeText(this, "Not enough", Toast.LENGTH_SHORT).show()
+            } else {
+                startActivity(Intent(this, RoleActivity::class.java))
+            }
         }
 
         binding.textField.setEndIconOnClickListener {

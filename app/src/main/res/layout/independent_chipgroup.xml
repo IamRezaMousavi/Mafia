@@ -5,7 +5,7 @@
     android:layout_height="wrap_content">
 
     <com.google.android.material.chip.ChipGroup
-        android:id="@+id/chipGroup3"
+        android:id="@+id/chipGroup"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         app:layout_constraintBottom_toBottomOf="parent"

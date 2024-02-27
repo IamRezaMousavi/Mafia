@@ -1,15 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:id="@+id/people_item"
+    android:id="@+id/player_role_item"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
     android:layout_margin="10dp"
+    android:clickable="true"
+    android:focusable="true"
     app:cardBackgroundColor="@color/md_theme_secondaryContainer"
     app:cardCornerRadius="10dp"
-    app:contentPadding="20dp">
+    app:contentPadding="30dp">
 
     <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/playerLayout"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 

@@ -35,7 +35,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/mainTopBar"
-        tools:listitem="@layout/people_item" />
+        tools:listitem="@layout/player_item" />
 
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/textField"

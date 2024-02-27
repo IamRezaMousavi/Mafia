@@ -44,7 +44,7 @@
             android:textColor="@color/citizen_md_theme_onSecondaryContainer" />
 
         <include
-            android:id="@+id/chipGroup"
+            android:id="@+id/citizen"
             layout="@layout/citizen_chipgroup"
             android:layout_width="match_parent"
             android:layout_height="wrap_content" />
@@ -61,7 +61,7 @@
             android:textColor="@color/mafia_md_theme_onSecondaryContainer" />
 
         <include
-            android:id="@+id/chipGroup2"
+            android:id="@+id/mafia"
             layout="@layout/mafia_chipgroup"
             android:layout_width="match_parent"
             android:layout_height="wrap_content" />
@@ -78,7 +78,7 @@
             android:textColor="@color/independent_md_theme_onSecondaryContainer" />
 
         <include
-            android:id="@+id/chipGroup3"
+            android:id="@+id/independent"
             layout="@layout/independent_chipgroup"
             android:layout_width="match_parent"
             android:layout_height="wrap_content" />

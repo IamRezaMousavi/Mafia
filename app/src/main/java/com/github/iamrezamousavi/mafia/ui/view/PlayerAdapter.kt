@@ -5,7 +5,7 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.github.iamrezamousavi.mafia.data.model.Player
-import com.github.iamrezamousavi.mafia.databinding.PeopleItemBinding
+import com.github.iamrezamousavi.mafia.databinding.PlayerItemBinding
 
 class PlayerAdapter(
     private var players: ArrayList<Player>,
@@ -13,7 +13,7 @@ class PlayerAdapter(
     private val onDeleteClicked: (Player) -> Unit,
 ) : RecyclerView.Adapter<PlayerAdapter.ViewHolder>() {
 
-    inner class ViewHolder(private val binding: PeopleItemBinding) :
+    inner class ViewHolder(private val binding: PlayerItemBinding) :
         RecyclerView.ViewHolder(binding.root) {
         fun bind(player: Player) {
             binding.playerName.text = player.name
@@ -29,7 +29,7 @@ class PlayerAdapter(
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
-        val binding = PeopleItemBinding.inflate(LayoutInflater.from(parent.context), parent, false)
+        val binding = PlayerItemBinding.inflate(LayoutInflater.from(parent.context), parent, false)
         return ViewHolder(binding)
     }
 
