@@ -1,5 +1,6 @@
 package com.github.iamrezamousavi.mafia.ui.view
 
+import android.annotation.SuppressLint
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -35,5 +36,11 @@ class PlayerRoleAdapter(
 
     override fun getItemCount(): Int {
         return players.size
+    }
+
+    @SuppressLint("NotifyDataSetChanged")
+    fun updatePlayers(newPlayers: ArrayList<Player>) {
+        players = newPlayers
+        notifyDataSetChanged()
     }
 }

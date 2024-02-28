@@ -20,11 +20,23 @@ class RoleActivity : AppCompatActivity() {
         }
 
         binding.button.setOnClickListener {
-            val selectedChips = binding.citizen.chipGroup.checkedChipIds
             val selectedRoles = ArrayList<String>()
-            for (id in selectedChips) {
+
+            val citizenChips = binding.citizen.chipGroup.checkedChipIds
+            for (id in citizenChips) {
                 selectedRoles.add(findViewById<Chip>(id).text.toString())
             }
+
+            val mafiaChips = binding.mafia.chipGroup.checkedChipIds
+            for (id in mafiaChips) {
+                selectedRoles.add(findViewById<Chip>(id).text.toString())
+            }
+
+            val independentChips = binding.independent.chipGroup.checkedChipIds
+            for (id in independentChips) {
+                selectedRoles.add(findViewById<Chip>(id).text.toString())
+            }
+
             Toast.makeText(this, "$selectedRoles", Toast.LENGTH_SHORT).show()
 
             val intent = Intent(this, PlayerRoleActivity::class.java)
