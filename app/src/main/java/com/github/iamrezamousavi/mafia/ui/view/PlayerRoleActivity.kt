@@ -2,28 +2,26 @@ package com.github.iamrezamousavi.mafia.ui.view
 
 import android.content.DialogInterface
 import android.os.Bundle
-import android.util.Log
+import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.GridLayoutManager
-import com.github.iamrezamousavi.mafia.data.model.Player
+import com.github.iamrezamousavi.mafia.R
 import com.github.iamrezamousavi.mafia.data.repository.PlayerRepository
 import com.github.iamrezamousavi.mafia.data.source.SharedPreferencesManager
 import com.github.iamrezamousavi.mafia.databinding.ActivityPlayerRoleBinding
-import com.github.iamrezamousavi.mafia.ui.viewmodel.PlayerRoleViewModel
-import com.github.iamrezamousavi.mafia.ui.viewmodel.PlayerRoleViewModelFactory
 import com.github.iamrezamousavi.mafia.ui.viewmodel.PlayerViewModel
 import com.github.iamrezamousavi.mafia.ui.viewmodel.PlayerViewModelFactory
+import com.github.iamrezamousavi.mafia.ui.viewmodel.RoleViewModel
+import com.github.iamrezamousavi.mafia.ui.viewmodel.RoleViewModelFactory
 
 class PlayerRoleActivity : AppCompatActivity() {
     private lateinit var binding: ActivityPlayerRoleBinding
 
     private lateinit var playerRoleAdapter: PlayerRoleAdapter
     private lateinit var playerViewModel: PlayerViewModel
-    private lateinit var playerRoleViewModel: PlayerRoleViewModel
-    private lateinit var players: ArrayList<Player>
-    private lateinit var roles: ArrayList<String>
+    private lateinit var roleViewModel: RoleViewModel
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -36,43 +34,28 @@ class PlayerRoleActivity : AppCompatActivity() {
         playerViewModel = ViewModelProvider(this, factory)[PlayerViewModel::class.java]
         playerViewModel.loadPlayers()
 
-        Log.d("TAG", "onCreate: Player Loaded")
+        val playerRoleFactory = RoleViewModelFactory()
+        roleViewModel =
+            ViewModelProvider(this, playerRoleFactory)[RoleViewModel::class.java]
 
-        val playerRoleFactory = PlayerRoleViewModelFactory()
-        playerRoleViewModel =
-            ViewModelProvider(this, playerRoleFactory)[PlayerRoleViewModel::class.java]
-
-        Log.d("TAG", "onCreate: create playerRoleViewModel")
-
-        players = ArrayList(
-            playerViewModel.getPlayers().value?.filter { it.isChecked } ?: ArrayList()
+        roleViewModel.setPlayers(
+            playerViewModel.getPlayers().value ?: ArrayList()
         )
-        playerRoleViewModel.setPlayers(players)
 
-        Log.d("TAG", "onCreate: set players: $players")
-
-        roles = ArrayList(
+        val roles = ArrayList(
             intent.extras?.getString("roles")?.split(",")?.map { it.trim(' ', '[', ']') }
                 ?: ArrayList()
         )
-
-        while (roles.size < players.size) {
-            roles.add("شهروند")
-        }
-        roles.shuffled()
-        roles.shuffled()
-
-        Log.d("TAG", "onCreate: create roles: $roles")
+        roleViewModel.setRoles(roles)
 
         playerRoleAdapter = PlayerRoleAdapter(
-            players,
+            ArrayList(roleViewModel.getPlayers().value ?: ArrayList()),
             onSelect = { player ->
-                val index = players.indexOf(player)
-                val playerRole = roles[index]
+                val role = roleViewModel.getRole(player)
 
                 AlertDialog.Builder(this)
-                    .setTitle(playerRole)
-                    .setMessage("${player.name}: $playerRole")
+                    .setTitle(role)
+                    .setMessage("${player.name}: $role")
                     .setPositiveButton("Ok", DialogInterface.OnClickListener { dialog, _ ->
                         dialog.cancel()
                     })
@@ -82,12 +65,22 @@ class PlayerRoleActivity : AppCompatActivity() {
         binding.playerRoleList.adapter = playerRoleAdapter
         binding.playerRoleList.layoutManager = GridLayoutManager(this, 3)
 
-        Log.d("TAG", "onCreate: create playerRoleAdapter")
-
-        playerRoleViewModel.getPlayers().observe(this) { players ->
-            playerRoleAdapter.updatePlayers(players)
+        roleViewModel.getRoles().observe(this) { _ ->
+            playerRoleAdapter.refresh()
         }
 
-        Log.d("TAG", "onCreate: bind playerRoleAdapter to viewModel")
+        binding.peopleRoleToolBar.setOnMenuItemClickListener { menuItem ->
+            when (menuItem.itemId) {
+                R.id.menuItemRefresh -> {
+                    roleViewModel.shuffled()
+                    Toast.makeText(this, "Refresh", Toast.LENGTH_SHORT).show()
+                    true
+                }
+
+                else -> {
+                    false
+                }
+            }
+        }
     }
 }

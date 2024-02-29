@@ -17,6 +17,7 @@ class PlayerRoleAdapter(
         RecyclerView.ViewHolder(binding.root) {
         fun bind(player: Player) {
             binding.playerName.text = player.name
+            binding.playerRoleItem.visibility = View.VISIBLE
             binding.playerRoleItem.setOnClickListener {
                 onSelect(player)
                 binding.playerRoleItem.visibility = View.GONE
@@ -39,8 +40,7 @@ class PlayerRoleAdapter(
     }
 
     @SuppressLint("NotifyDataSetChanged")
-    fun updatePlayers(newPlayers: ArrayList<Player>) {
-        players = newPlayers
+    fun refresh() {
         notifyDataSetChanged()
     }
 }
