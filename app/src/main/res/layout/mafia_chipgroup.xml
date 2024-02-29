@@ -19,84 +19,132 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:checked="true"
-            android:text="@string/mafia" />
+            android:text="@string/mafia"
+            android:textColor="@color/mafiachip_text"
+            app:checkedIconTint="@color/mafiachip_text"
+            app:chipBackgroundColor="@color/mafiachip_background"
+            app:chipStrokeColor="@color/mafiachip_stroke" />
 
         <com.google.android.material.chip.Chip
             android:id="@+id/chip202"
             style="@style/Widget.Material3.Chip.Filter"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/godfather" />
+            android:text="@string/godfather"
+            android:textColor="@color/mafiachip_text"
+            app:checkedIconTint="@color/mafiachip_text"
+            app:chipBackgroundColor="@color/mafiachip_background"
+            app:chipStrokeColor="@color/mafiachip_stroke" />
 
         <com.google.android.material.chip.Chip
             android:id="@+id/chip203"
             style="@style/Widget.Material3.Chip.Filter"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/dr_lecter" />
+            android:text="@string/dr_lecter"
+            android:textColor="@color/mafiachip_text"
+            app:checkedIconTint="@color/mafiachip_text"
+            app:chipBackgroundColor="@color/mafiachip_background"
+            app:chipStrokeColor="@color/mafiachip_stroke" />
 
         <com.google.android.material.chip.Chip
             android:id="@+id/chip204"
             style="@style/Widget.Material3.Chip.Filter"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/silencer" />
+            android:text="@string/silencer"
+            android:textColor="@color/mafiachip_text"
+            app:checkedIconTint="@color/mafiachip_text"
+            app:chipBackgroundColor="@color/mafiachip_background"
+            app:chipStrokeColor="@color/mafiachip_stroke" />
 
         <com.google.android.material.chip.Chip
             android:id="@+id/chip205"
             style="@style/Widget.Material3.Chip.Filter"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/bomber" />
+            android:text="@string/bomber"
+            android:textColor="@color/mafiachip_text"
+            app:checkedIconTint="@color/mafiachip_text"
+            app:chipBackgroundColor="@color/mafiachip_background"
+            app:chipStrokeColor="@color/mafiachip_stroke" />
 
         <com.google.android.material.chip.Chip
             android:id="@+id/chip206"
             style="@style/Widget.Material3.Chip.Filter"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/negotiator" />
+            android:text="@string/negotiator"
+            android:textColor="@color/mafiachip_text"
+            app:checkedIconTint="@color/mafiachip_text"
+            app:chipBackgroundColor="@color/mafiachip_background"
+            app:chipStrokeColor="@color/mafiachip_stroke" />
 
         <com.google.android.material.chip.Chip
             android:id="@+id/chip207"
             style="@style/Widget.Material3.Chip.Filter"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/magician" />
+            android:text="@string/magician"
+            android:textColor="@color/mafiachip_text"
+            app:checkedIconTint="@color/mafiachip_text"
+            app:chipBackgroundColor="@color/mafiachip_background"
+            app:chipStrokeColor="@color/mafiachip_stroke" />
 
         <com.google.android.material.chip.Chip
             android:id="@+id/chip208"
             style="@style/Widget.Material3.Chip.Filter"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/nato" />
+            android:text="@string/nato"
+            android:textColor="@color/mafiachip_text"
+            app:checkedIconTint="@color/mafiachip_text"
+            app:chipBackgroundColor="@color/mafiachip_background"
+            app:chipStrokeColor="@color/mafiachip_stroke" />
 
         <com.google.android.material.chip.Chip
             android:id="@+id/chip209"
             style="@style/Widget.Material3.Chip.Filter"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/terrorist" />
+            android:text="@string/terrorist"
+            android:textColor="@color/mafiachip_text"
+            app:checkedIconTint="@color/mafiachip_text"
+            app:chipBackgroundColor="@color/mafiachip_background"
+            app:chipStrokeColor="@color/mafiachip_stroke" />
 
         <com.google.android.material.chip.Chip
             android:id="@+id/chip210"
             style="@style/Widget.Material3.Chip.Filter"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/vandal" />
+            android:text="@string/vandal"
+            android:textColor="@color/mafiachip_text"
+            app:checkedIconTint="@color/mafiachip_text"
+            app:chipBackgroundColor="@color/mafiachip_background"
+            app:chipStrokeColor="@color/mafiachip_stroke" />
 
         <com.google.android.material.chip.Chip
             android:id="@+id/chip211"
             style="@style/Widget.Material3.Chip.Filter"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/hostage_taker" />
+            android:text="@string/hostage_taker"
+            android:textColor="@color/mafiachip_text"
+            app:checkedIconTint="@color/mafiachip_text"
+            app:chipBackgroundColor="@color/mafiachip_background"
+            app:chipStrokeColor="@color/mafiachip_stroke" />
 
         <com.google.android.material.chip.Chip
             android:id="@+id/chip212"
             style="@style/Widget.Material3.Chip.Filter"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/bodyguard" />
+            android:text="@string/bodyguard"
+            android:textColor="@color/mafiachip_text"
+            app:checkedIconTint="@color/mafiachip_text"
+            app:chipBackgroundColor="@color/mafiachip_background"
+            app:chipStrokeColor="@color/mafiachip_stroke" />
 
     </com.google.android.material.chip.ChipGroup>
 
