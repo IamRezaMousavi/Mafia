@@ -5,7 +5,7 @@
     android:layout_height="wrap_content">
 
     <com.google.android.material.chip.ChipGroup
-        android:id="@+id/chipGroup"
+        android:id="@+id/chipGroup3"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -14,7 +14,7 @@
         app:layout_constraintTop_toTopOf="parent">
 
         <com.google.android.material.chip.Chip
-            android:id="@+id/chip31"
+            android:id="@+id/chip301"
             style="@style/Widget.Material3.Chip.Filter"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -26,7 +26,7 @@
             app:chipStrokeColor="@color/independentchip_stroke" />
 
         <com.google.android.material.chip.Chip
-            android:id="@+id/chip32"
+            android:id="@+id/chip302"
             style="@style/Widget.Material3.Chip.Filter"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -37,7 +37,7 @@
             app:chipStrokeColor="@color/independentchip_stroke" />
 
         <com.google.android.material.chip.Chip
-            android:id="@+id/chip32"
+            android:id="@+id/chip303"
             style="@style/Widget.Material3.Chip.Filter"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -48,7 +48,7 @@
             app:chipStrokeColor="@color/independentchip_stroke" />
 
         <com.google.android.material.chip.Chip
-            android:id="@+id/chip33"
+            android:id="@+id/chip304"
             style="@style/Widget.Material3.Chip.Filter"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -59,7 +59,7 @@
             app:chipStrokeColor="@color/independentchip_stroke" />
 
         <com.google.android.material.chip.Chip
-            android:id="@+id/chip35"
+            android:id="@+id/chip305"
             style="@style/Widget.Material3.Chip.Filter"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"

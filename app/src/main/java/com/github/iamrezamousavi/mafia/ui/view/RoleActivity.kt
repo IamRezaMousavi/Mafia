@@ -16,24 +16,24 @@ class RoleActivity : AppCompatActivity() {
         binding = ActivityRoleBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        binding.citizen.chip1.setOnCheckedChangeListener { _, isChecked ->
+        binding.citizen.chip101.setOnCheckedChangeListener { _, isChecked ->
             Toast.makeText(this, "Chip 1: $isChecked", Toast.LENGTH_SHORT).show()
         }
 
         binding.button.setOnClickListener {
             val selectedRoles = ArrayList<String>()
 
-            val citizenChips = binding.citizen.chipGroup.checkedChipIds
+            val citizenChips = binding.citizen.chipGroup1.checkedChipIds
             for (id in citizenChips) {
                 selectedRoles.add(findViewById<Chip>(id).text.toString())
             }
 
-            val mafiaChips = binding.mafia.chipGroup.checkedChipIds
+            val mafiaChips = binding.mafia.chipGroup2.checkedChipIds
             for (id in mafiaChips) {
                 selectedRoles.add(findViewById<Chip>(id).text.toString())
             }
 
-            val independentChips = binding.independent.chipGroup.checkedChipIds
+            val independentChips = binding.independent.chipGroup3.checkedChipIds
             for (id in independentChips) {
                 selectedRoles.add(findViewById<Chip>(id).text.toString())
             }

@@ -3,7 +3,6 @@ package com.github.iamrezamousavi.mafia.ui.viewmodel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.github.iamrezamousavi.mafia.R
 import com.github.iamrezamousavi.mafia.data.model.Player
 
 class RoleViewModel : ViewModel() {
@@ -23,7 +22,7 @@ class RoleViewModel : ViewModel() {
         val playersSize = players.value?.size ?: 0
         var playerRoles = roles
         while (playerRoles.size < playersSize) {
-            playerRoles.add(R.string.citizen.toString())
+            playerRoles.add("شهروند")
         }
         playerRoles = ArrayList(playerRoles.shuffled())
         playerRoles = ArrayList(playerRoles.shuffled())
