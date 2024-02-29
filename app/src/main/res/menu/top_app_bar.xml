@@ -4,7 +4,7 @@
     <item
         android:id="@+id/menuItemSelectAll"
         android:icon="@drawable/baseline_select_all_24"
-        android:title="Select All"
+        android:title="@string/select_all"
         app:showAsAction="always" />
 
 </menu>

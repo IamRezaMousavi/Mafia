@@ -14,75 +14,89 @@
         app:layout_constraintTop_toTopOf="parent">
 
         <com.google.android.material.chip.Chip
-            android:id="@+id/chip21"
+            android:id="@+id/chip1"
             style="@style/Widget.Material3.Chip.Filter"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:checked="true"
-            android:text="مافیا" />
+            android:text="@string/mafia" />
 
         <com.google.android.material.chip.Chip
-            android:id="@+id/chip22"
+            android:id="@+id/chip2"
             style="@style/Widget.Material3.Chip.Filter"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="گادفادر" />
+            android:text="@string/godfather" />
 
         <com.google.android.material.chip.Chip
-            android:id="@+id/chip23"
+            android:id="@+id/chip3"
             style="@style/Widget.Material3.Chip.Filter"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="سایلنسر" />
+            android:text="@string/dr_lecter" />
 
         <com.google.android.material.chip.Chip
-            android:id="@+id/chip24"
+            android:id="@+id/chip4"
             style="@style/Widget.Material3.Chip.Filter"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="وکیل" />
+            android:text="@string/silencer" />
 
         <com.google.android.material.chip.Chip
-            android:id="@+id/chip25"
+            android:id="@+id/chip5"
             style="@style/Widget.Material3.Chip.Filter"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="تروریست" />
+            android:text="@string/bomber" />
 
         <com.google.android.material.chip.Chip
-            android:id="@+id/chip26"
+            android:id="@+id/chip6"
             style="@style/Widget.Material3.Chip.Filter"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="مرد قوی" />
+            android:text="@string/negotiator" />
 
         <com.google.android.material.chip.Chip
-            android:id="@+id/chip27"
+            android:id="@+id/chip7"
             style="@style/Widget.Material3.Chip.Filter"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="تهمت‌زن" />
+            android:text="@string/magician" />
 
         <com.google.android.material.chip.Chip
-            android:id="@+id/chip28"
+            android:id="@+id/chip8"
             style="@style/Widget.Material3.Chip.Filter"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="افسونگر" />
+            android:text="@string/nato" />
 
         <com.google.android.material.chip.Chip
-            android:id="@+id/chip29"
+            android:id="@+id/chip9"
             style="@style/Widget.Material3.Chip.Filter"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="دزد" />
+            android:text="@string/terrorist" />
 
         <com.google.android.material.chip.Chip
-            android:id="@+id/chip30"
+            android:id="@+id/chip10"
             style="@style/Widget.Material3.Chip.Filter"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="جاسوس" />
+            android:text="@string/vandal" />
+
+        <com.google.android.material.chip.Chip
+            android:id="@+id/chip11"
+            style="@style/Widget.Material3.Chip.Filter"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/hostage_taker" />
+
+        <com.google.android.material.chip.Chip
+            android:id="@+id/chip12"
+            style="@style/Widget.Material3.Chip.Filter"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/bodyguard" />
 
     </com.google.android.material.chip.ChipGroup>
 

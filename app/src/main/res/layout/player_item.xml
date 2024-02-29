@@ -40,7 +40,7 @@
             android:layout_marginStart="8dp"
             android:layout_marginLeft="8dp"
             android:background="@android:color/transparent"
-            android:contentDescription="clear item"
+            android:contentDescription="@string/delete_player"
             android:src="@drawable/baseline_clear_24"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"

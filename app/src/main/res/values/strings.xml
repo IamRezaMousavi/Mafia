@@ -3,10 +3,54 @@
     <string name="player_name">نام بازیکن</string>
     <string name="select_roles">انتخاب نقش‌ها</string>
     <string name="player_list">لیست بازیکن‌ها</string>
-    <string name="citizen_roles">نقش‌های شهروندان</string>
-    <string name="mafia_roles">نقش‌های مافیا</string>
-    <string name="independent_roles">نقش‌های مستقل</string>
     <string name="division_roles">تقسیم نقش‌ها</string>
     <string name="narrator">راوی</string>
     <string name="settings">تنظیمات</string>
+
+    <string name="player_not_enough">حداقل ۳ نفر باید انتخاب کنید</string>
+    <string name="select_all">انتخاب همه</string>
+    <string name="delete_player">حذف بازیکن</string>
+    <string name="refresh">تازه کردن</string>
+    <string name="ok_button">متوجه شدم</string>
+
+    <string name="citizen_roles">نقش‌های شهروندان</string>
+    <string name="mafia_roles">نقش‌های مافیا</string>
+    <string name="independent_roles">نقش‌های مستقل</string>
+
+    <string name="citizen">شهروند</string>
+    <string name="doctor">دکتر</string>
+    <string name="detective">کاراگاه</string>
+    <string name="sniper">تک‌تیرانداز</string>
+    <string name="mayor">شهردار</string>
+    <string name="guardian">محافظ</string>
+    <string name="psychologist">روانشناس</string>
+    <string name="professional">حرفه‌ای</string>
+    <string name="gunman">تفنگ‌دار</string>
+    <string name="judge">قاضی</string>
+    <string name="champion">قهرمان</string>
+    <string name="priest">کشیش</string>
+    <string name="hacker">هکر</string>
+    <string name="angel">فرشته</string>
+    <string name="vigilante">نگهبان</string>
+    <string name="bartender">ساقی</string>
+
+    <string name="mafia">مافیا</string>
+    <string name="godfather">گادفادر</string>
+    <string name="dr_lecter">دکتر لکتر</string>
+    <string name="silencer">سایلنسر</string>
+    <string name="terrorist">تروریست</string>
+    <string name="negotiator">مذاکره کننده</string>
+    <string name="nato">ناتو</string>
+    <string name="vandal">خرابکار</string>
+    <string name="magician">شعبده‌باز</string>
+    <string name="hostage_taker">گروگان‌گیر</string>
+    <string name="bodyguard">بادیگارد</string>
+    <string name="bomber">بمب‌گذار</string>
+
+    <string name="unknown">مجهول</string>
+    <string name="wolfs_rain">گرگ‌نما</string>
+    <string name="killer">قاتل</string>
+    <string name="thousand_faces">هزار چهره</string>
+    <string name="syndicate">سندیکا</string>
+
 </resources>

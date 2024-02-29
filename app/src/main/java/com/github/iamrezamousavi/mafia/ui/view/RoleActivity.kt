@@ -8,6 +8,7 @@ import com.github.iamrezamousavi.mafia.databinding.ActivityRoleBinding
 import com.google.android.material.chip.Chip
 
 class RoleActivity : AppCompatActivity() {
+    private val extraValue = "roles"
 
     private lateinit var binding: ActivityRoleBinding
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -40,7 +41,7 @@ class RoleActivity : AppCompatActivity() {
             Toast.makeText(this, "$selectedRoles", Toast.LENGTH_SHORT).show()
 
             val intent = Intent(this, PlayerRoleActivity::class.java)
-            intent.putExtra("roles", selectedRoles.toString())
+            intent.putExtra(extraValue, selectedRoles.toString())
             startActivity(intent)
         }
     }

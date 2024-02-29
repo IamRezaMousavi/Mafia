@@ -17,6 +17,8 @@ import com.github.iamrezamousavi.mafia.ui.viewmodel.RoleViewModel
 import com.github.iamrezamousavi.mafia.ui.viewmodel.RoleViewModelFactory
 
 class PlayerRoleActivity : AppCompatActivity() {
+    private val extraValue = "roles"
+
     private lateinit var binding: ActivityPlayerRoleBinding
 
     private lateinit var playerRoleAdapter: PlayerRoleAdapter
@@ -43,7 +45,7 @@ class PlayerRoleActivity : AppCompatActivity() {
         )
 
         val roles = ArrayList(
-            intent.extras?.getString("roles")?.split(",")?.map { it.trim(' ', '[', ']') }
+            intent.extras?.getString(extraValue)?.split(",")?.map { it.trim(' ', '[', ']') }
                 ?: ArrayList()
         )
         roleViewModel.setRoles(roles)
@@ -56,9 +58,11 @@ class PlayerRoleActivity : AppCompatActivity() {
                 AlertDialog.Builder(this)
                     .setTitle(role)
                     .setMessage("${player.name}: $role")
-                    .setPositiveButton("Ok", DialogInterface.OnClickListener { dialog, _ ->
-                        dialog.cancel()
-                    })
+                    .setPositiveButton(
+                        R.string.ok_button,
+                        DialogInterface.OnClickListener { dialog, _ ->
+                            dialog.cancel()
+                        })
                     .show()
             }
         )
@@ -73,7 +77,7 @@ class PlayerRoleActivity : AppCompatActivity() {
             when (menuItem.itemId) {
                 R.id.menuItemRefresh -> {
                     roleViewModel.shuffled()
-                    Toast.makeText(this, "Refresh", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(this, R.string.refresh, Toast.LENGTH_SHORT).show()
                     true
                 }
 

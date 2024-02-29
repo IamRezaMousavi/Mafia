@@ -50,7 +50,7 @@ class MainActivity : AppCompatActivity() {
             val players = viewModel.getPlayers().value ?: return@setOnClickListener
             val playerCheckedSize = players.filter { it.isChecked }.size
             if (playerCheckedSize < 3) {
-                Toast.makeText(this, "Not enough", Toast.LENGTH_SHORT).show()
+                Toast.makeText(this, R.string.player_not_enough, Toast.LENGTH_SHORT).show()
             } else {
                 startActivity(Intent(this, RoleActivity::class.java))
             }
@@ -73,7 +73,7 @@ class MainActivity : AppCompatActivity() {
             when (menuItem.itemId) {
                 R.id.menuItemSelectAll -> {
                     viewModel.selectAllPlayer()
-                    Toast.makeText(this, "Select All", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(this, R.string.select_all, Toast.LENGTH_SHORT).show()
                     true
                 }
 
