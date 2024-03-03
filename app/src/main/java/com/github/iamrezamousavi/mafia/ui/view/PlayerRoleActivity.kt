@@ -1,9 +1,7 @@
 package com.github.iamrezamousavi.mafia.ui.view
 
-import android.content.DialogInterface
 import android.os.Bundle
 import android.widget.Toast
-import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.GridLayoutManager
@@ -54,16 +52,8 @@ class PlayerRoleActivity : AppCompatActivity() {
             ArrayList(roleViewModel.getPlayers().value ?: ArrayList()),
             onSelect = { player ->
                 val role = roleViewModel.getRole(player)
-
-                AlertDialog.Builder(this)
-                    .setTitle(role)
-                    .setMessage("${player.name}: $role")
-                    .setPositiveButton(
-                        R.string.ok_button,
-                        DialogInterface.OnClickListener { dialog, _ ->
-                            dialog.cancel()
-                        })
-                    .show()
+                val roleDialog = RoleDialog(this, role)
+                roleDialog.show()
             }
         )
         binding.playerRoleList.adapter = playerRoleAdapter
