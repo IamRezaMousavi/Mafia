@@ -42,12 +42,12 @@ class MainActivity : AppCompatActivity() {
         val playerRepository = PlayerRepository(sharedPreferencesManager)
         val factory = PlayerViewModelFactory(playerRepository)
         viewModel = ViewModelProvider(this, factory)[PlayerViewModel::class.java]
-        viewModel.getPlayers().observe(this) { players ->
+        viewModel.players.observe(this) { players ->
             playerAdapter.updatePlayers(players ?: ArrayList())
         }
 
         binding.button1.setOnClickListener {
-            val players = viewModel.getPlayers().value ?: return@setOnClickListener
+            val players = viewModel.players.value ?: return@setOnClickListener
             val playerCheckedSize = players.filter { it.isChecked }.size
             if (playerCheckedSize < 3) {
                 Toast.makeText(this, R.string.player_not_enough, Toast.LENGTH_SHORT).show()

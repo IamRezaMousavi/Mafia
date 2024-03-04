@@ -39,8 +39,10 @@ class PlayerRoleActivity : AppCompatActivity() {
             ViewModelProvider(this, playerRoleFactory)[RoleViewModel::class.java]
 
         roleViewModel.setPlayers(
-            playerViewModel.getPlayers().value ?: ArrayList()
+            playerViewModel.players.value ?: ArrayList()
         )
+
+        roleViewModel.setSimpleCitizenText(getString(R.string.simple_citizen))
 
         val roles = ArrayList(
             intent.extras?.getString(extraValue)?.split(",")?.map { it.trim(' ', '[', ']') }
@@ -49,7 +51,7 @@ class PlayerRoleActivity : AppCompatActivity() {
         roleViewModel.setRoles(roles)
 
         playerRoleAdapter = PlayerRoleAdapter(
-            ArrayList(roleViewModel.getPlayers().value ?: ArrayList()),
+            ArrayList(roleViewModel.players.value ?: ArrayList()),
             onSelect = { player ->
                 val role = roleViewModel.getRole(player)
                 val roleDialog = RoleDialog(this, role)
@@ -59,7 +61,7 @@ class PlayerRoleActivity : AppCompatActivity() {
         binding.playerRoleList.adapter = playerRoleAdapter
         binding.playerRoleList.layoutManager = GridLayoutManager(this, 3)
 
-        roleViewModel.getRoles().observe(this) { _ ->
+        roleViewModel.roles.observe(this) { _ ->
             playerRoleAdapter.refresh()
         }
 

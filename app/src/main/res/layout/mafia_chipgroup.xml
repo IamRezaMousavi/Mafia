@@ -19,7 +19,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:checked="true"
-            android:text="@string/mafia"
+            android:text="@string/simple_mafia"
             android:textColor="@color/mafiachip_text"
             app:checkedIconTint="@color/mafiachip_text"
             app:chipBackgroundColor="@color/mafiachip_background"

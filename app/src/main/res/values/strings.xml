@@ -17,7 +17,8 @@
     <string name="mafia_roles">نقش‌های مافیا</string>
     <string name="independent_roles">نقش‌های مستقل</string>
 
-    <string name="citizen">شهروند</string>
+    <string name="citizen_side">شهروند</string>
+    <string name="simple_citizen">شهروند ساده</string>
     <string name="doctor">دکتر</string>
     <string name="detective">کاراگاه</string>
     <string name="sniper">تک‌تیرانداز</string>
@@ -34,7 +35,8 @@
     <string name="vigilante">نگهبان</string>
     <string name="bartender">ساقی</string>
 
-    <string name="mafia">مافیا</string>
+    <string name="mafia_side">مافیا</string>
+    <string name="simple_mafia">مافیا ساده</string>
     <string name="godfather">گادفادر</string>
     <string name="dr_lecter">دکتر لکتر</string>
     <string name="silencer">سایلنسر</string>
@@ -47,6 +49,7 @@
     <string name="bodyguard">بادیگارد</string>
     <string name="bomber">بمب‌گذار</string>
 
+    <string name="independent_side">مستقل</string>
     <string name="unknown">مجهول</string>
     <string name="wolfs_rain">گرگ‌نما</string>
     <string name="killer">قاتل</string>

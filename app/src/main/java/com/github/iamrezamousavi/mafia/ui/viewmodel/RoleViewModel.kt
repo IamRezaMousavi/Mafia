@@ -6,39 +6,47 @@ import androidx.lifecycle.ViewModel
 import com.github.iamrezamousavi.mafia.data.model.Player
 
 class RoleViewModel : ViewModel() {
-    private val players = MutableLiveData<ArrayList<Player>>()
-    private val roles = MutableLiveData<ArrayList<String>>()
+    private val _players = MutableLiveData<ArrayList<Player>>()
+    val players: LiveData<ArrayList<Player>>
+        get() = _players
 
-    fun getPlayers(): LiveData<ArrayList<Player>> = players
-    fun getRoles(): LiveData<ArrayList<String>> = roles
+    private val _roles = MutableLiveData<ArrayList<String>>()
+    val roles: LiveData<ArrayList<String>>
+        get() = _roles
+
+    private var simpleCitizen = ""
 
     fun setPlayers(players: ArrayList<Player>) {
-        this.players.value = ArrayList(
+        _players.value = ArrayList(
             players.filter { it.isChecked }
         )
     }
 
     fun setRoles(roles: ArrayList<String>) {
-        val playersSize = players.value?.size ?: 0
+        val playersSize = _players.value?.size ?: 0
         var playerRoles = roles
         while (playerRoles.size < playersSize) {
-            playerRoles.add("شهروند")
+            playerRoles.add(simpleCitizen)
         }
         playerRoles = ArrayList(playerRoles.shuffled())
         playerRoles = ArrayList(playerRoles.shuffled())
-        this.roles.value = playerRoles
+        _roles.value = playerRoles
     }
 
     fun shuffled() {
-        this.roles.value = this.roles.value?.shuffled()?.let { ArrayList(it) }
+        _roles.value = _roles.value?.shuffled()?.let { ArrayList(it) }
     }
 
     fun getRole(player: Player): String {
-        val index = players.value!!.indexOf(player)
+        val index = _players.value!!.indexOf(player)
         return if (index < 0) {
             ""
         } else {
-            roles.value!![index]
+            _roles.value!![index]
         }
+    }
+
+    fun setSimpleCitizenText(text: String) {
+        this.simpleCitizen = text
     }
 }
