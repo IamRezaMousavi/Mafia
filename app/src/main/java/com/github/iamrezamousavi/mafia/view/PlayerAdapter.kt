@@ -1,4 +1,4 @@
-package com.github.iamrezamousavi.mafia.ui.view
+package com.github.iamrezamousavi.mafia.view
 
 import android.annotation.SuppressLint
 import android.view.LayoutInflater

@@ -3,6 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <application
+        android:name=".MafiaApplication"
         android:allowBackup="true"
         android:dataExtractionRules="@xml/data_extraction_rules"
         android:fullBackupContent="@xml/backup_rules"
@@ -13,16 +14,16 @@
         android:theme="@style/Theme.Mafia"
         tools:targetApi="31">
         <activity
-            android:name=".ui.view.PlayerRoleActivity"
+            android:name=".view.PlayerRoleActivity"
             android:exported="false" />
         <activity
-            android:name=".ui.view.RoleActivity"
+            android:name=".view.RoleActivity"
             android:exported="false" />
         <activity
-            android:name=".ui.view.SettingsActivity"
+            android:name=".view.SettingsActivity"
             android:exported="false" />
         <activity
-            android:name=".ui.view.MainActivity"
+            android:name=".view.MainActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

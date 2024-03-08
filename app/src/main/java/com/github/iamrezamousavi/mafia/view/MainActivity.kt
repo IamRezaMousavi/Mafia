@@ -1,24 +1,23 @@
-package com.github.iamrezamousavi.mafia.ui.view
+package com.github.iamrezamousavi.mafia.view
 
 import android.content.Intent
 import android.os.Bundle
 import android.widget.Toast
+import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
-import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.github.iamrezamousavi.mafia.R
 import com.github.iamrezamousavi.mafia.data.model.Player
-import com.github.iamrezamousavi.mafia.data.repository.PlayerRepository
-import com.github.iamrezamousavi.mafia.data.source.SharedPreferencesManager
 import com.github.iamrezamousavi.mafia.databinding.ActivityMainBinding
-import com.github.iamrezamousavi.mafia.ui.viewmodel.PlayerViewModel
-import com.github.iamrezamousavi.mafia.ui.viewmodel.PlayerViewModelFactory
+import com.github.iamrezamousavi.mafia.viewmodel.PlayerViewModel
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
 
     private lateinit var playerAdapter: PlayerAdapter
-    private lateinit var viewModel: PlayerViewModel
+    private val viewModel: PlayerViewModel by viewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -38,10 +37,6 @@ class MainActivity : AppCompatActivity() {
         binding.peopleList.adapter = playerAdapter
         binding.peopleList.layoutManager = LinearLayoutManager(this)
 
-        val sharedPreferencesManager = SharedPreferencesManager(this)
-        val playerRepository = PlayerRepository(sharedPreferencesManager)
-        val factory = PlayerViewModelFactory(playerRepository)
-        viewModel = ViewModelProvider(this, factory)[PlayerViewModel::class.java]
         viewModel.players.observe(this) { players ->
             playerAdapter.updatePlayers(players ?: ArrayList())
         }

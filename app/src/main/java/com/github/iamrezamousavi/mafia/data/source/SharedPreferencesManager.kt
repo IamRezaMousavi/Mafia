@@ -4,8 +4,10 @@ import android.content.Context
 import com.github.iamrezamousavi.mafia.data.model.Player
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
+import dagger.hilt.android.qualifiers.ApplicationContext
+import javax.inject.Inject
 
-class SharedPreferencesManager(context: Context) {
+class SharedPreferencesManager @Inject constructor(@ApplicationContext context: Context) {
     private val sharedPreferences =
         context.getSharedPreferences("player_prefs", Context.MODE_PRIVATE)
     private val playersKey = "Players"

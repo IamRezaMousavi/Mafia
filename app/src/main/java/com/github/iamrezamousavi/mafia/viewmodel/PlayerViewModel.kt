@@ -1,12 +1,18 @@
-package com.github.iamrezamousavi.mafia.ui.viewmodel
+package com.github.iamrezamousavi.mafia.viewmodel
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.github.iamrezamousavi.mafia.data.model.Player
 import com.github.iamrezamousavi.mafia.data.repository.PlayerRepository
+import dagger.hilt.android.lifecycle.HiltViewModel
+import javax.inject.Inject
 
-class PlayerViewModel(private val repository: PlayerRepository) : ViewModel() {
+@HiltViewModel
+class PlayerViewModel @Inject constructor(
+    private val repository: PlayerRepository
+) : ViewModel() {
+
     private val _players = MutableLiveData<ArrayList<Player>>()
     val players: LiveData<ArrayList<Player>>
         get() = _players

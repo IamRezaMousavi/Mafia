@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="decrease_image_button">decrease image button</string>
+    <string name="increase_image_button">increase image button</string>
+</resources>

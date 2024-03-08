@@ -1,4 +1,4 @@
-package com.github.iamrezamousavi.mafia.ui.view
+package com.github.iamrezamousavi.mafia.view
 
 import android.os.Bundle
 import android.widget.Toast
