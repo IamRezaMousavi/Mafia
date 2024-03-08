@@ -462,6 +462,15 @@ class HorizontalQuantitizer @JvmOverloads constructor(
         binding.quantityTv.setTextColor(colorInt)
     }
 
+    fun setValueTextBackgroundColor(@ColorRes colorRes: Int) {
+        binding.quantityTv.setBackgroundResource(colorRes)
+    }
+
+    @SuppressLint("ResourceAsColor")
+    fun setTextBackgroundColor(@ColorRes colorRes: Int) {
+        binding.bgBg.setBackgroundResource(colorRes)
+    }
+
     fun setPlusIcon(@DrawableRes icon: Int) {
         binding.increaseIb.setImageResource(icon)
     }

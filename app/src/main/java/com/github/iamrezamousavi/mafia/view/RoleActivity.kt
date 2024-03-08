@@ -4,6 +4,7 @@ import android.content.Intent
 import android.os.Bundle
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.content.ContextCompat
 import com.github.iamrezamousavi.mafia.R
 import com.github.iamrezamousavi.mafia.databinding.ActivityRoleBinding
 import com.github.iamrezamousavi.quantitizer.AnimationStyle
@@ -27,6 +28,27 @@ class RoleActivity : AppCompatActivity() {
         binding.citizenCounter.setMinusIcon(R.drawable.ic_minus_small)
         binding.citizenCounter.setPlusBackground(R.drawable.plus_icon_bg)
         binding.citizenCounter.setMinusBackground(R.drawable.plus_icon_bg)
+
+        binding.citizenCounter.setValueTextColorInt(
+            ContextCompat.getColor(
+                this, R.color.md_theme_onPrimary
+            )
+        )
+        binding.citizenCounter.setTextBackgroundColor(R.color.md_theme_primary)
+
+        binding.mafiaCounter.textAnimationStyle = AnimationStyle.FALL_IN
+        binding.mafiaCounter.setPlusIcon(R.drawable.ic_plus_small)
+        binding.mafiaCounter.setMinusIcon(R.drawable.ic_minus_small)
+        binding.mafiaCounter.setPlusBackground(R.drawable.plus_icon_bg)
+        binding.mafiaCounter.setMinusBackground(R.drawable.plus_icon_bg)
+
+        binding.mafiaCounter.setValueTextColorInt(
+            ContextCompat.getColor(
+                this, R.color.md_theme_onPrimary
+            )
+        )
+        binding.mafiaCounter.setTextBackgroundColor(R.color.md_theme_primary)
+
 
         binding.button.setOnClickListener {
             val selectedRoles = ArrayList<String>()
