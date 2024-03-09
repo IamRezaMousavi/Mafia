@@ -11,7 +11,10 @@ import com.github.iamrezamousavi.quantitizer.AnimationStyle
 import com.google.android.material.chip.Chip
 
 class RoleActivity : AppCompatActivity() {
-    private val extraValue = "roles"
+
+    companion object {
+        private const val EXTRA_VALUE = "roles"
+    }
 
     private lateinit var binding: ActivityRoleBinding
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -71,7 +74,7 @@ class RoleActivity : AppCompatActivity() {
             Toast.makeText(this, "$selectedRoles", Toast.LENGTH_SHORT).show()
 
             val intent = Intent(this, PlayerRoleActivity::class.java)
-            intent.putExtra(extraValue, selectedRoles.toString())
+            intent.putExtra(EXTRA_VALUE, selectedRoles.toString())
             startActivity(intent)
         }
     }

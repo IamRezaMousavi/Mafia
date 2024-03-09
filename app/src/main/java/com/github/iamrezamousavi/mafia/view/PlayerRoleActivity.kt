@@ -13,7 +13,10 @@ import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
 class PlayerRoleActivity : AppCompatActivity() {
-    private val extraValue = "roles"
+
+    companion object {
+        private const val EXTRA_VALUE = "roles"
+    }
 
     private lateinit var binding: ActivityPlayerRoleBinding
 
@@ -36,7 +39,7 @@ class PlayerRoleActivity : AppCompatActivity() {
         roleViewModel.setSimpleCitizenText(getString(R.string.simple_citizen))
 
         val roles = ArrayList(
-            intent.extras?.getString(extraValue)?.split(",")?.map { it.trim(' ', '[', ']') }
+            intent.extras?.getString(EXTRA_VALUE)?.split(",")?.map { it.trim(' ', '[', ']') }
                 ?: ArrayList()
         )
         roleViewModel.setRoles(roles)
