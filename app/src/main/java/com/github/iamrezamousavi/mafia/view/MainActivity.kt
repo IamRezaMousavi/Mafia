@@ -3,26 +3,32 @@ package com.github.iamrezamousavi.mafia.view
 import android.content.Intent
 import android.os.Bundle
 import android.widget.Toast
-import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
+import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.github.iamrezamousavi.mafia.R
 import com.github.iamrezamousavi.mafia.data.model.Player
+import com.github.iamrezamousavi.mafia.data.repository.PlayerRepository
+import com.github.iamrezamousavi.mafia.data.source.SharedPreferencesManager
 import com.github.iamrezamousavi.mafia.databinding.ActivityMainBinding
 import com.github.iamrezamousavi.mafia.viewmodel.PlayerViewModel
-import dagger.hilt.android.AndroidEntryPoint
+import com.github.iamrezamousavi.mafia.viewmodel.PlayerViewModelFactory
 
-@AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
 
     private lateinit var playerAdapter: PlayerAdapter
-    private val viewModel: PlayerViewModel by viewModels()
+    private lateinit var viewModel: PlayerViewModel
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
+
+        val sharedPreferencesManager = SharedPreferencesManager(this)
+        val playerRepository = PlayerRepository(sharedPreferencesManager)
+        val factory = PlayerViewModelFactory(playerRepository)
+        viewModel = ViewModelProvider(this, factory)[PlayerViewModel::class.java]
 
         playerAdapter = PlayerAdapter(
             ArrayList(),

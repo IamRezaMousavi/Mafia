@@ -5,21 +5,18 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.github.iamrezamousavi.mafia.data.model.Player
 import com.github.iamrezamousavi.mafia.data.repository.PlayerRepository
-import dagger.hilt.android.lifecycle.HiltViewModel
-import javax.inject.Inject
 
-@HiltViewModel
-class PlayerViewModel @Inject constructor(
-    private val repository: PlayerRepository
-) : ViewModel() {
+class PlayerViewModel (private val repository: PlayerRepository) : ViewModel() {
 
     private val _players = MutableLiveData<ArrayList<Player>>()
     val players: LiveData<ArrayList<Player>>
         get() = _players
 
-    fun loadPlayers() {
+    fun loadPlayers(): ArrayList<Player> {
         // update LiveData
-        _players.value = repository.getPlayers()
+        val loadedPlayers = repository.getPlayers()
+        _players.value = loadedPlayers
+        return loadedPlayers
     }
 
     fun addPlayer(player: Player) {
