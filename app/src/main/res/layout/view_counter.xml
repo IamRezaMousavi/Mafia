@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_margin="5dp"
+    tools:context=".view.counterview.CounterView">
+
+    <ImageButton
+        android:id="@+id/minusButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@drawable/minus_icon_bg"
+        android:contentDescription="TODO"
+        android:padding="10dp"
+        android:src="@drawable/ic_minus_small"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <EditText
+        android:id="@+id/counterET"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:autofillHints="quantity"
+        android:background="@android:color/transparent"
+        android:gravity="center"
+        android:hint="12"
+        android:inputType="number"
+        android:labelFor="@id/counterET"
+        android:paddingStart="20dp"
+        android:paddingEnd="20dp"
+        android:text="12"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toEndOf="@id/minusButton"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <ImageButton
+        android:id="@+id/plusButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@drawable/plus_icon_bg"
+        android:contentDescription="TODO"
+        android:padding="10dp"
+        android:src="@drawable/ic_plus_small"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toEndOf="@id/counterET"
+        app:layout_constraintTop_toTopOf="parent" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

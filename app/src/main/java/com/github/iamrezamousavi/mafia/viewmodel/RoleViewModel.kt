@@ -25,22 +25,13 @@ class RoleViewModel(context: Context) : ViewModel() {
     val simpleMafiaCounter: LiveData<Int>
         get() = _simpleMafiaCounter
 
-    private val _maxSimpleMafia = MutableLiveData(1)
+    private val _maxSimpleMafia = MutableLiveData(10)
     val maxSimpleMafia: LiveData<Int>
         get() = _maxSimpleMafia
 
-    var simpleCitizenCounter = 0
-
-    fun updateSimpleMafiaCounter() {
-        val currentValue = _simpleMafiaCounter.value ?: 1
-        val maxValue = _maxSimpleMafia.value ?: 1
-        val newValue = if (currentValue > maxValue) {
-            maxValue
-        } else {
-            currentValue
-        }
-        _simpleMafiaCounter.value = newValue
-    }
+    private val _simpleCitizenCounter = MutableLiveData(1)
+    val simpleCitizenCounter: LiveData<Int>
+        get() = _simpleCitizenCounter
 
     fun updateMaxSimpleMafia(mafiaCheckedSize: Int, hasSimpleMafia: Boolean = true) {
         val newValue = if (players.value == null || players.value?.size == null) {
@@ -61,20 +52,17 @@ class RoleViewModel(context: Context) : ViewModel() {
         _maxSimpleMafia.value = newValue
     }
 
-    fun updateSimpleCitizenCounter() {
-        val newValue =
-            if (players.value == null || players.value?.size == null || roles.value == null || roles.value?.size == null) {
-                1
-            } else {
-                val playersSize = players.value?.size!!
-                val rolesSize = roles.value?.size!!
-                playersSize - rolesSize - (simpleMafiaCounter.value ?: 0) + 1
-            }
-        simpleCitizenCounter = newValue
+    fun setSimpleMafiaCounter(value: Int) {
+        val oldValue = _simpleMafiaCounter.value
+        if (value != oldValue) _simpleMafiaCounter.value = value
     }
 
-    fun setSimpleMafiaCounter(value: Int) {
-        _simpleMafiaCounter.value = value
+    fun updateSimpleMafiaCounter(selectedMafiaRoleSize: Int, hasSimpleMafia: Boolean) {
+        _maxSimpleMafia.value = if (hasSimpleMafia) {
+            _maxSimpleMafia.value!! - selectedMafiaRoleSize - 1
+        } else {
+            0
+        }
     }
 
     fun setPlayersAndRoles(players: ArrayList<Player>, roles: ArrayList<String>) {

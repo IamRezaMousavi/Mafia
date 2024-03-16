@@ -16,4 +16,3 @@ dependencyResolutionManagement {
 
 rootProject.name = "Mafia"
 include(":app")
-include(":Quantitizer")

@@ -6,7 +6,7 @@ import androidx.lifecycle.ViewModel
 import com.github.iamrezamousavi.mafia.data.model.Player
 import com.github.iamrezamousavi.mafia.data.repository.PlayerRepository
 
-class PlayerViewModel (private val repository: PlayerRepository) : ViewModel() {
+class PlayerViewModel(private val repository: PlayerRepository) : ViewModel() {
 
     private val _players = MutableLiveData<ArrayList<Player>>()
     val players: LiveData<ArrayList<Player>>

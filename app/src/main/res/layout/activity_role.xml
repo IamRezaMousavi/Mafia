@@ -54,7 +54,7 @@
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
 
-                <com.github.iamrezamousavi.quantitizer.HorizontalQuantitizer
+                <com.github.iamrezamousavi.mafia.view.counterview.CounterView
                     android:id="@+id/citizenCounter"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -72,7 +72,7 @@
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintStart_toStartOf="parent" />
 
-                <com.github.iamrezamousavi.quantitizer.HorizontalQuantitizer
+                <com.github.iamrezamousavi.mafia.view.counterview.CounterView
                     android:id="@+id/mafiaCounter"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
