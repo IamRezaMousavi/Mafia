@@ -6,50 +6,47 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.github.iamrezamousavi.mafia.R
 import com.github.iamrezamousavi.mafia.data.model.Player
+import com.github.iamrezamousavi.mafia.data.model.Role
 
 
-class RoleViewModel(context: Context) : ViewModel() {
+class RoleViewModel(context: Context, players: ArrayList<Player>) : ViewModel() {
 
-    private var simpleCitizen = context.getString(R.string.simple_citizen)
-    private var simpleMafia = context.getString(R.string.simple_mafia)
+    private val simpleCitizen = context.getString(R.string.simple_citizen)
+    private val simpleMafia = context.getString(R.string.simple_mafia)
+    private val citizenSide = context.getString(R.string.citizen_side)
+    private val mafiaSide = context.getString(R.string.mafia_side)
+    private val independentSide = context.getString(R.string.independent_side)
 
-    private val _players = MutableLiveData<ArrayList<Player>>()
-    val players: LiveData<ArrayList<Player>>
-        get() = _players
+    private val players = ArrayList(players.filter { it.isChecked })
+    private val playersSize = players.size
 
-    private val _roles = MutableLiveData<ArrayList<String>>()
-    val roles: LiveData<ArrayList<String>>
+    private lateinit var selectedRoles: ArrayList<Role>
+    private var selectedRolesSize = 1
+
+    private val _roles = MutableLiveData<ArrayList<Role>>()
+    val roles: LiveData<ArrayList<Role>>
         get() = _roles
-
-    private val _simpleMafiaCounter = MutableLiveData(1)
-    val simpleMafiaCounter: LiveData<Int>
-        get() = _simpleMafiaCounter
-
-    private val _maxSimpleMafia = MutableLiveData(10)
-    val maxSimpleMafia: LiveData<Int>
-        get() = _maxSimpleMafia
 
     private val _simpleCitizenCounter = MutableLiveData(1)
     val simpleCitizenCounter: LiveData<Int>
         get() = _simpleCitizenCounter
 
-    fun updateMaxSimpleMafia(mafiaCheckedSize: Int, hasSimpleMafia: Boolean = true) {
-        val newValue = if (players.value == null || players.value?.size == null) {
-            1
-        } else {
-            val playersSize = players.value?.size!!
-            val maxMafia = if (playersSize % 2 == 1) {
-                playersSize / 2
-            } else {
-                playersSize / 2 - 1
-            }
-            if (hasSimpleMafia) {
-                maxMafia - mafiaCheckedSize
-            } else {
-                0
-            }
-        }
-        _maxSimpleMafia.value = newValue
+    private val _simpleMafiaCounter = MutableLiveData(1)
+    val simpleMafiaCounter: LiveData<Int>
+        get() = _simpleMafiaCounter
+
+    private val _maxSimpleMafia = MutableLiveData(1)
+    val maxSimpleMafia: LiveData<Int>
+        get() = _maxSimpleMafia
+
+    fun increaseSimpleMafia() {
+        setSimpleMafiaCounter(_simpleMafiaCounter.value!! + 1)
+        setSimpleCitizenCounter(_simpleCitizenCounter.value!! - 1)
+    }
+
+    fun decreaseSimpleMafia() {
+        setSimpleMafiaCounter(_simpleMafiaCounter.value!! - 1)
+        setSimpleCitizenCounter(_simpleCitizenCounter.value!! + 1)
     }
 
     fun setSimpleMafiaCounter(value: Int) {
@@ -57,35 +54,72 @@ class RoleViewModel(context: Context) : ViewModel() {
         if (value != oldValue) _simpleMafiaCounter.value = value
     }
 
-    fun updateSimpleMafiaCounter(selectedMafiaRoleSize: Int, hasSimpleMafia: Boolean) {
-        _maxSimpleMafia.value = if (hasSimpleMafia) {
-            _maxSimpleMafia.value!! - selectedMafiaRoleSize - 1
+    private fun setSimpleCitizenCounter(value: Int) {
+        val oldValue = _simpleCitizenCounter.value
+        if (value != oldValue) _simpleCitizenCounter.value = value
+    }
+
+    private fun calculateSimpleCitizenCounter() {
+        val simpleCitizen = playersSize - selectedRolesSize + 1
+        val oldValue = _simpleCitizenCounter.value
+        if (simpleCitizen != oldValue) _simpleCitizenCounter.value = simpleCitizen
+    }
+
+    private fun calculateMaxSimpleMafia(
+        selectedMafiaRoleSize: Int, hasSimpleMafia: Boolean
+    ) {
+        val maxMafia = if (playersSize % 2 == 1) {
+            playersSize / 2
+        } else {
+            playersSize / 2 - 1
+        }
+        val newValue = if (hasSimpleMafia) {
+            maxMafia - selectedMafiaRoleSize
         } else {
             0
         }
+
+        _maxSimpleMafia.value = newValue
     }
 
-    fun setPlayersAndRoles(players: ArrayList<Player>, roles: ArrayList<String>) {
-        // set players
-        _players.value = ArrayList(players.filter { it.isChecked })
+    fun setSelectedRoles(selectedRoles: ArrayList<Role>) {
+        this.selectedRoles = selectedRoles
+        this.selectedRolesSize = selectedRoles.size
+        updateVariables()
+    }
 
-        // set roles
-        _roles.value = roles
-
+    private fun updateVariables() {
         // calculate number of simple citizen and simple mafia
-        // TODO
+        val selectedMafiaRoleSize = selectedRoles.filter { it.side == mafiaSide }.size
+        val hasSimpleMafia = selectedRoles.contains(
+            Role(name = simpleMafia, side = mafiaSide)
+        )
+
+        calculateSimpleCitizenCounter()
+
+        if (hasSimpleMafia) {
+            calculateMaxSimpleMafia(selectedMafiaRoleSize, true)
+            setSimpleMafiaCounter(1)
+        } else {
+            calculateMaxSimpleMafia(selectedMafiaRoleSize, false)
+            setSimpleMafiaCounter(0)
+        }
     }
 
     fun shuffled() {
         _roles.value = _roles.value?.shuffled()?.let { ArrayList(it) }
     }
 
+    fun generateRoles() {
+
+    }
+
     fun getRole(player: Player): String {
-        val index = _players.value!!.indexOf(player)
+        val index = players.indexOf(player)
         return if (index < 0) {
             ""
         } else {
-            _roles.value!![index]
+            _roles.value!![index].name
         }
     }
 }

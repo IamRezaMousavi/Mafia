@@ -40,13 +40,6 @@ class PlayerRoleActivity : AppCompatActivity() {
         val roleFactory = RoleViewModelFactory(this)
         roleViewModel = ViewModelProvider(this, roleFactory)[RoleViewModel::class.java]
 
-        val players = playerViewModel.loadPlayers()
-        val roles = ArrayList(
-            intent.extras?.getString(EXTRA_VALUE)?.split(",")?.map { it.trim(' ', '[', ']') }
-                ?: ArrayList()
-        )
-        roleViewModel.setPlayersAndRoles(players, roles)
-
         playerRoleAdapter = PlayerRoleAdapter(
             ArrayList(roleViewModel.players.value ?: ArrayList()),
             onSelect = { player ->

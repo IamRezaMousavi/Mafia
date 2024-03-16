@@ -6,6 +6,8 @@ import android.util.Log
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
+import com.github.iamrezamousavi.mafia.R
+import com.github.iamrezamousavi.mafia.data.model.Role
 import com.github.iamrezamousavi.mafia.data.repository.PlayerRepository
 import com.github.iamrezamousavi.mafia.data.source.SharedPreferencesManager
 import com.github.iamrezamousavi.mafia.databinding.ActivityRoleBinding
@@ -47,8 +49,8 @@ class RoleActivity : AppCompatActivity() {
         val roleFactory = RoleViewModelFactory(this)
         roleViewModel = ViewModelProvider(this, roleFactory)[RoleViewModel::class.java]
 
-        val roles = getRoles()
-        roleViewModel.setPlayersAndRoles(playerViewModel.loadPlayers(), roles)
+        val roles = getSelectedRoles()
+        roleViewModel.setPlayersAndSelectedRoles(playerViewModel.loadPlayers(), roles)
 
         Log.d("TAG", "ROLE: viewmodels is setup")
 
@@ -59,10 +61,12 @@ class RoleActivity : AppCompatActivity() {
         binding.mafiaCounter.also {
             it.setCounterListener(object : CounterViewListener {
                 override fun onIncrease() {
+                    roleViewModel.increaseSimpleMafia()
                     Log.d("TAG", "ROLE: onIncrease")
                 }
 
                 override fun onDecrease() {
+                    roleViewModel.decreaseSimpleMafia()
                     Log.d("TAG", "ROLE: onDecrease")
                 }
 
@@ -90,10 +94,22 @@ class RoleActivity : AppCompatActivity() {
 
         Log.d("TAG", "ROLE: counter callbacks is ok")
 
+        binding.citizen.chipGroup1.setOnCheckedStateChangeListener { _, checkedIds ->
+            val selectedRoles = getSelectedRoles()
+            roleViewModel.setSelectedRoles(selectedRoles)
+            Log.d("TAG", "ROLE: citizen chipGroup changed ${checkedIds.size}")
+        }
+
         binding.mafia.chipGroup2.setOnCheckedStateChangeListener { _, checkedIds ->
-            val hasSimpleMafia = binding.mafia.chip201.isChecked
-            roleViewModel.updateSimpleMafiaCounter(checkedIds.size, hasSimpleMafia)
+            val selectedRoles = getSelectedRoles()
+            roleViewModel.setSelectedRoles(selectedRoles)
             Log.d("TAG", "ROLE: mafia chipGroup changed ${checkedIds.size}")
+        }
+
+        binding.independent.chipGroup3.setOnCheckedStateChangeListener { _, checkedIds ->
+            val selectedRoles = getSelectedRoles()
+            roleViewModel.setSelectedRoles(selectedRoles)
+            Log.d("TAG", "ROLE: independent chipGroup changed ${checkedIds.size}")
         }
 
         Log.d("TAG", "ROLE: mafia chipGroup is ok")
@@ -103,7 +119,7 @@ class RoleActivity : AppCompatActivity() {
         }
 
         binding.button.setOnClickListener {
-            val selectedRoles = getRoles()
+            val selectedRoles = getSelectedRoles()
             Toast.makeText(this, "$selectedRoles", Toast.LENGTH_SHORT).show()
 
             val intent = Intent(this, PlayerRoleActivity::class.java)
@@ -114,16 +130,27 @@ class RoleActivity : AppCompatActivity() {
         Log.d("TAG", "ROLE: everything is ok")
     }
 
-    private fun getRoles(): ArrayList<String> {
-        val selectedRoles = ArrayList<String>()
-
-        val selectedChipsList = binding.citizen.chipGroup1.checkedChipIds +
-                binding.mafia.chipGroup2.checkedChipIds +
-                binding.independent.chipGroup3.checkedChipIds
-        for (id in selectedChipsList) {
-            selectedRoles.add(findViewById<Chip>(id).text.toString())
-        }
-
+    private fun getSelectedRoles(): ArrayList<Role> {
+        val selectedRoles = ArrayList(
+            binding.citizen.chipGroup1.checkedChipIds.map {
+                Role(
+                    name = findViewById<Chip>(it).text.toString(),
+                    side = getString(R.string.citizen_side)
+                )
+            } +
+                    binding.mafia.chipGroup2.checkedChipIds.map {
+                        Role(
+                            name = findViewById<Chip>(it).text.toString(),
+                            side = getString(R.string.mafia_side)
+                        )
+                    } +
+                    binding.independent.chipGroup3.checkedChipIds.map {
+                        Role(
+                            name = findViewById<Chip>(it).text.toString(),
+                            side = getString(R.string.independent_side)
+                        )
+                    }
+        )
         return selectedRoles
     }
 }
