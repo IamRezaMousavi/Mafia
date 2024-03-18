@@ -37,15 +37,20 @@ class RoleActivity : AppCompatActivity() {
 
         Log.d("TAG", "ROLE: players: ${SharedData.players.value}")
 
-        binding.citizenCounter.also {
-            it.isReadOnly = true
+        binding.citizenCounter.apply {
+            isReadOnly = true
         }
 
-        binding.mafiaCounter.also {
-            it.setCounterListener(object : CounterViewListener {
-                override fun onIncrease() {}
+        binding.mafiaCounter.apply {
+            isReadOnly = true
+            setCounterListener(object : CounterViewListener {
+                override fun onIncrease() {
+                    roleViewModel.setSimpleMafiaCounter(value)
+                }
 
-                override fun onDecrease() {}
+                override fun onDecrease() {
+                    roleViewModel.setSimpleMafiaCounter(value)
+                }
 
                 override fun onValueChanged(value: Int) {
                     Log.d("TAG", "ROLE: onValueChanged: $value")
@@ -67,9 +72,25 @@ class RoleActivity : AppCompatActivity() {
             binding.mafiaCounter.minValue = it ?: 1
         }
 
+        roleViewModel.simpleCitizenCounter.observe(this) {
+            binding.citizenCounter.value = it ?: 1
+        }
+
         Log.d("TAG", "ROLE: counters is ok")
 
+        binding.citizen.chipGroup1.setOnCheckedStateChangeListener { _, _ ->
+            val selectedRoles = getSelectedRoles()
+            Log.d("TAG", "ROLE: onClick groupChip $selectedRoles")
+            roleViewModel.setSelectedRoles(selectedRoles)
+        }
+
         binding.mafia.chipGroup2.setOnCheckedStateChangeListener { _, _ ->
+            val selectedRoles = getSelectedRoles()
+            Log.d("TAG", "ROLE: onClick groupChip $selectedRoles")
+            roleViewModel.setSelectedRoles(selectedRoles)
+        }
+
+        binding.independent.chipGroup3.setOnCheckedStateChangeListener { _, _ ->
             val selectedRoles = getSelectedRoles()
             Log.d("TAG", "ROLE: onClick groupChip $selectedRoles")
             roleViewModel.setSelectedRoles(selectedRoles)

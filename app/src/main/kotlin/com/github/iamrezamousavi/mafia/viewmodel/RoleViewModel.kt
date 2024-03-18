@@ -13,8 +13,7 @@ import com.github.iamrezamousavi.mafia.data.model.Role
 import com.github.iamrezamousavi.mafia.utils.SharedData
 
 
-class RoleViewModel(application: Application) :
-    AndroidViewModel(application) {
+class RoleViewModel(application: Application) : AndroidViewModel(application) {
 
     private val simpleCitizen = application.getString(R.string.simple_citizen)
     private val simpleMafia = application.getString(R.string.simple_mafia)
@@ -39,6 +38,17 @@ class RoleViewModel(application: Application) :
     val simpleMafiaCounter: LiveData<Int>
         get() = _simpleMafiaCounter
 
+    private val _simpleCitizenCounter = MutableLiveData(1)
+    val simpleCitizenCounter: LiveData<Int>
+        get() = _simpleCitizenCounter
+
+    fun setSimpleMafiaCounter(value: Int) {
+        if (value < minSimpleMafia.value!! && value > maxSimpleMafia.value!!)
+            return
+        _simpleMafiaCounter.value = value
+        _simpleCitizenCounter.value = calculateSimpleCitizenCounter()
+    }
+
     fun setSelectedRoles(selectedRoles: ArrayList<Role>) {
         _selectedRoles = selectedRoles
         val max = calculateMaxSimpleMafia()
@@ -50,6 +60,21 @@ class RoleViewModel(application: Application) :
             _maxSimpleMafia.value = max
             _simpleMafiaCounter.value = 1
             _minSimpleMafia.value = 1
+        }
+        _simpleCitizenCounter.value = calculateSimpleCitizenCounter()
+    }
+
+    private fun calculateSimpleCitizenCounter(): Int {
+        val hasSimpleCitizen =
+            _selectedRoles.contains(Role(name = simpleCitizen, side = citizenSide))
+        val hasSimpleMafia = _selectedRoles.contains(Role(name = simpleMafia, side = mafiaSide))
+        return when {
+            hasSimpleCitizen && hasSimpleMafia ->
+                playersSize - _selectedRoles.size - _simpleMafiaCounter.value!! + 2
+
+            hasSimpleCitizen -> playersSize - _selectedRoles.size + 1
+
+            else -> 0
         }
     }
 
