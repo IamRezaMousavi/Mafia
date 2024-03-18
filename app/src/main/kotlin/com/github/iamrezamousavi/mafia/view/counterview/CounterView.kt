@@ -5,7 +5,6 @@ import android.text.Editable
 import android.text.InputType
 import android.text.TextWatcher
 import android.util.AttributeSet
-import android.util.Log
 import android.view.LayoutInflater
 import android.widget.Toast
 import androidx.constraintlayout.widget.ConstraintLayout
@@ -64,7 +63,6 @@ class CounterView @JvmOverloads constructor(
         }
 
     init {
-        Log.d("TAG", "ROLE: counterview is started")
 
         val a = context.obtainStyledAttributes(
             attributeSet, R.styleable.CounterView, defStyle, 0
@@ -143,8 +141,6 @@ class CounterView @JvmOverloads constructor(
                 }
             }
         })
-
-        Log.d("TAG", "ROLE: Counter View is ok")
 
         /*TypedArrays are heavyweight objects that should be recycled immediately
          after all the attributes you need have been extracted.*/

@@ -5,9 +5,11 @@ import com.github.iamrezamousavi.mafia.data.model.Player
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 
-class SharedPreferencesManager(context: Context) {
+class SharedPreferencesManager(
+    applicationContext: Context
+) {
     private val sharedPreferences =
-        context.getSharedPreferences("player_prefs", Context.MODE_PRIVATE)
+        applicationContext.getSharedPreferences("player_prefs", Context.MODE_PRIVATE)
     private val playersKey = "Players"
 
     private val gson = Gson()

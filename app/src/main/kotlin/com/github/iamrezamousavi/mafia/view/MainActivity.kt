@@ -3,35 +3,30 @@ package com.github.iamrezamousavi.mafia.view
 import android.content.Intent
 import android.os.Bundle
 import android.widget.Toast
+import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
-import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.github.iamrezamousavi.mafia.R
 import com.github.iamrezamousavi.mafia.data.model.Player
-import com.github.iamrezamousavi.mafia.data.repository.PlayerRepository
-import com.github.iamrezamousavi.mafia.data.source.SharedPreferencesManager
 import com.github.iamrezamousavi.mafia.databinding.ActivityMainBinding
+import com.github.iamrezamousavi.mafia.utils.SharedData
 import com.github.iamrezamousavi.mafia.viewmodel.PlayerViewModel
-import com.github.iamrezamousavi.mafia.viewmodel.PlayerViewModelFactory
 
 class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
 
     private lateinit var playerAdapter: PlayerAdapter
-    private lateinit var viewModel: PlayerViewModel
+    private val viewModel: PlayerViewModel by viewModels {
+        PlayerViewModel.Factory
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        val sharedPreferencesManager = SharedPreferencesManager(this)
-        val playerRepository = PlayerRepository(sharedPreferencesManager)
-        val factory = PlayerViewModelFactory(playerRepository)
-        viewModel = ViewModelProvider(this, factory)[PlayerViewModel::class.java]
-
         playerAdapter = PlayerAdapter(
-            ArrayList(),
+            SharedData.getPlayers(),
             onSelect = { player, isChecked ->
                 player.isChecked = isChecked
                 viewModel.updatePlayer(player)
@@ -43,12 +38,14 @@ class MainActivity : AppCompatActivity() {
         binding.peopleList.adapter = playerAdapter
         binding.peopleList.layoutManager = LinearLayoutManager(this)
 
-        viewModel.players.observe(this) { players ->
+        SharedData.players.observe(this) { players ->
             playerAdapter.updatePlayers(players ?: ArrayList())
         }
 
         binding.button1.setOnClickListener {
-            val players = viewModel.players.value ?: return@setOnClickListener
+            val players = SharedData.getPlayers()
+            if (players.size == 0) return@setOnClickListener
+
             val playerCheckedSize = players.filter { it.isChecked }.size
             if (playerCheckedSize < 3) {
                 Toast.makeText(this, R.string.player_not_enough, Toast.LENGTH_SHORT).show()
