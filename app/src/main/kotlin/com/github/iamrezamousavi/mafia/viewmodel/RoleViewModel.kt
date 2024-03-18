@@ -1,7 +1,6 @@
 package com.github.iamrezamousavi.mafia.viewmodel
 
 import android.app.Application
-import android.util.Log
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
@@ -19,7 +18,6 @@ class RoleViewModel(application: Application) : AndroidViewModel(application) {
     private val simpleMafia = application.getString(R.string.simple_mafia)
     private val citizenSide = application.getString(R.string.citizen_side)
     private val mafiaSide = application.getString(R.string.mafia_side)
-    private val independentSide = application.getString(R.string.independent_side)
 
     private val players = ArrayList(SharedData.players.value!!.filter { it.isChecked })
     private val playersSize = players.size
@@ -79,16 +77,15 @@ class RoleViewModel(application: Application) : AndroidViewModel(application) {
     }
 
     private fun calculateMaxSimpleMafia(): Int {
-        Log.d("TAG", "ROLE: calculateMaxSimpleMafia playerSize = $playersSize")
         val maxMafia = if (playersSize % 2 == 1) {
             playersSize / 2
         } else {
             playersSize / 2 - 1
         }
         val selectedMafiaRoles = _selectedRoles.filter { it.side == mafiaSide }
-        val hasSimpleMafia = selectedMafiaRoles.contains(Role(name = simpleMafia, side = mafiaSide))
+        val hasSimpleMafia =
+            selectedMafiaRoles.contains(Role(name = simpleMafia, side = mafiaSide))
         val selectedMafiaRoleSize = selectedMafiaRoles.size
-        Log.d("TAG", "ROLE: calculateMaxSimpleMafia selectedMafia = $selectedMafiaRoles")
 
         val maxSimpleMafia = if (hasSimpleMafia) {
             maxMafia - selectedMafiaRoleSize + 1
@@ -96,7 +93,6 @@ class RoleViewModel(application: Application) : AndroidViewModel(application) {
             0
         }
 
-        Log.d("TAG", "ROLE: calculateMaxSimpleMafia maxSimpleMafia = $maxSimpleMafia")
         return maxSimpleMafia
     }
 

@@ -2,14 +2,12 @@ package com.github.iamrezamousavi.mafia.view
 
 import android.content.Intent
 import android.os.Bundle
-import android.util.Log
 import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import com.github.iamrezamousavi.mafia.R
 import com.github.iamrezamousavi.mafia.data.model.Role
 import com.github.iamrezamousavi.mafia.databinding.ActivityRoleBinding
-import com.github.iamrezamousavi.mafia.utils.SharedData
 import com.github.iamrezamousavi.mafia.view.counterview.CounterViewListener
 import com.github.iamrezamousavi.mafia.viewmodel.RoleViewModel
 import com.google.android.material.chip.Chip
@@ -24,18 +22,11 @@ class RoleActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
-        Log.d("TAG", "ROLE: started")
-
         binding = ActivityRoleBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        Log.d("TAG", "ROLE: binding is ok")
-
         val roles = getSelectedRoles()
         roleViewModel.setSelectedRoles(roles)
-
-        Log.d("TAG", "ROLE: players: ${SharedData.players.value}")
 
         binding.citizenCounter.apply {
             isReadOnly = true
@@ -52,13 +43,9 @@ class RoleActivity : AppCompatActivity() {
                     roleViewModel.setSimpleMafiaCounter(value)
                 }
 
-                override fun onValueChanged(value: Int) {
-                    Log.d("TAG", "ROLE: onValueChanged: $value")
-                }
+                override fun onValueChanged(value: Int) {}
             })
         }
-
-        Log.d("TAG", "ROLE: counter callbacks is ok")
 
         roleViewModel.maxSimpleMafia.observe(this) {
             binding.mafiaCounter.maxValue = it ?: 1
@@ -76,27 +63,20 @@ class RoleActivity : AppCompatActivity() {
             binding.citizenCounter.value = it ?: 1
         }
 
-        Log.d("TAG", "ROLE: counters is ok")
-
         binding.citizen.chipGroup1.setOnCheckedStateChangeListener { _, _ ->
             val selectedRoles = getSelectedRoles()
-            Log.d("TAG", "ROLE: onClick groupChip $selectedRoles")
             roleViewModel.setSelectedRoles(selectedRoles)
         }
 
         binding.mafia.chipGroup2.setOnCheckedStateChangeListener { _, _ ->
             val selectedRoles = getSelectedRoles()
-            Log.d("TAG", "ROLE: onClick groupChip $selectedRoles")
             roleViewModel.setSelectedRoles(selectedRoles)
         }
 
         binding.independent.chipGroup3.setOnCheckedStateChangeListener { _, _ ->
             val selectedRoles = getSelectedRoles()
-            Log.d("TAG", "ROLE: onClick groupChip $selectedRoles")
             roleViewModel.setSelectedRoles(selectedRoles)
         }
-
-        Log.d("TAG", "ROLE: mafia chipGroup is ok")
 
         binding.citizen.chip101.setOnCheckedChangeListener { _, isChecked ->
             Toast.makeText(this, "Chip 1: $isChecked", Toast.LENGTH_SHORT).show()
@@ -109,12 +89,9 @@ class RoleActivity : AppCompatActivity() {
             val intent = Intent(this, PlayerRoleActivity::class.java)
             startActivity(intent)
         }
-
-        Log.d("TAG", "ROLE: everything is ok")
     }
 
     private fun getSelectedRoles(): ArrayList<Role> {
-        Log.d("TAG", "getSelectedRoles: started")
         val selectedRoles = ArrayList(
             binding.citizen.chipGroup1.checkedChipIds.map {
                 Role(
@@ -135,7 +112,6 @@ class RoleActivity : AppCompatActivity() {
                         )
                     }
         )
-        Log.d("TAG", "getSelectedRoles: $selectedRoles")
         return selectedRoles
     }
 }
