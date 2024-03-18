@@ -35,7 +35,7 @@ class RoleActivity : AppCompatActivity() {
         val roles = getSelectedRoles()
         roleViewModel.setSelectedRoles(roles)
 
-        Log.d("TAG", "ROLE: roleViewModel: ${SharedData.players.value}")
+        Log.d("TAG", "ROLE: players: ${SharedData.players.value}")
 
         binding.citizenCounter.also {
             it.isReadOnly = true
@@ -47,7 +47,9 @@ class RoleActivity : AppCompatActivity() {
 
                 override fun onDecrease() {}
 
-                override fun onValueChanged(value: Int) {}
+                override fun onValueChanged(value: Int) {
+                    Log.d("TAG", "ROLE: onValueChanged: $value")
+                }
             })
         }
 
@@ -57,10 +59,19 @@ class RoleActivity : AppCompatActivity() {
             binding.mafiaCounter.maxValue = it ?: 1
         }
 
+        roleViewModel.simpleMafiaCounter.observe(this) {
+            binding.mafiaCounter.value = it ?: 1
+        }
+
+        roleViewModel.minSimpleMafia.observe(this) {
+            binding.mafiaCounter.minValue = it ?: 1
+        }
+
         Log.d("TAG", "ROLE: counters is ok")
 
         binding.mafia.chipGroup2.setOnCheckedStateChangeListener { _, _ ->
             val selectedRoles = getSelectedRoles()
+            Log.d("TAG", "ROLE: onClick groupChip $selectedRoles")
             roleViewModel.setSelectedRoles(selectedRoles)
         }
 

@@ -19,7 +19,6 @@ class PlayerViewModel(
         PlayerRepository(SharedPreferencesManager(application.applicationContext))
 
     fun loadPlayers(): ArrayList<Player> {
-        // update LiveData
         val loadedPlayers = repository.getPlayers()
         SharedData.setPlayers(loadedPlayers)
         return loadedPlayers
@@ -30,7 +29,6 @@ class PlayerViewModel(
         val lastIndex = updatedPlayers.lastIndex
         player.id = lastIndex + 1
         updatedPlayers.add(player)
-        // update LiveData
         SharedData.setPlayers(updatedPlayers)
     }
 
