@@ -1,91 +1,118 @@
 package com.github.iamrezamousavi.mafia.viewmodel
 
-import android.content.Context
+import android.app.Application
+import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.viewmodel.CreationExtras
 import com.github.iamrezamousavi.mafia.R
-import com.github.iamrezamousavi.mafia.data.model.Player
+import com.github.iamrezamousavi.mafia.data.model.Role
+import com.github.iamrezamousavi.mafia.utils.SharedData
 
 
-class RoleViewModel(context: Context) : ViewModel() {
+class RoleViewModel(application: Application) : AndroidViewModel(application) {
 
-    private var simpleCitizen = context.getString(R.string.simple_citizen)
-    private var simpleMafia = context.getString(R.string.simple_mafia)
+    private val simpleCitizen = application.getString(R.string.simple_citizen)
+    private val simpleMafia = application.getString(R.string.simple_mafia)
+    private val citizenSide = application.getString(R.string.citizen_side)
+    private val mafiaSide = application.getString(R.string.mafia_side)
 
-    private val _players = MutableLiveData<ArrayList<Player>>()
-    val players: LiveData<ArrayList<Player>>
-        get() = _players
+    private val players = ArrayList(SharedData.players.value!!.filter { it.isChecked })
+    private val playersSize = players.size
 
-    private val _roles = MutableLiveData<ArrayList<String>>()
-    val roles: LiveData<ArrayList<String>>
-        get() = _roles
+    private var _selectedRoles = ArrayList<Role>()
+
+    private val _maxSimpleMafia = MutableLiveData(calculateMaxSimpleMafia())
+    val maxSimpleMafia: LiveData<Int>
+        get() = _maxSimpleMafia
+
+    private val _minSimpleMafia = MutableLiveData(1)
+    val minSimpleMafia: LiveData<Int>
+        get() = _minSimpleMafia
 
     private val _simpleMafiaCounter = MutableLiveData(1)
     val simpleMafiaCounter: LiveData<Int>
         get() = _simpleMafiaCounter
 
-    private val _maxSimpleMafia = MutableLiveData(10)
-    val maxSimpleMafia: LiveData<Int>
-        get() = _maxSimpleMafia
-
     private val _simpleCitizenCounter = MutableLiveData(1)
     val simpleCitizenCounter: LiveData<Int>
         get() = _simpleCitizenCounter
 
-    fun updateMaxSimpleMafia(mafiaCheckedSize: Int, hasSimpleMafia: Boolean = true) {
-        val newValue = if (players.value == null || players.value?.size == null) {
-            1
-        } else {
-            val playersSize = players.value?.size!!
-            val maxMafia = if (playersSize % 2 == 1) {
-                playersSize / 2
-            } else {
-                playersSize / 2 - 1
-            }
-            if (hasSimpleMafia) {
-                maxMafia - mafiaCheckedSize
-            } else {
-                0
-            }
-        }
-        _maxSimpleMafia.value = newValue
-    }
-
     fun setSimpleMafiaCounter(value: Int) {
-        val oldValue = _simpleMafiaCounter.value
-        if (value != oldValue) _simpleMafiaCounter.value = value
+        if (value < minSimpleMafia.value!! && value > maxSimpleMafia.value!!)
+            return
+        _simpleMafiaCounter.value = value
+        _simpleCitizenCounter.value = calculateSimpleCitizenCounter()
     }
 
-    fun updateSimpleMafiaCounter(selectedMafiaRoleSize: Int, hasSimpleMafia: Boolean) {
-        _maxSimpleMafia.value = if (hasSimpleMafia) {
-            _maxSimpleMafia.value!! - selectedMafiaRoleSize - 1
+    fun setSelectedRoles(selectedRoles: ArrayList<Role>) {
+        _selectedRoles = selectedRoles
+        val max = calculateMaxSimpleMafia()
+        if (max == 0) {
+            _minSimpleMafia.value = 0
+            _simpleMafiaCounter.value = 0
+            _maxSimpleMafia.value = 0
+        } else {
+            _maxSimpleMafia.value = max
+            _simpleMafiaCounter.value = 1
+            _minSimpleMafia.value = 1
+        }
+        _simpleCitizenCounter.value = calculateSimpleCitizenCounter()
+    }
+
+    private fun calculateSimpleCitizenCounter(): Int {
+        val hasSimpleCitizen =
+            _selectedRoles.contains(Role(name = simpleCitizen, side = citizenSide))
+        val hasSimpleMafia = _selectedRoles.contains(Role(name = simpleMafia, side = mafiaSide))
+        return when {
+            hasSimpleCitizen && hasSimpleMafia ->
+                playersSize - _selectedRoles.size - _simpleMafiaCounter.value!! + 2
+
+            hasSimpleCitizen -> playersSize - _selectedRoles.size + 1
+
+            else -> 0
+        }
+    }
+
+    private fun calculateMaxSimpleMafia(): Int {
+        val maxMafia = if (playersSize % 2 == 1) {
+            playersSize / 2
+        } else {
+            playersSize / 2 - 1
+        }
+        val selectedMafiaRoles = _selectedRoles.filter { it.side == mafiaSide }
+        val hasSimpleMafia =
+            selectedMafiaRoles.contains(Role(name = simpleMafia, side = mafiaSide))
+        val selectedMafiaRoleSize = selectedMafiaRoles.size
+
+        val maxSimpleMafia = if (hasSimpleMafia) {
+            maxMafia - selectedMafiaRoleSize + 1
         } else {
             0
         }
+
+        return maxSimpleMafia
     }
 
-    fun setPlayersAndRoles(players: ArrayList<Player>, roles: ArrayList<String>) {
-        // set players
-        _players.value = ArrayList(players.filter { it.isChecked })
+    fun generateRoles() {
 
-        // set roles
-        _roles.value = roles
-
-        // calculate number of simple citizen and simple mafia
-        // TODO
     }
 
-    fun shuffled() {
-        _roles.value = _roles.value?.shuffled()?.let { ArrayList(it) }
-    }
+    companion object {
 
-    fun getRole(player: Player): String {
-        val index = _players.value!!.indexOf(player)
-        return if (index < 0) {
-            ""
-        } else {
-            _roles.value!![index]
+        val Factory = object : ViewModelProvider.Factory {
+            @Suppress("UNCHECKED_CAST")
+            override fun <T : ViewModel> create(modelClass: Class<T>, extras: CreationExtras): T {
+                val application =
+                    checkNotNull(extras[ViewModelProvider.AndroidViewModelFactory.APPLICATION_KEY])
+                if (modelClass.isAssignableFrom(RoleViewModel::class.java)) {
+                    return RoleViewModel(application) as T
+                }
+                return super.create(modelClass)
+            }
         }
+
     }
 }
