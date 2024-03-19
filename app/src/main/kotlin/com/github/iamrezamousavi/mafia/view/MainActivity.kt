@@ -40,6 +40,8 @@ class MainActivity : AppCompatActivity() {
 
         SharedData.players.observe(this) { players ->
             playerAdapter.updatePlayers(players ?: ArrayList())
+            binding.button1.text =
+                getString(R.string.select_roles, players.filter { it.isChecked }.size)
         }
 
         binding.button1.setOnClickListener {

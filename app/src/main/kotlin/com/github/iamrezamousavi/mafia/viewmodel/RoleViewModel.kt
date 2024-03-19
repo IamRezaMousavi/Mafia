@@ -22,6 +22,10 @@ class RoleViewModel : ViewModel() {
 
     private var _selectedRoles = ArrayList<Role>()
 
+    private val _selectedRolesSize = MutableLiveData(calculateMaxSimpleMafia())
+    val selectedRolesSize: LiveData<Int>
+        get() = _selectedRolesSize
+
     private val _maxSimpleMafia = MutableLiveData(calculateMaxSimpleMafia())
     val maxSimpleMafia: LiveData<Int>
         get() = _maxSimpleMafia
@@ -58,6 +62,25 @@ class RoleViewModel : ViewModel() {
             _minSimpleMafia.value = 1
         }
         _simpleCitizenCounter.value = calculateSimpleCitizenCounter()
+        _selectedRolesSize.value = calculateSelectedRolesSize()
+    }
+
+    private fun calculateSelectedRolesSize(): Int {
+        val hasSimpleMafia = _selectedRoles.contains(Role(name = simpleMafia))
+        val hasSimpleCitizen = _selectedRoles.contains(Role(name = simpleCitizen))
+
+        return when {
+            hasSimpleCitizen && hasSimpleMafia ->
+                _selectedRoles.size + _simpleMafiaCounter.value!! + _simpleCitizenCounter.value!! - 2
+
+            hasSimpleCitizen ->
+                _selectedRoles.size + _simpleCitizenCounter.value!! - 1
+
+            hasSimpleMafia -> _selectedRoles.size + _simpleMafiaCounter.value!! - 1
+
+            else -> _selectedRoles.size
+
+        }
     }
 
     private fun calculateSimpleCitizenCounter(): Int {
@@ -94,33 +117,19 @@ class RoleViewModel : ViewModel() {
         return maxSimpleMafia
     }
 
-    fun checkRolesIsOk(selectedRoles: ArrayList<Role>): Boolean {
-        val hasSimpleMafia = selectedRoles.contains(Role(name = simpleMafia))
-        val hasSimpleCitizen = selectedRoles.contains(Role(name = simpleCitizen))
-
-        return when {
-            hasSimpleCitizen && hasSimpleMafia ->
-                playersSize == selectedRoles.size +
-                        _simpleMafiaCounter.value!! + _simpleCitizenCounter.value!! - 2
-
-            hasSimpleCitizen ->
-                playersSize == selectedRoles.size + _simpleCitizenCounter.value!! - 1
-
-            hasSimpleMafia -> playersSize == selectedRoles.size + _simpleMafiaCounter.value!! - 1
-
-            else -> playersSize == selectedRoles.size
-
-        }
+    fun checkRolesIsOk(): Boolean {
+        val selectedRolesSize = _selectedRolesSize.value!!
+        return playersSize == selectedRolesSize
     }
 
-    fun generateRoles(selectedRoles: ArrayList<Role>) {
-        if (selectedRoles.size < playersSize) {
+    fun generateRoles() {
+        if (_selectedRoles.size < playersSize) {
             for (i in 1.._simpleMafiaCounter.value!!)
-                selectedRoles.add(Role(name = simpleMafia))
+                _selectedRoles.add(Role(name = simpleMafia))
             for (i in 1.._simpleCitizenCounter.value!!)
-                selectedRoles.add(Role(name = simpleCitizen))
+                _selectedRoles.add(Role(name = simpleCitizen))
         }
-        SharedData.setRoles(selectedRoles)
+        SharedData.setRoles(_selectedRoles)
     }
 
     companion object {

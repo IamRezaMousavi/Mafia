@@ -20,7 +20,7 @@
             android:layout_height="wrap_content"
             android:minHeight="?attr/actionBarSize"
             app:menu="@menu/people_role_app_bar"
-            app:title="@string/division_roles"
+            app:title="@string/division_roles_title"
             app:titleCentered="true" />
 
     </com.google.android.material.appbar.AppBarLayout>

@@ -27,7 +27,7 @@ class RoleActivity : AppCompatActivity() {
         setContentView(binding.root)
 
         binding.roleToolBar.title =
-            getString(R.string.select_roles) + " (${roleViewModel.playersSize}) "
+            getString(R.string.select_roles, roleViewModel.playersSize)
 
         val roles = getSelectedRoles()
         roleViewModel.setSelectedRoles(roles)
@@ -86,11 +86,13 @@ class RoleActivity : AppCompatActivity() {
             Toast.makeText(this, "Chip 1: $isChecked", Toast.LENGTH_SHORT).show()
         }
 
-        binding.button.setOnClickListener {
-            val selectedRoles = getSelectedRoles()
+        roleViewModel.selectedRolesSize.observe(this) {
+            binding.button.text = getString(R.string.division_roles, it)
+        }
 
-            if (roleViewModel.checkRolesIsOk(selectedRoles)) {
-                roleViewModel.generateRoles(selectedRoles)
+        binding.button.setOnClickListener {
+            if (roleViewModel.checkRolesIsOk()) {
+                roleViewModel.generateRoles()
                 val intent = Intent(this, PlayerRoleActivity::class.java)
                 startActivity(intent)
             } else {
