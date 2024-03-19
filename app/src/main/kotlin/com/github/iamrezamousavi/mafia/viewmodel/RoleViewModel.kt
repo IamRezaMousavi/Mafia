@@ -6,19 +6,19 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewmodel.CreationExtras
 import com.github.iamrezamousavi.mafia.R
+import com.github.iamrezamousavi.mafia.data.model.Player
 import com.github.iamrezamousavi.mafia.data.model.Role
 import com.github.iamrezamousavi.mafia.utils.SharedData
 import com.github.iamrezamousavi.mafia.utils.getSide
 
 
-class RoleViewModel : ViewModel() {
+class RoleViewModel(players: ArrayList<Player>) : ViewModel() {
 
     private val simpleCitizen = R.string.simple_citizen
     private val simpleMafia = R.string.simple_mafia
     private val mafiaSide = R.string.mafia_side
 
-    private val players = ArrayList(SharedData.players.value!!.filter { it.isChecked })
-    val playersSize = players.size
+    var playersSize = players.size
 
     private var _selectedRoles = ArrayList<Role>()
 
@@ -65,7 +65,7 @@ class RoleViewModel : ViewModel() {
         _selectedRolesSize.value = calculateSelectedRolesSize()
     }
 
-    private fun calculateSelectedRolesSize(): Int {
+    fun calculateSelectedRolesSize(): Int {
         val hasSimpleMafia = _selectedRoles.contains(Role(name = simpleMafia))
         val hasSimpleCitizen = _selectedRoles.contains(Role(name = simpleCitizen))
 
@@ -83,7 +83,7 @@ class RoleViewModel : ViewModel() {
         }
     }
 
-    private fun calculateSimpleCitizenCounter(): Int {
+    fun calculateSimpleCitizenCounter(): Int {
         val hasSimpleCitizen =
             _selectedRoles.contains(Role(name = simpleCitizen))
         val hasSimpleMafia = _selectedRoles.contains(Role(name = simpleMafia))
@@ -97,7 +97,7 @@ class RoleViewModel : ViewModel() {
         }
     }
 
-    private fun calculateMaxSimpleMafia(): Int {
+    fun calculateMaxSimpleMafia(): Int {
         val maxMafia = if (playersSize % 2 == 1) {
             playersSize / 2
         } else {
@@ -138,7 +138,7 @@ class RoleViewModel : ViewModel() {
             @Suppress("UNCHECKED_CAST")
             override fun <T : ViewModel> create(modelClass: Class<T>, extras: CreationExtras): T {
                 if (modelClass.isAssignableFrom(RoleViewModel::class.java)) {
-                    return RoleViewModel() as T
+                    return RoleViewModel(SharedData.getPlayers()) as T
                 }
                 return super.create(modelClass)
             }
