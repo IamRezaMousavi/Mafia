@@ -37,11 +37,7 @@ object SharedData {
 
     fun getRole(player: Player): Role {
         val index = _players.value!!.indexOf(player)
-        return if (index < 0) {
-            Role()
-        } else {
-            _roles.value!![index]
-        }
+        return _roles.value!![index]
     }
 
 }

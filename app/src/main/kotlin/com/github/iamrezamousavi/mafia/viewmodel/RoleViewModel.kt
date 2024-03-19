@@ -1,7 +1,5 @@
 package com.github.iamrezamousavi.mafia.viewmodel
 
-import android.app.Application
-import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -10,17 +8,17 @@ import androidx.lifecycle.viewmodel.CreationExtras
 import com.github.iamrezamousavi.mafia.R
 import com.github.iamrezamousavi.mafia.data.model.Role
 import com.github.iamrezamousavi.mafia.utils.SharedData
+import com.github.iamrezamousavi.mafia.utils.getSide
 
 
-class RoleViewModel(application: Application) : AndroidViewModel(application) {
+class RoleViewModel : ViewModel() {
 
-    private val simpleCitizen = application.getString(R.string.simple_citizen)
-    private val simpleMafia = application.getString(R.string.simple_mafia)
-    private val citizenSide = application.getString(R.string.citizen_side)
-    private val mafiaSide = application.getString(R.string.mafia_side)
+    private val simpleCitizen = R.string.simple_citizen
+    private val simpleMafia = R.string.simple_mafia
+    private val mafiaSide = R.string.mafia_side
 
     private val players = ArrayList(SharedData.players.value!!.filter { it.isChecked })
-    private val playersSize = players.size
+    val playersSize = players.size
 
     private var _selectedRoles = ArrayList<Role>()
 
@@ -64,8 +62,8 @@ class RoleViewModel(application: Application) : AndroidViewModel(application) {
 
     private fun calculateSimpleCitizenCounter(): Int {
         val hasSimpleCitizen =
-            _selectedRoles.contains(Role(name = simpleCitizen, side = citizenSide))
-        val hasSimpleMafia = _selectedRoles.contains(Role(name = simpleMafia, side = mafiaSide))
+            _selectedRoles.contains(Role(name = simpleCitizen))
+        val hasSimpleMafia = _selectedRoles.contains(Role(name = simpleMafia))
         return when {
             hasSimpleCitizen && hasSimpleMafia ->
                 playersSize - _selectedRoles.size - _simpleMafiaCounter.value!! + 2
@@ -82,9 +80,9 @@ class RoleViewModel(application: Application) : AndroidViewModel(application) {
         } else {
             playersSize / 2 - 1
         }
-        val selectedMafiaRoles = _selectedRoles.filter { it.side == mafiaSide }
+        val selectedMafiaRoles = _selectedRoles.filter { getSide(it.name) == mafiaSide }
         val hasSimpleMafia =
-            selectedMafiaRoles.contains(Role(name = simpleMafia, side = mafiaSide))
+            selectedMafiaRoles.contains(Role(name = simpleMafia))
         val selectedMafiaRoleSize = selectedMafiaRoles.size
 
         val maxSimpleMafia = if (hasSimpleMafia) {
@@ -96,8 +94,33 @@ class RoleViewModel(application: Application) : AndroidViewModel(application) {
         return maxSimpleMafia
     }
 
-    fun generateRoles() {
+    fun checkRolesIsOk(selectedRoles: ArrayList<Role>): Boolean {
+        val hasSimpleMafia = selectedRoles.contains(Role(name = simpleMafia))
+        val hasSimpleCitizen = selectedRoles.contains(Role(name = simpleCitizen))
 
+        return when {
+            hasSimpleCitizen && hasSimpleMafia ->
+                playersSize == selectedRoles.size +
+                        _simpleMafiaCounter.value!! + _simpleCitizenCounter.value!! - 2
+
+            hasSimpleCitizen ->
+                playersSize == selectedRoles.size + _simpleCitizenCounter.value!! - 1
+
+            hasSimpleMafia -> playersSize == selectedRoles.size + _simpleMafiaCounter.value!! - 1
+
+            else -> playersSize == selectedRoles.size
+
+        }
+    }
+
+    fun generateRoles(selectedRoles: ArrayList<Role>) {
+        if (selectedRoles.size < playersSize) {
+            for (i in 1.._simpleMafiaCounter.value!!)
+                selectedRoles.add(Role(name = simpleMafia))
+            for (i in 1.._simpleCitizenCounter.value!!)
+                selectedRoles.add(Role(name = simpleCitizen))
+        }
+        SharedData.setRoles(selectedRoles)
     }
 
     companion object {
@@ -105,10 +128,8 @@ class RoleViewModel(application: Application) : AndroidViewModel(application) {
         val Factory = object : ViewModelProvider.Factory {
             @Suppress("UNCHECKED_CAST")
             override fun <T : ViewModel> create(modelClass: Class<T>, extras: CreationExtras): T {
-                val application =
-                    checkNotNull(extras[ViewModelProvider.AndroidViewModelFactory.APPLICATION_KEY])
                 if (modelClass.isAssignableFrom(RoleViewModel::class.java)) {
-                    return RoleViewModel(application) as T
+                    return RoleViewModel() as T
                 }
                 return super.create(modelClass)
             }

@@ -1,7 +1,6 @@
 package com.github.iamrezamousavi.mafia.viewmodel
 
-import android.app.Application
-import androidx.lifecycle.AndroidViewModel
+import android.content.Context
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.ViewModelProvider.AndroidViewModelFactory.Companion.APPLICATION_KEY
@@ -11,12 +10,9 @@ import com.github.iamrezamousavi.mafia.data.repository.PlayerRepository
 import com.github.iamrezamousavi.mafia.data.source.SharedPreferencesManager
 import com.github.iamrezamousavi.mafia.utils.SharedData
 
-class PlayerViewModel(
-    application: Application
-) : AndroidViewModel(application) {
+class PlayerViewModel(context: Context) : ViewModel() {
 
-    private val repository =
-        PlayerRepository(SharedPreferencesManager(application.applicationContext))
+    private val repository = PlayerRepository(SharedPreferencesManager(context))
 
     fun loadPlayers(): ArrayList<Player> {
         val loadedPlayers = repository.getPlayers()
@@ -69,7 +65,7 @@ class PlayerViewModel(
             override fun <T : ViewModel> create(modelClass: Class<T>, extras: CreationExtras): T {
                 val application = checkNotNull(extras[APPLICATION_KEY])
                 if (modelClass.isAssignableFrom(PlayerViewModel::class.java)) {
-                    return PlayerViewModel(application) as T
+                    return PlayerViewModel(application.baseContext) as T
                 }
                 return super.create(modelClass)
             }

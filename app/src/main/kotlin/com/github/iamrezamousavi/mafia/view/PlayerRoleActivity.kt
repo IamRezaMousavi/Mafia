@@ -23,7 +23,7 @@ class PlayerRoleActivity : AppCompatActivity() {
             SharedData.getPlayers(),
             onSelect = { player ->
                 val role = SharedData.getRole(player)
-                val roleDialog = RoleDialog(this, role.name)
+                val roleDialog = RoleDialog(this, role)
                 roleDialog.show()
             }
         )

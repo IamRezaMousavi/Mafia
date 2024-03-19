@@ -8,6 +8,7 @@ import androidx.appcompat.app.AppCompatActivity
 import com.github.iamrezamousavi.mafia.R
 import com.github.iamrezamousavi.mafia.data.model.Role
 import com.github.iamrezamousavi.mafia.databinding.ActivityRoleBinding
+import com.github.iamrezamousavi.mafia.utils.getRoleId
 import com.github.iamrezamousavi.mafia.view.counterview.CounterViewListener
 import com.github.iamrezamousavi.mafia.viewmodel.RoleViewModel
 import com.google.android.material.chip.Chip
@@ -24,6 +25,9 @@ class RoleActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivityRoleBinding.inflate(layoutInflater)
         setContentView(binding.root)
+
+        binding.roleToolBar.title =
+            getString(R.string.select_roles) + " (${roleViewModel.playersSize}) "
 
         val roles = getSelectedRoles()
         roleViewModel.setSelectedRoles(roles)
@@ -84,34 +88,30 @@ class RoleActivity : AppCompatActivity() {
 
         binding.button.setOnClickListener {
             val selectedRoles = getSelectedRoles()
-            Toast.makeText(this, "$selectedRoles", Toast.LENGTH_SHORT).show()
 
-            val intent = Intent(this, PlayerRoleActivity::class.java)
-            startActivity(intent)
+            if (roleViewModel.checkRolesIsOk(selectedRoles)) {
+                roleViewModel.generateRoles(selectedRoles)
+                val intent = Intent(this, PlayerRoleActivity::class.java)
+                startActivity(intent)
+            } else {
+                Toast.makeText(this, "Players and Roles doesn't match", Toast.LENGTH_SHORT).show()
+            }
         }
     }
 
     private fun getSelectedRoles(): ArrayList<Role> {
-        val selectedRoles = ArrayList(
-            binding.citizen.chipGroup1.checkedChipIds.map {
+        val selectedRoles = ArrayList((
+                binding.citizen.chipGroup1.checkedChipIds +
+                        binding.mafia.chipGroup2.checkedChipIds +
+                        binding.independent.chipGroup3.checkedChipIds
+                ).map {
                 Role(
-                    name = findViewById<Chip>(it).text.toString(),
-                    side = getString(R.string.citizen_side)
+                    name = getRoleId(
+                        this,
+                        findViewById<Chip>(it).text.toString()
+                    )
                 )
-            } +
-                    binding.mafia.chipGroup2.checkedChipIds.map {
-                        Role(
-                            name = findViewById<Chip>(it).text.toString(),
-                            side = getString(R.string.mafia_side)
-                        )
-                    } +
-                    binding.independent.chipGroup3.checkedChipIds.map {
-                        Role(
-                            name = findViewById<Chip>(it).text.toString(),
-                            side = getString(R.string.independent_side)
-                        )
-                    }
-        )
+            })
         return selectedRoles
     }
 }

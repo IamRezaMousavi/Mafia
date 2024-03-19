@@ -1,7 +1,11 @@
 package com.github.iamrezamousavi.mafia.data.model
 
+import androidx.annotation.StringRes
+
 data class Role(
+
     var id: Int = 0,
-    val name: String = "",
-    val side: String = "",
+
+    @StringRes
+    val name: Int,
 )
