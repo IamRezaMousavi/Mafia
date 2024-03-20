@@ -18,7 +18,7 @@ class RoleViewModel(players: ArrayList<Player>) : ViewModel() {
     private val simpleMafia = R.string.simple_mafia
     private val mafiaSide = R.string.mafia_side
 
-    var playersSize = players.size
+    var playersSize = players.filter { it.isChecked }.size
 
     private var _selectedRoles = ArrayList<Role>()
 
@@ -49,6 +49,10 @@ class RoleViewModel(players: ArrayList<Player>) : ViewModel() {
         _simpleCitizenCounter.value = calculateSimpleCitizenCounter()
     }
 
+    fun getSelectedRoles(): ArrayList<Role> {
+        return _selectedRoles
+    }
+
     fun setSelectedRoles(selectedRoles: ArrayList<Role>) {
         _selectedRoles = selectedRoles
         val max = calculateMaxSimpleMafia()
@@ -65,7 +69,7 @@ class RoleViewModel(players: ArrayList<Player>) : ViewModel() {
         _selectedRolesSize.value = calculateSelectedRolesSize()
     }
 
-    fun calculateSelectedRolesSize(): Int {
+    private fun calculateSelectedRolesSize(): Int {
         val hasSimpleMafia = _selectedRoles.contains(Role(name = simpleMafia))
         val hasSimpleCitizen = _selectedRoles.contains(Role(name = simpleCitizen))
 
@@ -83,7 +87,7 @@ class RoleViewModel(players: ArrayList<Player>) : ViewModel() {
         }
     }
 
-    fun calculateSimpleCitizenCounter(): Int {
+    private fun calculateSimpleCitizenCounter(): Int {
         val hasSimpleCitizen =
             _selectedRoles.contains(Role(name = simpleCitizen))
         val hasSimpleMafia = _selectedRoles.contains(Role(name = simpleMafia))
@@ -97,7 +101,7 @@ class RoleViewModel(players: ArrayList<Player>) : ViewModel() {
         }
     }
 
-    fun calculateMaxSimpleMafia(): Int {
+    private fun calculateMaxSimpleMafia(): Int {
         val maxMafia = if (playersSize % 2 == 1) {
             playersSize / 2
         } else {

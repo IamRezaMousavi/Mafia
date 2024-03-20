@@ -2,6 +2,7 @@ package com.github.iamrezamousavi.mafia.viewmodel
 
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import com.github.iamrezamousavi.mafia.R
+import com.github.iamrezamousavi.mafia.data.model.Player
 import com.github.iamrezamousavi.mafia.data.model.Role
 import org.junit.Assert.assertEquals
 import org.junit.Assert.assertFalse
@@ -15,361 +16,121 @@ class RoleViewModelTest {
     @get:Rule
     val instantTaskExecutorRule = InstantTaskExecutorRule()
 
-    private val roleViewModel = RoleViewModel(ArrayList())
-
+    private val roleViewModel =
+        RoleViewModel(ArrayList((1..10).map { Player(name = "Player $it", isChecked = true) }))
 
     @Test
-    fun calculateSelectedRolesSize_withNoSimpleRoles_matchCase() {
-        roleViewModel.playersSize = 6
+    fun setSelectedRoles_justSimpleRoles() {
         roleViewModel.setSelectedRoles(
             arrayListOf(
-                Role(name = R.string.godfather),
-                Role(name = R.string.dr_lecter),
-                Role(name = R.string.doctor),
-                Role(name = R.string.detective),
-                Role(name = R.string.professional),
-                Role(name = R.string.unknown)
+                Role(name = R.string.simple_citizen),
+                Role(name = R.string.simple_mafia)
             )
         )
-        assertEquals(roleViewModel.calculateSelectedRolesSize(), 6)
+        assertEquals(2, roleViewModel.selectedRolesSize.value)
+        assertEquals(1, roleViewModel.simpleMafiaCounter.value)
+        assertEquals(9, roleViewModel.simpleCitizenCounter.value)
+        assertEquals(4, roleViewModel.maxSimpleMafia.value)
+        assertEquals(1, roleViewModel.minSimpleMafia.value)
     }
 
     @Test
-    fun calculateSelectedRolesSize_withNoSimpleRoles_noMatchCase() {
-        roleViewModel.playersSize = 8
+    fun setSelectedRoles_justSimpleCitizen() {
         roleViewModel.setSelectedRoles(
             arrayListOf(
-                Role(name = R.string.godfather),
-                Role(name = R.string.dr_lecter),
-                Role(name = R.string.doctor),
-                Role(name = R.string.detective),
-                Role(name = R.string.professional),
-                Role(name = R.string.unknown)
+                Role(name = R.string.simple_citizen),
+                Role(name = R.string.godfather)
             )
         )
-        assertEquals(roleViewModel.calculateSelectedRolesSize(), 6)
+        assertEquals(2, roleViewModel.selectedRolesSize.value)
+        assertEquals(0, roleViewModel.simpleMafiaCounter.value)
+        assertEquals(9, roleViewModel.simpleCitizenCounter.value)
+        assertEquals(0, roleViewModel.maxSimpleMafia.value)
+        assertEquals(0, roleViewModel.minSimpleMafia.value)
     }
 
     @Test
-    fun calculateSelectedRolesSize_withSomeSimpleMafias_matchCase() {
-        roleViewModel.playersSize = 8
+    fun setSelectedRoles_justSimpleMafia() {
         roleViewModel.setSelectedRoles(
             arrayListOf(
-                Role(name = R.string.godfather),
-                Role(name = R.string.simple_mafia),
                 Role(name = R.string.doctor),
                 Role(name = R.string.detective),
-                Role(name = R.string.professional),
                 Role(name = R.string.sniper),
-                Role(name = R.string.unknown)
+                Role(name = R.string.mayor),
+                Role(name = R.string.guardian),
+                Role(name = R.string.psychologist),
+                Role(name = R.string.professional),
+                Role(name = R.string.gunman),
+                Role(name = R.string.judge),
+                Role(name = R.string.simple_mafia)
+            )
+        )
+        assertEquals(10, roleViewModel.selectedRolesSize.value)
+        assertEquals(1, roleViewModel.simpleMafiaCounter.value)
+        assertEquals(0, roleViewModel.simpleCitizenCounter.value)
+        assertEquals(1, roleViewModel.maxSimpleMafia.value)
+        assertEquals(1, roleViewModel.minSimpleMafia.value)
+    }
+
+    @Test
+    fun setSelectedRoles_withoutSimpleRoles() {
+        roleViewModel.setSelectedRoles(
+            arrayListOf(
+                Role(name = R.string.doctor),
+                Role(name = R.string.detective),
+                Role(name = R.string.sniper),
+                Role(name = R.string.mayor),
+                Role(name = R.string.guardian),
+                Role(name = R.string.psychologist),
+                Role(name = R.string.professional),
+                Role(name = R.string.gunman),
+                Role(name = R.string.judge),
+                Role(name = R.string.godfather)
+            )
+        )
+        assertEquals(10, roleViewModel.selectedRolesSize.value)
+        assertEquals(0, roleViewModel.simpleMafiaCounter.value)
+        assertEquals(0, roleViewModel.simpleCitizenCounter.value)
+        assertEquals(0, roleViewModel.maxSimpleMafia.value)
+        assertEquals(0, roleViewModel.minSimpleMafia.value)
+    }
+
+    @Test
+    fun setSimpleMafiaCounter_lessThanMin() {
+        roleViewModel.setSelectedRoles(
+            arrayListOf(
+                Role(name = R.string.simple_citizen),
+                Role(name = R.string.simple_mafia)
+            )
+        )
+
+        roleViewModel.setSimpleMafiaCounter(0)
+        assertEquals(1, roleViewModel.simpleMafiaCounter.value)
+    }
+
+    @Test
+    fun setSimpleMafiaCounter_moreThanMax() {
+        roleViewModel.setSelectedRoles(
+            arrayListOf(
+                Role(name = R.string.simple_citizen),
+                Role(name = R.string.simple_mafia)
+            )
+        )
+
+        roleViewModel.setSimpleMafiaCounter(3)
+        assertEquals(1, roleViewModel.simpleMafiaCounter.value)
+    }
+
+    @Test
+    fun setSimpleMafiaCounter_correct() {
+        roleViewModel.setSelectedRoles(
+            arrayListOf(
+                Role(name = R.string.simple_citizen),
+                Role(name = R.string.simple_mafia)
             )
         )
         roleViewModel.setSimpleMafiaCounter(2)
-        assertEquals(roleViewModel.calculateSelectedRolesSize(), 8)
-    }
-
-    @Test
-    fun calculateSelectedRolesSize_withSomeSimpleMafias_noMatchCase() {
-        roleViewModel.playersSize = 10
-        roleViewModel.setSelectedRoles(
-            arrayListOf(
-                Role(name = R.string.godfather),
-                Role(name = R.string.simple_mafia),
-                Role(name = R.string.doctor),
-                Role(name = R.string.detective),
-                Role(name = R.string.professional),
-                Role(name = R.string.sniper),
-                Role(name = R.string.unknown)
-            )
-        )
-        roleViewModel.setSimpleMafiaCounter(2)
-        assertEquals(roleViewModel.calculateSelectedRolesSize(), 8)
-    }
-
-    @Test
-    fun calculateSelectedRolesSize_withSomeSimpleCitizens() {
-        roleViewModel.playersSize = 6
-        roleViewModel.setSelectedRoles(
-            arrayListOf(
-                Role(name = R.string.godfather),
-                Role(name = R.string.doctor),
-                Role(name = R.string.simple_citizen),
-                Role(name = R.string.unknown)
-            )
-        )
-        assertEquals(roleViewModel.calculateSelectedRolesSize(), 6)
-    }
-
-    @Test
-    fun calculateSelectedRolesSize_withOneSimpleMafiaSomeSimpleCitizens() {
-        roleViewModel.playersSize = 7
-        roleViewModel.setSelectedRoles(
-            arrayListOf(
-                Role(name = R.string.godfather),
-                Role(name = R.string.simple_mafia),
-                Role(name = R.string.doctor),
-                Role(name = R.string.simple_citizen),
-                Role(name = R.string.unknown)
-            )
-        )
-        assertEquals(roleViewModel.calculateSelectedRolesSize(), 7)
-    }
-
-    @Test
-    fun calculateSelectedRolesSize_withSomeSimpleMafiasSomeSimpleCitizens() {
-        roleViewModel.playersSize = 9
-        roleViewModel.setSelectedRoles(
-            arrayListOf(
-                Role(name = R.string.godfather),
-                Role(name = R.string.simple_mafia),
-                Role(name = R.string.doctor),
-                Role(name = R.string.simple_citizen)
-            )
-        )
-        roleViewModel.setSimpleMafiaCounter(2)
-        assertEquals(roleViewModel.calculateSelectedRolesSize(), 9)
-    }
-
-    @Test
-    fun calculateSimpleCitizenCounter_withZeroSimpleCitizenOneSimpleMafia() {
-        roleViewModel.playersSize = 6
-        roleViewModel.setSelectedRoles(
-            arrayListOf(
-                Role(name = R.string.simple_mafia),
-                Role(name = R.string.godfather),
-                Role(name = R.string.doctor),
-                Role(name = R.string.detective),
-                Role(name = R.string.sniper),
-                Role(name = R.string.unknown)
-            )
-        )
-        assertEquals(roleViewModel.calculateSimpleCitizenCounter(), 0)
-    }
-
-    @Test
-    fun calculateSimpleCitizenCounter_withOneSimpleCitizenOneSimpleMafia() {
-        roleViewModel.playersSize = 6
-        roleViewModel.setSelectedRoles(
-            arrayListOf(
-                Role(name = R.string.simple_mafia),
-                Role(name = R.string.godfather),
-                Role(name = R.string.simple_citizen),
-                Role(name = R.string.doctor),
-                Role(name = R.string.detective),
-                Role(name = R.string.unknown)
-            )
-        )
-        assertEquals(roleViewModel.calculateSimpleCitizenCounter(), 1)
-    }
-
-    @Test
-    fun calculateSimpleCitizenCounter_withSomeSimpleCitizensOneSimpleMafia() {
-        roleViewModel.playersSize = 10
-        roleViewModel.setSelectedRoles(
-            arrayListOf(
-                Role(name = R.string.simple_mafia),
-                Role(name = R.string.godfather),
-                Role(name = R.string.simple_citizen),
-                Role(name = R.string.doctor),
-                Role(name = R.string.detective),
-                Role(name = R.string.unknown)
-            )
-        )
-        assertEquals(roleViewModel.calculateSimpleCitizenCounter(), 5)
-    }
-
-    @Test
-    fun calculateSimpleCitizenCounter_withZeroSimpleCitizen() {
-        roleViewModel.playersSize = 5
-        roleViewModel.setSelectedRoles(
-            arrayListOf(
-                Role(name = R.string.godfather),
-                Role(name = R.string.doctor),
-                Role(name = R.string.detective),
-                Role(name = R.string.sniper),
-                Role(name = R.string.unknown)
-            )
-        )
-        assertEquals(roleViewModel.calculateSimpleCitizenCounter(), 0)
-    }
-
-    @Test
-    fun calculateSimpleCitizenCounter_withOneSimpleCitizen() {
-        roleViewModel.playersSize = 5
-        roleViewModel.setSelectedRoles(
-            arrayListOf(
-                Role(name = R.string.godfather),
-                Role(name = R.string.simple_citizen),
-                Role(name = R.string.doctor),
-                Role(name = R.string.detective),
-                Role(name = R.string.unknown)
-            )
-        )
-        assertEquals(roleViewModel.calculateSimpleCitizenCounter(), 1)
-    }
-
-    @Test
-    fun calculateSimpleCitizenCounter_withSomeSimpleCitizens() {
-        roleViewModel.playersSize = 10
-        roleViewModel.setSelectedRoles(
-            arrayListOf(
-                Role(name = R.string.godfather),
-                Role(name = R.string.simple_citizen),
-                Role(name = R.string.doctor),
-                Role(name = R.string.detective),
-                Role(name = R.string.unknown)
-            )
-        )
-        assertEquals(roleViewModel.calculateSimpleCitizenCounter(), 6)
-    }
-
-    @Test
-    fun calculateSimpleCitizenCounter_withZeroSimpleCitizenSomeSimpleMafias() {
-        roleViewModel.playersSize = 8
-        roleViewModel.setSelectedRoles(
-            arrayListOf(
-                Role(name = R.string.simple_mafia),
-                Role(name = R.string.godfather),
-                Role(name = R.string.doctor),
-                Role(name = R.string.detective),
-                Role(name = R.string.sniper),
-                Role(name = R.string.professional),
-                Role(name = R.string.unknown)
-            )
-        )
-        roleViewModel.setSimpleMafiaCounter(2)
-        assertEquals(roleViewModel.calculateSimpleCitizenCounter(), 0)
-    }
-
-    @Test
-    fun calculateSimpleCitizenCounter_withOneSimpleCitizenSomeSimpleMafias() {
-        roleViewModel.playersSize = 9
-        roleViewModel.setSelectedRoles(
-            arrayListOf(
-                Role(name = R.string.simple_mafia),
-                Role(name = R.string.godfather),
-                Role(name = R.string.simple_citizen),
-                Role(name = R.string.doctor),
-                Role(name = R.string.detective),
-                Role(name = R.string.sniper),
-                Role(name = R.string.professional),
-                Role(name = R.string.unknown)
-            )
-        )
-        roleViewModel.setSimpleMafiaCounter(2)
-        assertEquals(roleViewModel.calculateSimpleCitizenCounter(), 1)
-    }
-
-    @Test
-    fun calculateSimpleCitizenCounter_withSomeSimpleCitizensSomeSimpleMafias() {
-        roleViewModel.playersSize = 10
-        roleViewModel.setSelectedRoles(
-            arrayListOf(
-                Role(name = R.string.simple_mafia),
-                Role(name = R.string.godfather),
-                Role(name = R.string.simple_citizen),
-                Role(name = R.string.doctor),
-                Role(name = R.string.detective),
-                Role(name = R.string.sniper),
-                Role(name = R.string.unknown)
-            )
-        )
-        roleViewModel.setSimpleMafiaCounter(2)
-        assertEquals(roleViewModel.calculateSimpleCitizenCounter(), 3)
-    }
-
-    @Test
-    fun calculateMaxSimpleMafia_withSimpleMafia_playersSizeIsEven() {
-        roleViewModel.setSelectedRoles(
-            arrayListOf(
-                Role(name = R.string.simple_mafia),
-                Role(name = R.string.simple_citizen),
-            )
-        )
-        for (i in 4..20 step 2) {
-            roleViewModel.playersSize = i
-            assertEquals(roleViewModel.calculateMaxSimpleMafia(), i / 2 - 1)
-        }
-    }
-
-    @Test
-    fun calculateMaxSimpleMafia_withSimpleMafiaOtherRoles_playersSizeIsEven() {
-        roleViewModel.setSelectedRoles(
-            arrayListOf(
-                Role(name = R.string.simple_mafia),
-                Role(name = R.string.godfather),
-                Role(name = R.string.simple_citizen),
-                Role(name = R.string.doctor),
-                Role(name = R.string.unknown)
-            )
-        )
-        for (i in 6..20 step 2) {
-            roleViewModel.playersSize = i
-            assertEquals(roleViewModel.calculateMaxSimpleMafia(), i / 2 - 2)
-        }
-    }
-
-    @Test
-    fun calculateMaxSimpleMafia_withSimpleMafia_playersSizeIsOdd() {
-        roleViewModel.setSelectedRoles(
-            arrayListOf(
-                Role(name = R.string.simple_mafia),
-                Role(name = R.string.simple_citizen),
-            )
-        )
-        for (i in 3..21 step 2) {
-            roleViewModel.playersSize = i
-            assertEquals(roleViewModel.calculateMaxSimpleMafia(), i / 2)
-        }
-    }
-
-    @Test
-    fun calculateMaxSimpleMafia_withSimpleMafiaOtherRoles_playersSizeIsOdd() {
-        roleViewModel.setSelectedRoles(
-            arrayListOf(
-                Role(name = R.string.simple_mafia),
-                Role(name = R.string.godfather),
-                Role(name = R.string.simple_citizen),
-                Role(name = R.string.doctor),
-                Role(name = R.string.unknown)
-            )
-        )
-        for (i in 5..21 step 2) {
-            roleViewModel.playersSize = i
-            assertEquals(roleViewModel.calculateMaxSimpleMafia(), i / 2 - 1)
-        }
-    }
-
-    @Test
-    fun calculateMaxSimpleMafia_withNoSimpleMafia() {
-        roleViewModel.setSelectedRoles(
-            arrayListOf(
-                Role(name = R.string.simple_citizen),
-                Role(name = R.string.godfather),
-                Role(name = R.string.unknown)
-            )
-        )
-        for (i in 3..20) {
-            roleViewModel.playersSize = i
-            assertEquals(roleViewModel.calculateMaxSimpleMafia(), 0)
-        }
-    }
-
-    @Test
-    fun calculateMaxSimpleMafia_withNoSimpleMafiaOtherRoles() {
-        roleViewModel.setSelectedRoles(
-            arrayListOf(
-                Role(name = R.string.godfather),
-                Role(name = R.string.dr_lecter),
-                Role(name = R.string.simple_citizen),
-                Role(name = R.string.doctor),
-                Role(name = R.string.unknown)
-            )
-        )
-        for (i in 5..20) {
-            roleViewModel.playersSize = i
-            assertEquals(roleViewModel.calculateMaxSimpleMafia(), 0)
-        }
+        assertEquals(2, roleViewModel.simpleMafiaCounter.value)
     }
 
     @Test
@@ -594,5 +355,252 @@ class RoleViewModelTest {
         )
         roleViewModel.setSimpleMafiaCounter(2)
         assertFalse(roleViewModel.checkRolesIsOk())
+    }
+
+    @Test
+    fun generateRoles_withNoSimpleRoles() {
+        roleViewModel.playersSize = 5
+        roleViewModel.setSelectedRoles(
+            arrayListOf(
+                Role(name = R.string.godfather),
+                Role(name = R.string.dr_lecter),
+                Role(name = R.string.doctor),
+                Role(name = R.string.detective),
+                Role(name = R.string.sniper),
+                Role(name = R.string.mayor),
+                Role(name = R.string.guardian),
+                Role(name = R.string.psychologist),
+                Role(name = R.string.professional),
+                Role(name = R.string.unknown)
+            )
+        )
+        roleViewModel.generateRoles()
+        assertEquals(10, roleViewModel.selectedRolesSize.value)
+        assertEquals(0, roleViewModel.simpleCitizenCounter.value)
+        assertEquals(0, roleViewModel.simpleMafiaCounter.value)
+        assertEquals(0, roleViewModel.minSimpleMafia.value)
+        assertEquals(0, roleViewModel.maxSimpleMafia.value)
+        assertTrue(
+            roleViewModel.getSelectedRoles().filter { it.name == R.string.simple_citizen }.size ==
+                    roleViewModel.simpleCitizenCounter.value
+        )
+        assertTrue(
+            roleViewModel.getSelectedRoles().filter { it.name == R.string.simple_mafia }.size ==
+                    roleViewModel.simpleMafiaCounter.value
+        )
+    }
+
+    @Test
+    fun generateRoles_withOneSimpleMafia() {
+        roleViewModel.setSelectedRoles(
+            arrayListOf(
+                Role(name = R.string.godfather),
+                Role(name = R.string.simple_mafia),
+                Role(name = R.string.doctor),
+                Role(name = R.string.detective),
+                Role(name = R.string.sniper),
+                Role(name = R.string.mayor),
+                Role(name = R.string.guardian),
+                Role(name = R.string.psychologist),
+                Role(name = R.string.professional),
+                Role(name = R.string.unknown)
+            )
+        )
+        roleViewModel.generateRoles()
+        assertEquals(10, roleViewModel.selectedRolesSize.value)
+        assertEquals(0, roleViewModel.simpleCitizenCounter.value)
+        assertEquals(1, roleViewModel.simpleMafiaCounter.value)
+        assertEquals(1, roleViewModel.minSimpleMafia.value)
+        assertEquals(1, roleViewModel.maxSimpleMafia.value)
+        assertTrue(
+            roleViewModel.getSelectedRoles().filter { it.name == R.string.simple_citizen }.size ==
+                    roleViewModel.simpleCitizenCounter.value
+        )
+        assertTrue(
+            roleViewModel.getSelectedRoles().filter { it.name == R.string.simple_mafia }.size ==
+                    roleViewModel.simpleMafiaCounter.value
+        )
+    }
+
+    @Test
+    fun generateRoles_withOneSimpleCitizen() {
+        roleViewModel.setSelectedRoles(
+            arrayListOf(
+                Role(name = R.string.godfather),
+                Role(name = R.string.simple_citizen),
+                Role(name = R.string.doctor),
+                Role(name = R.string.detective),
+                Role(name = R.string.sniper),
+                Role(name = R.string.mayor),
+                Role(name = R.string.guardian),
+                Role(name = R.string.psychologist),
+                Role(name = R.string.professional),
+                Role(name = R.string.unknown)
+            )
+        )
+        roleViewModel.generateRoles()
+        assertEquals(10, roleViewModel.selectedRolesSize.value)
+        assertEquals(1, roleViewModel.simpleCitizenCounter.value)
+        assertEquals(0, roleViewModel.simpleMafiaCounter.value)
+        assertEquals(0, roleViewModel.minSimpleMafia.value)
+        assertEquals(0, roleViewModel.maxSimpleMafia.value)
+        assertTrue(
+            roleViewModel.getSelectedRoles().filter { it.name == R.string.simple_citizen }.size ==
+                    roleViewModel.simpleCitizenCounter.value
+        )
+        assertTrue(
+            roleViewModel.getSelectedRoles().filter { it.name == R.string.simple_mafia }.size ==
+                    roleViewModel.simpleMafiaCounter.value
+        )
+    }
+
+    @Test
+    fun generateRoles_withSomeSimpleMafias() {
+        roleViewModel.setSelectedRoles(
+            arrayListOf(
+                Role(name = R.string.godfather),
+                Role(name = R.string.simple_mafia),
+                Role(name = R.string.doctor),
+                Role(name = R.string.detective),
+                Role(name = R.string.sniper),
+                Role(name = R.string.mayor),
+                Role(name = R.string.guardian),
+                Role(name = R.string.professional),
+                Role(name = R.string.unknown)
+            )
+        )
+        roleViewModel.setSimpleMafiaCounter(2)
+        roleViewModel.generateRoles()
+        assertEquals(10, roleViewModel.selectedRolesSize.value)
+        assertEquals(0, roleViewModel.simpleCitizenCounter.value)
+        assertEquals(2, roleViewModel.simpleMafiaCounter.value)
+        assertEquals(1, roleViewModel.minSimpleMafia.value)
+        assertEquals(2, roleViewModel.maxSimpleMafia.value)
+        assertTrue(
+            roleViewModel.getSelectedRoles().filter { it.name == R.string.simple_citizen }.size ==
+                    roleViewModel.simpleCitizenCounter.value
+        )
+        assertTrue(
+            roleViewModel.getSelectedRoles().filter { it.name == R.string.simple_mafia }.size ==
+                    roleViewModel.simpleMafiaCounter.value
+        )
+    }
+
+    @Test
+    fun generateRoles_withSomeSimpleCitizens() {
+        roleViewModel.setSelectedRoles(
+            arrayListOf(
+                Role(name = R.string.godfather),
+                Role(name = R.string.simple_citizen),
+                Role(name = R.string.doctor),
+                Role(name = R.string.detective),
+                Role(name = R.string.sniper),
+                Role(name = R.string.mayor),
+                Role(name = R.string.guardian),
+                Role(name = R.string.professional),
+                Role(name = R.string.unknown)
+            )
+        )
+        roleViewModel.generateRoles()
+        assertEquals(10, roleViewModel.selectedRolesSize.value)
+        assertEquals(2, roleViewModel.simpleCitizenCounter.value)
+        assertEquals(0, roleViewModel.simpleMafiaCounter.value)
+        assertEquals(0, roleViewModel.minSimpleMafia.value)
+        assertEquals(0, roleViewModel.maxSimpleMafia.value)
+        assertTrue(
+            roleViewModel.getSelectedRoles().filter { it.name == R.string.simple_citizen }.size ==
+                    roleViewModel.simpleCitizenCounter.value
+        )
+        assertTrue(
+            roleViewModel.getSelectedRoles().filter { it.name == R.string.simple_mafia }.size ==
+                    roleViewModel.simpleMafiaCounter.value
+        )
+    }
+
+    @Test
+    fun generateRoles_withOneSimpleCitizenOneSimpleMafia() {
+        roleViewModel.setSelectedRoles(
+            arrayListOf(
+                Role(name = R.string.godfather),
+                Role(name = R.string.simple_mafia),
+                Role(name = R.string.simple_citizen),
+                Role(name = R.string.doctor),
+                Role(name = R.string.detective),
+                Role(name = R.string.sniper),
+                Role(name = R.string.mayor),
+                Role(name = R.string.professional),
+                Role(name = R.string.professional),
+                Role(name = R.string.unknown)
+            )
+        )
+        roleViewModel.generateRoles()
+        assertEquals(10, roleViewModel.selectedRolesSize.value)
+        assertEquals(1, roleViewModel.simpleCitizenCounter.value)
+        assertEquals(1, roleViewModel.simpleMafiaCounter.value)
+        assertEquals(1, roleViewModel.minSimpleMafia.value)
+        assertEquals(1, roleViewModel.maxSimpleMafia.value)
+        assertTrue(
+            roleViewModel.getSelectedRoles().filter { it.name == R.string.simple_citizen }.size ==
+                    roleViewModel.simpleCitizenCounter.value
+        )
+        assertTrue(
+            roleViewModel.getSelectedRoles().filter { it.name == R.string.simple_mafia }.size ==
+                    roleViewModel.simpleMafiaCounter.value
+        )
+    }
+
+    @Test
+    fun generateRoles_withSomeSimpleCitizenOneSimpleMafia() {
+        roleViewModel.setSelectedRoles(
+            arrayListOf(
+                Role(name = R.string.godfather),
+                Role(name = R.string.simple_mafia),
+                Role(name = R.string.simple_citizen),
+                Role(name = R.string.professional),
+                Role(name = R.string.unknown)
+            )
+        )
+        roleViewModel.generateRoles()
+        assertEquals(10, roleViewModel.selectedRolesSize.value)
+        assertEquals(6, roleViewModel.simpleCitizenCounter.value)
+        assertEquals(1, roleViewModel.simpleMafiaCounter.value)
+        assertEquals(1, roleViewModel.minSimpleMafia.value)
+        assertEquals(3, roleViewModel.maxSimpleMafia.value)
+        assertTrue(
+            roleViewModel.getSelectedRoles().filter { it.name == R.string.simple_citizen }.size ==
+                    roleViewModel.simpleCitizenCounter.value
+        )
+        assertTrue(
+            roleViewModel.getSelectedRoles().filter { it.name == R.string.simple_mafia }.size ==
+                    roleViewModel.simpleMafiaCounter.value
+        )
+    }
+
+    @Test
+    fun generateRoles_withSomeSimpleCitizenSomeSimpleMafia() {
+        roleViewModel.setSelectedRoles(
+            arrayListOf(
+                Role(name = R.string.godfather),
+                Role(name = R.string.simple_mafia),
+                Role(name = R.string.simple_citizen),
+                Role(name = R.string.professional),
+                Role(name = R.string.unknown)
+            )
+        )
+        roleViewModel.setSimpleMafiaCounter(2)
+        roleViewModel.generateRoles()
+        assertEquals(10, roleViewModel.selectedRolesSize.value)
+        assertEquals(5, roleViewModel.simpleCitizenCounter.value)
+        assertEquals(2, roleViewModel.simpleMafiaCounter.value)
+        assertEquals(1, roleViewModel.minSimpleMafia.value)
+        assertEquals(3, roleViewModel.maxSimpleMafia.value)
+        assertTrue(
+            roleViewModel.getSelectedRoles().filter { it.name == R.string.simple_citizen }.size ==
+                    roleViewModel.simpleCitizenCounter.value
+        )
+        assertTrue(
+            roleViewModel.getSelectedRoles().filter { it.name == R.string.simple_mafia }.size ==
+                    roleViewModel.simpleMafiaCounter.value
+        )
     }
 }
