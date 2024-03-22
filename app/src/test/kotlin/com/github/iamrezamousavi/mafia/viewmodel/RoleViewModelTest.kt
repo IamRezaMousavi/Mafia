@@ -6,7 +6,6 @@ import com.github.iamrezamousavi.mafia.data.model.Player
 import com.github.iamrezamousavi.mafia.data.model.Role
 import org.junit.Assert.assertEquals
 import org.junit.Assert.assertFalse
-import org.junit.Assert.assertNotEquals
 import org.junit.Assert.assertTrue
 import org.junit.Rule
 import org.junit.Test
@@ -27,7 +26,7 @@ class RoleViewModelTest {
                 Role(name = R.string.simple_mafia)
             )
         )
-        assertEquals(2, roleViewModel.selectedRolesSize.value)
+        assertEquals(10, roleViewModel.selectedRolesSize.value)
         assertEquals(1, roleViewModel.simpleMafiaCounter.value)
         assertEquals(9, roleViewModel.simpleCitizenCounter.value)
         assertEquals(4, roleViewModel.maxSimpleMafia.value)
@@ -42,7 +41,7 @@ class RoleViewModelTest {
                 Role(name = R.string.godfather)
             )
         )
-        assertEquals(2, roleViewModel.selectedRolesSize.value)
+        assertEquals(10, roleViewModel.selectedRolesSize.value)
         assertEquals(0, roleViewModel.simpleMafiaCounter.value)
         assertEquals(9, roleViewModel.simpleCitizenCounter.value)
         assertEquals(0, roleViewModel.maxSimpleMafia.value)
@@ -117,7 +116,7 @@ class RoleViewModelTest {
             )
         )
 
-        roleViewModel.setSimpleMafiaCounter(3)
+        roleViewModel.setSimpleMafiaCounter(6)
         assertEquals(1, roleViewModel.simpleMafiaCounter.value)
     }
 
@@ -341,7 +340,7 @@ class RoleViewModelTest {
     }
 
     @Test
-    fun checkRolesIsOk_withSomeSimpleMafiaSomeSimpleCitizen_error() {
+    fun checkRolesIsOk_withSomeSimpleMafiaSomeSimpleCitizen_errorDontWork() {
         roleViewModel.playersSize = 7
         roleViewModel.setSelectedRoles(
             arrayListOf(
@@ -354,7 +353,8 @@ class RoleViewModelTest {
             )
         )
         roleViewModel.setSimpleMafiaCounter(2)
-        assertFalse(roleViewModel.checkRolesIsOk())
+        assertEquals(2, roleViewModel.simpleCitizenCounter.value)
+        assertTrue(roleViewModel.checkRolesIsOk())
     }
 
     @Test
@@ -529,7 +529,7 @@ class RoleViewModelTest {
                 Role(name = R.string.sniper),
                 Role(name = R.string.mayor),
                 Role(name = R.string.professional),
-                Role(name = R.string.professional),
+                Role(name = R.string.champion),
                 Role(name = R.string.unknown)
             )
         )
