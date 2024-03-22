@@ -96,7 +96,7 @@ class RoleActivity : AppCompatActivity() {
                 val intent = Intent(this, PlayerRoleActivity::class.java)
                 startActivity(intent)
             } else {
-                Toast.makeText(this, "Players and Roles doesn't match", Toast.LENGTH_SHORT).show()
+                Toast.makeText(this, R.string.roles_not_match, Toast.LENGTH_SHORT).show()
             }
         }
     }

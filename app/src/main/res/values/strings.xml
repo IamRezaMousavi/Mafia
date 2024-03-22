@@ -9,6 +9,7 @@
     <string name="settings">تنظیمات</string>
 
     <string name="player_not_enough">حداقل ۳ نفر باید انتخاب کنید</string>
+    <string name="roles_not_match">Players and Roles doesn\'t match</string>
     <string name="select_all">انتخاب همه</string>
     <string name="delete_player">حذف بازیکن</string>
     <string name="refresh">تازه کردن</string>

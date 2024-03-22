@@ -19,6 +19,8 @@ class PlayerRoleActivity : AppCompatActivity() {
         binding = ActivityPlayerRoleBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+        roleShuffled()
+
         playerRoleAdapter = PlayerRoleAdapter(
             SharedData.getPlayers(),
             onSelect = { player ->
@@ -37,7 +39,7 @@ class PlayerRoleActivity : AppCompatActivity() {
         binding.peopleRoleToolBar.setOnMenuItemClickListener { menuItem ->
             when (menuItem.itemId) {
                 R.id.menuItemRefresh -> {
-                    SharedData.shuffled()
+                    roleShuffled()
                     Toast.makeText(this, R.string.refresh, Toast.LENGTH_SHORT).show()
                     true
                 }
@@ -46,6 +48,12 @@ class PlayerRoleActivity : AppCompatActivity() {
                     false
                 }
             }
+        }
+    }
+
+    private fun roleShuffled() {
+        for (i in 1..2) {
+            SharedData.shuffled()
         }
     }
 }
