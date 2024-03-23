@@ -37,6 +37,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             app:cardBackgroundColor="@color/md_theme_surface"
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent">
 
@@ -111,7 +112,6 @@
             android:id="@+id/textView2"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="24dp"
             android:background="@color/mafia_md_theme_secondaryContainer"
             android:gravity="center_horizontal"
             android:text="@string/mafia_roles"
@@ -134,7 +134,6 @@
             android:id="@+id/textView3"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="24dp"
             android:background="@color/independent_md_theme_secondaryContainer"
             android:gravity="center_horizontal"
             android:text="@string/independent_roles"
