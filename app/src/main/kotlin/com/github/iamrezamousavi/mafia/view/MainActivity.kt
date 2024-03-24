@@ -33,7 +33,7 @@ class MainActivity : AppCompatActivity() {
             },
             onDeleteClicked = { player ->
                 viewModel.removePlayer(player.id)
-            },
+            }
         )
         binding.peopleList.adapter = playerAdapter
         binding.peopleList.layoutManager = LinearLayoutManager(this)

@@ -39,5 +39,4 @@ object SharedData {
         val index = _players.value!!.indexOf(player)
         return _roles.value!![index]
     }
-
 }

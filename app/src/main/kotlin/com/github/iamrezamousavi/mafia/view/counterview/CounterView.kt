@@ -12,7 +12,9 @@ import com.github.iamrezamousavi.mafia.R
 import com.github.iamrezamousavi.mafia.databinding.ViewCounterBinding
 
 class CounterView @JvmOverloads constructor(
-    context: Context, attributeSet: AttributeSet? = null, defStyle: Int = 0
+    context: Context,
+    attributeSet: AttributeSet? = null,
+    defStyle: Int = 0
 ) : ConstraintLayout(context, attributeSet, defStyle) {
 
     private var listener: CounterViewListener? = null
@@ -65,7 +67,10 @@ class CounterView @JvmOverloads constructor(
     init {
 
         val a = context.obtainStyledAttributes(
-            attributeSet, R.styleable.CounterView, defStyle, 0
+            attributeSet,
+            R.styleable.CounterView,
+            defStyle,
+            0
         )
 
         minValue = a.getInteger(
@@ -84,7 +89,7 @@ class CounterView @JvmOverloads constructor(
         binding.minusButton.setOnClickListener {
             hideKeyboard()
             if (minValue >= currentValue) {
-                //do nothing
+                // do nothing
             } else {
                 doDec()
                 listener?.onDecrease()
@@ -95,7 +100,7 @@ class CounterView @JvmOverloads constructor(
         binding.plusButton.setOnClickListener {
             hideKeyboard()
             if (maxValue <= currentValue) {
-                //do  nothing
+                // do  nothing
             } else {
                 doInc()
                 listener?.onIncrease()
@@ -110,11 +115,21 @@ class CounterView @JvmOverloads constructor(
         }
 
         binding.counterET.addTextChangedListener(object : TextWatcher {
-            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
-                //TODO("Not yet implemented")
+            override fun beforeTextChanged(
+                s: CharSequence?,
+                start: Int,
+                count: Int,
+                after: Int
+            ) {
+                // TODO("Not yet implemented")
             }
 
-            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+            override fun onTextChanged(
+                s: CharSequence?,
+                start: Int,
+                before: Int,
+                count: Int
+            ) {
                 currentValue = if (s.toString().isNotEmpty() || s.toString() != "") {
                     val value = Integer.parseInt(s.toString())
                     listener?.onValueChanged(value)
@@ -127,7 +142,7 @@ class CounterView @JvmOverloads constructor(
             override fun afterTextChanged(s: Editable?) {
                 val value = s.toString().toIntOrNull()
                 if (s.toString().isEmpty()) {
-                    //do nothing
+                    // do nothing
                 } else if (value!! < minValue && s.toString().isBlank().not()) {
                     binding.counterET.text =
                         Editable.Factory.getInstance().newEditable(minValue.toString())
@@ -154,7 +169,7 @@ class CounterView @JvmOverloads constructor(
     }
 
     private fun doDec() {
-        binding.counterET.isCursorVisible = false  // hide cursor if it's visible
+        binding.counterET.isCursorVisible = false // hide cursor if it's visible
         val decreasedValue: Int = currentValue.dec()
         value = decreasedValue
     }
@@ -163,8 +178,8 @@ class CounterView @JvmOverloads constructor(
         this.listener = listener
     }
 
-    private fun isReadOnly(isReadOnly: Boolean): Boolean {
-        return if (isReadOnly) { // if user wants read only, then set edittext enabled to false
+    private fun isReadOnly(isReadOnly: Boolean): Boolean =
+        if (isReadOnly) { // if user wants read only, then set edittext enabled to false
             binding.counterET.apply {
                 isFocusableInTouchMode = false
                 isCursorVisible = false
@@ -178,5 +193,4 @@ class CounterView @JvmOverloads constructor(
             }
             false
         }
-    }
 }

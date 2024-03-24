@@ -10,11 +10,12 @@ import com.github.iamrezamousavi.mafia.databinding.PlayerRoleItemBinding
 
 class PlayerRoleAdapter(
     private var players: ArrayList<Player>,
-    private val onSelect: (Player) -> Unit,
+    private val onSelect: (Player) -> Unit
 ) : RecyclerView.Adapter<PlayerRoleAdapter.ViewHolder>() {
 
-    inner class ViewHolder(private val binding: PlayerRoleItemBinding) :
-        RecyclerView.ViewHolder(binding.root) {
+    inner class ViewHolder(
+        private val binding: PlayerRoleItemBinding
+    ) : RecyclerView.ViewHolder(binding.root) {
         fun bind(player: Player) {
             binding.playerName.text = player.name
             binding.playerRoleItem.visibility = View.VISIBLE
@@ -25,19 +26,23 @@ class PlayerRoleAdapter(
         }
     }
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
+    override fun onCreateViewHolder(
+        parent: ViewGroup,
+        viewType: Int
+    ): ViewHolder {
         val binding =
             PlayerRoleItemBinding.inflate(LayoutInflater.from(parent.context), parent, false)
         return ViewHolder(binding)
     }
 
-    override fun onBindViewHolder(holder: ViewHolder, position: Int) {
+    override fun onBindViewHolder(
+        holder: ViewHolder,
+        position: Int
+    ) {
         holder.bind(players[position])
     }
 
-    override fun getItemCount(): Int {
-        return players.size
-    }
+    override fun getItemCount(): Int = players.size
 
     @SuppressLint("NotifyDataSetChanged")
     fun refresh() {

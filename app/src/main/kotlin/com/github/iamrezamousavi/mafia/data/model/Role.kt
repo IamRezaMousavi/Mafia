@@ -7,5 +7,5 @@ data class Role(
     var id: Int = 0,
 
     @StringRes
-    val name: Int,
+    val name: Int
 )

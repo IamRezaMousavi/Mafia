@@ -21,6 +21,9 @@ jobs:
 
     - name: Lint with Gradle
       run: ./gradlew lint
+    
+    - name: Run ktlint
+      run: ./gradlew ktlintCheck
 
     - name: Test with Gradle
       run: ./gradlew test

@@ -10,7 +10,9 @@ import com.github.iamrezamousavi.mafia.data.repository.PlayerRepository
 import com.github.iamrezamousavi.mafia.data.source.SharedPreferencesManager
 import com.github.iamrezamousavi.mafia.utils.SharedData
 
-class PlayerViewModel(context: Context) : ViewModel() {
+class PlayerViewModel(
+    context: Context
+) : ViewModel() {
 
     private val repository = PlayerRepository(SharedPreferencesManager(context))
 
@@ -57,12 +59,14 @@ class PlayerViewModel(context: Context) : ViewModel() {
         repository.savePlayers(SharedData.getPlayers())
     }
 
-
     companion object {
 
         val Factory = object : ViewModelProvider.Factory {
             @Suppress("UNCHECKED_CAST")
-            override fun <T : ViewModel> create(modelClass: Class<T>, extras: CreationExtras): T {
+            override fun <T : ViewModel> create(
+                modelClass: Class<T>,
+                extras: CreationExtras
+            ): T {
                 val application = checkNotNull(extras[APPLICATION_KEY])
                 if (modelClass.isAssignableFrom(PlayerViewModel::class.java)) {
                     return PlayerViewModel(application.baseContext) as T
@@ -70,6 +74,5 @@ class PlayerViewModel(context: Context) : ViewModel() {
                 return super.create(modelClass)
             }
         }
-
     }
 }

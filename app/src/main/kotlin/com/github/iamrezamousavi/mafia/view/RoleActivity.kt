@@ -102,10 +102,11 @@ class RoleActivity : AppCompatActivity() {
     }
 
     private fun getSelectedRoles(): ArrayList<Role> {
-        val selectedRoles = ArrayList((
+        val selectedRoles = ArrayList(
+            (
                 binding.citizen.chipGroup1.checkedChipIds +
-                        binding.mafia.chipGroup2.checkedChipIds +
-                        binding.independent.chipGroup3.checkedChipIds
+                    binding.mafia.chipGroup2.checkedChipIds +
+                    binding.independent.chipGroup3.checkedChipIds
                 ).map {
                 Role(
                     name = getRoleId(
@@ -113,7 +114,8 @@ class RoleActivity : AppCompatActivity() {
                         findViewById<Chip>(it).text.toString()
                     )
                 )
-            })
+            }
+        )
         return selectedRoles
     }
 }

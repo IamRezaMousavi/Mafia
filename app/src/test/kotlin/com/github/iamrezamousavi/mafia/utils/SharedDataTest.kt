@@ -36,7 +36,7 @@ class SharedDataTest {
             Role(name = R.string.doctor),
             Role(name = R.string.detective),
             Role(name = R.string.simple_mafia),
-            Role(name = R.string.godfather),
+            Role(name = R.string.godfather)
         )
         sharedData.setRoles(roles)
         assertEquals(sharedData.getRoles(), roles)
@@ -49,7 +49,7 @@ class SharedDataTest {
             Role(name = R.string.doctor),
             Role(name = R.string.detective),
             Role(name = R.string.simple_mafia),
-            Role(name = R.string.godfather),
+            Role(name = R.string.godfather)
         )
         sharedData.setRoles(roles)
 
@@ -65,7 +65,7 @@ class SharedDataTest {
             Role(name = R.string.doctor),
             Role(name = R.string.detective),
             Role(name = R.string.simple_mafia),
-            Role(name = R.string.godfather),
+            Role(name = R.string.godfather)
         )
         sharedData.setRoles(roles)
 
@@ -90,7 +90,7 @@ class SharedDataTest {
             Role(name = R.string.doctor),
             Role(name = R.string.detective),
             Role(name = R.string.simple_mafia),
-            Role(name = R.string.godfather),
+            Role(name = R.string.godfather)
         )
         sharedData.setRoles(roles)
 
@@ -99,5 +99,4 @@ class SharedDataTest {
         val expectedRole = roles[1]
         assertEquals(role, expectedRole)
     }
-
 }

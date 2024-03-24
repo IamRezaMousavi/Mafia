@@ -382,11 +382,11 @@ class RoleViewModelTest {
         assertEquals(0, roleViewModel.maxSimpleMafia.value)
         assertTrue(
             roleViewModel.getSelectedRoles().filter { it.name == R.string.simple_citizen }.size ==
-                    roleViewModel.simpleCitizenCounter.value
+                roleViewModel.simpleCitizenCounter.value
         )
         assertTrue(
             roleViewModel.getSelectedRoles().filter { it.name == R.string.simple_mafia }.size ==
-                    roleViewModel.simpleMafiaCounter.value
+                roleViewModel.simpleMafiaCounter.value
         )
     }
 
@@ -414,11 +414,11 @@ class RoleViewModelTest {
         assertEquals(1, roleViewModel.maxSimpleMafia.value)
         assertTrue(
             roleViewModel.getSelectedRoles().filter { it.name == R.string.simple_citizen }.size ==
-                    roleViewModel.simpleCitizenCounter.value
+                roleViewModel.simpleCitizenCounter.value
         )
         assertTrue(
             roleViewModel.getSelectedRoles().filter { it.name == R.string.simple_mafia }.size ==
-                    roleViewModel.simpleMafiaCounter.value
+                roleViewModel.simpleMafiaCounter.value
         )
     }
 
@@ -446,11 +446,11 @@ class RoleViewModelTest {
         assertEquals(0, roleViewModel.maxSimpleMafia.value)
         assertTrue(
             roleViewModel.getSelectedRoles().filter { it.name == R.string.simple_citizen }.size ==
-                    roleViewModel.simpleCitizenCounter.value
+                roleViewModel.simpleCitizenCounter.value
         )
         assertTrue(
             roleViewModel.getSelectedRoles().filter { it.name == R.string.simple_mafia }.size ==
-                    roleViewModel.simpleMafiaCounter.value
+                roleViewModel.simpleMafiaCounter.value
         )
     }
 
@@ -478,11 +478,11 @@ class RoleViewModelTest {
         assertEquals(2, roleViewModel.maxSimpleMafia.value)
         assertTrue(
             roleViewModel.getSelectedRoles().filter { it.name == R.string.simple_citizen }.size ==
-                    roleViewModel.simpleCitizenCounter.value
+                roleViewModel.simpleCitizenCounter.value
         )
         assertTrue(
             roleViewModel.getSelectedRoles().filter { it.name == R.string.simple_mafia }.size ==
-                    roleViewModel.simpleMafiaCounter.value
+                roleViewModel.simpleMafiaCounter.value
         )
     }
 
@@ -509,11 +509,11 @@ class RoleViewModelTest {
         assertEquals(0, roleViewModel.maxSimpleMafia.value)
         assertTrue(
             roleViewModel.getSelectedRoles().filter { it.name == R.string.simple_citizen }.size ==
-                    roleViewModel.simpleCitizenCounter.value
+                roleViewModel.simpleCitizenCounter.value
         )
         assertTrue(
             roleViewModel.getSelectedRoles().filter { it.name == R.string.simple_mafia }.size ==
-                    roleViewModel.simpleMafiaCounter.value
+                roleViewModel.simpleMafiaCounter.value
         )
     }
 
@@ -541,11 +541,11 @@ class RoleViewModelTest {
         assertEquals(1, roleViewModel.maxSimpleMafia.value)
         assertTrue(
             roleViewModel.getSelectedRoles().filter { it.name == R.string.simple_citizen }.size ==
-                    roleViewModel.simpleCitizenCounter.value
+                roleViewModel.simpleCitizenCounter.value
         )
         assertTrue(
             roleViewModel.getSelectedRoles().filter { it.name == R.string.simple_mafia }.size ==
-                    roleViewModel.simpleMafiaCounter.value
+                roleViewModel.simpleMafiaCounter.value
         )
     }
 
@@ -568,11 +568,11 @@ class RoleViewModelTest {
         assertEquals(3, roleViewModel.maxSimpleMafia.value)
         assertTrue(
             roleViewModel.getSelectedRoles().filter { it.name == R.string.simple_citizen }.size ==
-                    roleViewModel.simpleCitizenCounter.value
+                roleViewModel.simpleCitizenCounter.value
         )
         assertTrue(
             roleViewModel.getSelectedRoles().filter { it.name == R.string.simple_mafia }.size ==
-                    roleViewModel.simpleMafiaCounter.value
+                roleViewModel.simpleMafiaCounter.value
         )
     }
 
@@ -596,11 +596,11 @@ class RoleViewModelTest {
         assertEquals(3, roleViewModel.maxSimpleMafia.value)
         assertTrue(
             roleViewModel.getSelectedRoles().filter { it.name == R.string.simple_citizen }.size ==
-                    roleViewModel.simpleCitizenCounter.value
+                roleViewModel.simpleCitizenCounter.value
         )
         assertTrue(
             roleViewModel.getSelectedRoles().filter { it.name == R.string.simple_mafia }.size ==
-                    roleViewModel.simpleMafiaCounter.value
+                roleViewModel.simpleMafiaCounter.value
         )
     }
 }

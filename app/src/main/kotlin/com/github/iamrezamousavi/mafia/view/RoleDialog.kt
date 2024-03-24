@@ -11,7 +11,8 @@ import com.github.iamrezamousavi.mafia.utils.getDescription
 import com.github.iamrezamousavi.mafia.utils.getSide
 
 class RoleDialog(
-    context: Context, private val role: Role
+    context: Context,
+    private val role: Role
 ) : AlertDialog(context) {
     private lateinit var binding: DialogRoleBinding
 
@@ -33,6 +34,5 @@ class RoleDialog(
         binding.okButton.setOnClickListener {
             dismiss()
         }
-
     }
 }
