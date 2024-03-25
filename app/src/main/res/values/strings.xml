@@ -20,6 +20,7 @@
     <string name="refresh">تازه کردن</string>
     <string name="ok_button">متوجه شدم</string>
     <string name="confirm_button">تایید</string>
+    <string name="comma">،</string>
 
     <string name="citizen_roles">نقش‌های شهروندان</string>
     <string name="mafia_roles">نقش‌های مافیا</string>

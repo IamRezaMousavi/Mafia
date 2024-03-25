@@ -10,6 +10,7 @@ import androidx.appcompat.app.AlertDialog
 import com.github.iamrezamousavi.mafia.R
 import com.github.iamrezamousavi.mafia.databinding.DialogRoleBinding
 import com.github.iamrezamousavi.mafia.utils.getSide
+import com.github.iamrezamousavi.mafia.view.counterview.CounterViewListener
 import com.github.iamrezamousavi.mafia.viewmodel.RoleViewModel
 
 class RoleDialog(
@@ -30,25 +31,78 @@ class RoleDialog(
         binding.playerSizeText.text =
             context.getString(R.string.players_size, roleViewModel.playersSize)
 
-        val citizenSize =
-            roleViewModel.selectedRoles.filter { getSide(it.name) == R.string.citizen_side }.size
-        binding.citizenCounterText.text =
-            context.getString(R.string.citizen_size, citizenSize)
-
-        val independentSize =
+        val independentRoles =
             roleViewModel.selectedRoles.filter {
                 getSide(it.name) == R.string.independent_side
-            }.size
-        if (independentSize == 0) {
+            }
+        if (independentRoles.isEmpty()) {
             binding.independentCard.visibility = View.GONE
         } else {
             binding.independentCounterText.text =
-                context.getString(R.string.independent_size, independentSize)
+                context.getString(R.string.independent_size, independentRoles.size)
+            binding.independentRoles.text =
+                independentRoles
+                    .map { role ->
+                        context.getString(role.name)
+                    }
+                    .toString()
+                    .replace("[", "")
+                    .replace("]", "")
+                    .replace(",", context.getString(R.string.comma))
         }
 
-        val mafiaSize =
-            roleViewModel.selectedRoles.filter { getSide(it.name) == R.string.mafia_side }.size
-        binding.mafiaCounter.value = mafiaSize
+        roleViewModel.citizenSize.observe(this) {
+            binding.citizenCounterText.text =
+                context.getString(R.string.citizen_size, it)
+        }
+
+        roleViewModel.mafiaSize.observe(this) {
+            binding.mafiaCounter.value = it
+        }
+
+        roleViewModel.generatedRoles.observe(this) {
+            binding.citizenRoles.text =
+                it.filter { role ->
+                    getSide(role.name) == R.string.citizen_side
+                }
+                    .map { role ->
+                        context.getString(role.name)
+                    }
+                    .toString()
+                    .replace("[", "")
+                    .replace("]", "")
+                    .replace(",", context.getString(R.string.comma))
+
+            binding.mafiaRoles.text =
+                it.filter { role ->
+                    getSide(role.name) == R.string.mafia_side
+                }
+                    .map { role ->
+                        context.getString(role.name)
+                    }
+                    .toString()
+                    .replace("[", "")
+                    .replace("]", "")
+                    .replace(",", context.getString(R.string.comma))
+        }
+
+        binding.mafiaCounter.setCounterListener(object : CounterViewListener {
+            override fun onIncrease() {
+                val newValue = binding.mafiaCounter.value
+                roleViewModel.setMafiaSize(newValue)
+            }
+
+            override fun onDecrease() {
+                val newValue = binding.mafiaCounter.value
+                roleViewModel.setMafiaSize(newValue)
+            }
+
+            override fun onValueChanged(value: Int) {
+            }
+        })
+
+        // to show roles
+        roleViewModel.setMafiaSize(1)
 
         binding.okButton.setOnClickListener {
             val intent = Intent(context, PlayerRoleActivity::class.java)

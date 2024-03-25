@@ -18,6 +18,7 @@ class RoleViewModel(
     private val simpleCitizen = R.string.simple_citizen
     private val simpleMafia = R.string.simple_mafia
     private val mafiaSide = R.string.mafia_side
+    private val citizenSide = R.string.citizen_side
 
     var playersSize = players.filter { it.isChecked }.size
 
@@ -27,12 +28,30 @@ class RoleViewModel(
     val selectedRolesSize: LiveData<Int>
         get() = _selectedRolesSize
 
+    private val _generatedRoles = MutableLiveData<ArrayList<Role>>()
+    val generatedRoles: LiveData<ArrayList<Role>>
+        get() = _generatedRoles
+
+    private val _mafiaSize = MutableLiveData(1)
+    val mafiaSize: LiveData<Int>
+        get() = _mafiaSize
+
+    private val _citizenSize = MutableLiveData(calculateCitizenSize())
+    val citizenSize: LiveData<Int>
+        get() = _citizenSize
+
+    fun setMafiaSize(newMafiaSize: Int) {
+        _mafiaSize.value = newMafiaSize
+        _generatedRoles.value = selectedRoles
+    }
+
     fun setSelectedRoles(selectedRoles: ArrayList<Role>): Boolean {
         if (!checkSelectedRolesIsOk(selectedRoles)) {
             return false
         }
         this.selectedRoles = selectedRoles
         _selectedRolesSize.value = selectedRoles.size
+        _citizenSize.value = calculateCitizenSize()
         return true
     }
 
@@ -67,6 +86,11 @@ class RoleViewModel(
         }
         return 0
     }
+
+    private fun getIndependentSize(): Int =
+        selectedRoles.filter { getSide(it.name) == R.string.independent_side }.size
+
+    private fun calculateCitizenSize(): Int = playersSize - mafiaSize.value!! - getIndependentSize()
 
     fun generateRoles(
         simpleMafiaCounter: Int,
