@@ -46,11 +46,12 @@ class RoleActivity : AppCompatActivity() {
         }
 
         binding.button.setOnClickListener {
-            if (roleViewModel.checkSelectedRolesIsOk(roleViewModel.selectedRoles)) {
+            val selectedRoles = getSelectedRoles()
+            if (roleViewModel.checkSelectedRolesIsOk(selectedRoles)) {
                 val roleDialog = RoleDialog(this, roleViewModel)
                 roleDialog.show()
             } else {
-                Toast.makeText(this, R.string.roles_not_match, Toast.LENGTH_SHORT).show()
+                Toast.makeText(this, R.string.mafia_roles_too_much, Toast.LENGTH_SHORT).show()
             }
         }
     }

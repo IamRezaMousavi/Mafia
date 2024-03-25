@@ -31,25 +31,7 @@ class RoleDialog(
         binding.playerSizeText.text =
             context.getString(R.string.players_size, roleViewModel.playersSize)
 
-        val independentRoles =
-            roleViewModel.selectedRoles.filter {
-                getSide(it.name) == R.string.independent_side
-            }
-        if (independentRoles.isEmpty()) {
-            binding.independentCard.visibility = View.GONE
-        } else {
-            binding.independentCounterText.text =
-                context.getString(R.string.independent_size, independentRoles.size)
-            binding.independentRoles.text =
-                independentRoles
-                    .map { role ->
-                        context.getString(role.name)
-                    }
-                    .toString()
-                    .replace("[", "")
-                    .replace("]", "")
-                    .replace(",", context.getString(R.string.comma))
-        }
+        setIndependentSection()
 
         roleViewModel.citizenSize.observe(this) {
             binding.citizenCounterText.text =
@@ -86,28 +68,55 @@ class RoleDialog(
                     .replace(",", context.getString(R.string.comma))
         }
 
-        binding.mafiaCounter.setCounterListener(object : CounterViewListener {
-            override fun onIncrease() {
-                val newValue = binding.mafiaCounter.value
-                roleViewModel.setMafiaSize(newValue)
-            }
+        binding.mafiaCounter.also {
+            it.setCounterListener(object : CounterViewListener {
+                override fun onIncrease() {
+                    val newValue = binding.mafiaCounter.value
+                    roleViewModel.setMafiaSize(newValue)
+                }
 
-            override fun onDecrease() {
-                val newValue = binding.mafiaCounter.value
-                roleViewModel.setMafiaSize(newValue)
-            }
+                override fun onDecrease() {
+                    val newValue = binding.mafiaCounter.value
+                    roleViewModel.setMafiaSize(newValue)
+                }
 
-            override fun onValueChanged(value: Int) {
-            }
-        })
+                override fun onValueChanged(value: Int) {
+                }
+            })
 
-        // to show roles
-        roleViewModel.setMafiaSize(1)
+            it.isReadOnly = true
+            it.maxValue = roleViewModel.calculateMaxMafia()
+            it.minValue = roleViewModel.calculateMinMafia()
+            it.value = roleViewModel.calculateMinMafia()
+            roleViewModel.setMafiaSize(it.value)
+        }
 
         binding.okButton.setOnClickListener {
             val intent = Intent(context, PlayerRoleActivity::class.java)
             context.startActivity(intent)
             dismiss()
+        }
+    }
+
+    private fun setIndependentSection() {
+        val independentRoles =
+            roleViewModel.selectedRoles.filter {
+                getSide(it.name) == R.string.independent_side
+            }
+        if (independentRoles.isEmpty()) {
+            binding.independentCard.visibility = View.GONE
+        } else {
+            binding.independentCounterText.text =
+                context.getString(R.string.independent_size, independentRoles.size)
+            binding.independentRoles.text =
+                independentRoles
+                    .map { role ->
+                        context.getString(role.name)
+                    }
+                    .toString()
+                    .replace("[", "")
+                    .replace("]", "")
+                    .replace(",", context.getString(R.string.comma))
         }
     }
 }

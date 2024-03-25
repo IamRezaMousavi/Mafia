@@ -15,11 +15,6 @@ class RoleViewModel(
     players: ArrayList<Player>
 ) : ViewModel() {
 
-    private val simpleCitizen = R.string.simple_citizen
-    private val simpleMafia = R.string.simple_mafia
-    private val mafiaSide = R.string.mafia_side
-    private val citizenSide = R.string.citizen_side
-
     var playersSize = players.filter { it.isChecked }.size
 
     var selectedRoles = ArrayList<Role>()
@@ -28,7 +23,7 @@ class RoleViewModel(
     val selectedRolesSize: LiveData<Int>
         get() = _selectedRolesSize
 
-    private val _generatedRoles = MutableLiveData<ArrayList<Role>>()
+    private val _generatedRoles = MutableLiveData(ArrayList<Role>())
     val generatedRoles: LiveData<ArrayList<Role>>
         get() = _generatedRoles
 
@@ -36,13 +31,43 @@ class RoleViewModel(
     val mafiaSize: LiveData<Int>
         get() = _mafiaSize
 
-    private val _citizenSize = MutableLiveData(calculateCitizenSize())
+    private val _citizenSize = MutableLiveData(1)
     val citizenSize: LiveData<Int>
         get() = _citizenSize
 
+    private fun getIndependentSize(): Int =
+        selectedRoles.filter { getSide(it.name) == R.string.independent_side }.size
+
+    private fun calculateCitizenSize(): Int = playersSize - mafiaSize.value!! - getIndependentSize()
+
+    fun calculateMaxMafia(): Int {
+        return if (playersSize % 2 == 1) {
+            playersSize / 2
+        } else {
+            playersSize / 2 - 1
+        }
+    }
+
+    fun calculateMinMafia(): Int {
+        val minMafia = selectedRoles
+            .filter { getSide(it.name) == R.string.mafia_side }
+            .size
+        return if (minMafia > 1) minMafia else 1
+    }
+
     fun setMafiaSize(newMafiaSize: Int) {
         _mafiaSize.value = newMafiaSize
-        _generatedRoles.value = selectedRoles
+        _citizenSize.value = calculateCitizenSize()
+        _generatedRoles.value = generateRoles()
+    }
+
+    fun checkSelectedRolesIsOk(selectedRoles: ArrayList<Role>): Boolean {
+        val mafiaSize = selectedRoles.filter { getSide(it.name) == R.string.mafia_side }.size
+        return if (playersSize % 2 == 1) {
+            mafiaSize <= playersSize / 2
+        } else {
+            mafiaSize < playersSize / 2
+        }
     }
 
     fun setSelectedRoles(selectedRoles: ArrayList<Role>): Boolean {
@@ -51,58 +76,34 @@ class RoleViewModel(
         }
         this.selectedRoles = selectedRoles
         _selectedRolesSize.value = selectedRoles.size
+        _mafiaSize.value = calculateMinMafia()
         _citizenSize.value = calculateCitizenSize()
         return true
     }
 
-    fun checkSelectedRolesIsOk(selectedRoles: ArrayList<Role>): Boolean {
-        val mafiaSize = selectedRoles.filter { getSide(it.name) == R.string.mafia_side }.size
-        return if (playersSize % 2 ==
-            1
-        ) {
-            mafiaSize <= playersSize / 2
-        } else {
-            mafiaSize < playersSize / 2
+    private fun generateRoles(): ArrayList<Role> {
+        val roles = ArrayList(selectedRoles)
+
+        var mafiaSizeInSelectedRoles = selectedRoles
+            .filter { getSide(it.name) == R.string.mafia_side }
+            .size
+        while (mafiaSizeInSelectedRoles < mafiaSize.value!!) {
+            roles.add(Role(name = R.string.simple_mafia))
+            mafiaSizeInSelectedRoles += 1
         }
-    }
 
-    private fun calculateMaxSimpleMafia(): Int {
-        val maxMafia = if (playersSize % 2 == 1) {
-            playersSize / 2
-        } else {
-            playersSize / 2 - 1
+        var citizenSizeInSelectedRoles = selectedRoles
+            .filter { getSide(it.name) == R.string.citizen_side }
+            .size
+        while (citizenSizeInSelectedRoles < citizenSize.value!!) {
+            roles.add(Role(name = R.string.simple_citizen))
+            citizenSizeInSelectedRoles += 1
         }
-        val selectedMafiaRoles = selectedRoles.filter { getSide(it.name) == mafiaSide }
-        val hasSimpleMafia =
-            selectedMafiaRoles.contains(Role(name = simpleMafia))
-        val selectedMafiaRoleSize = selectedMafiaRoles.size
 
-        if (hasSimpleMafia) {
-            var maxSimpleMafia = maxMafia - selectedMafiaRoleSize + 1
-            if (playersSize - selectedRoles.size < maxSimpleMafia) {
-                maxSimpleMafia = playersSize - selectedRoles.size + 1
-            }
-            return maxSimpleMafia
-        }
-        return 0
-    }
+        SharedData.setRoles(roles)
 
-    private fun getIndependentSize(): Int =
-        selectedRoles.filter { getSide(it.name) == R.string.independent_side }.size
-
-    private fun calculateCitizenSize(): Int = playersSize - mafiaSize.value!! - getIndependentSize()
-
-    fun generateRoles(
-        simpleMafiaCounter: Int,
-        simpleCitizenCounter: Int
-    ) {
-        if (selectedRoles.size < playersSize) {
-            for (i in 1..<simpleMafiaCounter)
-                selectedRoles.add(Role(name = simpleMafia))
-            for (i in 1..<simpleCitizenCounter)
-                selectedRoles.add(Role(name = simpleCitizen))
-        }
-        SharedData.setRoles(selectedRoles)
+        roles.sortBy { it.name }
+        return roles
     }
 
     companion object {
