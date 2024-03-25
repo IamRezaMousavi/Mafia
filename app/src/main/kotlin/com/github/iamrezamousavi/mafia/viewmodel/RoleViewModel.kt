@@ -21,87 +21,29 @@ class RoleViewModel(
 
     var playersSize = players.filter { it.isChecked }.size
 
-    private var selectedRoles = ArrayList<Role>()
+    var selectedRoles = ArrayList<Role>()
 
-    private val _selectedRolesSize = MutableLiveData(calculateMaxSimpleMafia())
+    private val _selectedRolesSize = MutableLiveData(selectedRoles.size)
     val selectedRolesSize: LiveData<Int>
         get() = _selectedRolesSize
 
-    private val _maxSimpleMafia = MutableLiveData(calculateMaxSimpleMafia())
-    val maxSimpleMafia: LiveData<Int>
-        get() = _maxSimpleMafia
-
-    private val _minSimpleMafia = MutableLiveData(1)
-    val minSimpleMafia: LiveData<Int>
-        get() = _minSimpleMafia
-
-    private val _simpleMafiaCounter = MutableLiveData(1)
-    val simpleMafiaCounter: LiveData<Int>
-        get() = _simpleMafiaCounter
-
-    private val _simpleCitizenCounter = MutableLiveData(1)
-    val simpleCitizenCounter: LiveData<Int>
-        get() = _simpleCitizenCounter
-
-    fun setSimpleMafiaCounter(value: Int) {
-        if (value < minSimpleMafia.value!! || value > maxSimpleMafia.value!!) {
-            return
+    fun setSelectedRoles(selectedRoles: ArrayList<Role>): Boolean {
+        if (!checkSelectedRolesIsOk(selectedRoles)) {
+            return false
         }
-        _simpleMafiaCounter.value = value
-        _simpleCitizenCounter.value = calculateSimpleCitizenCounter()
-        _selectedRolesSize.value = calculateSelectedRolesSize()
-    }
-
-    fun getSelectedRoles(): ArrayList<Role> {
-        return selectedRoles
-    }
-
-    fun setSelectedRoles(selectedRoles: ArrayList<Role>) {
         this.selectedRoles = selectedRoles
-        val max = calculateMaxSimpleMafia()
-        if (max == 0) {
-            _minSimpleMafia.value = 0
-            _simpleMafiaCounter.value = 0
-            _maxSimpleMafia.value = 0
+        _selectedRolesSize.value = selectedRoles.size
+        return true
+    }
+
+    fun checkSelectedRolesIsOk(selectedRoles: ArrayList<Role>): Boolean {
+        val mafiaSize = selectedRoles.filter { getSide(it.name) == R.string.mafia_side }.size
+        return if (playersSize % 2 ==
+            1
+        ) {
+            mafiaSize <= playersSize / 2
         } else {
-            _maxSimpleMafia.value = max
-            _simpleMafiaCounter.value = 1
-            _minSimpleMafia.value = 1
-        }
-        _simpleCitizenCounter.value = calculateSimpleCitizenCounter()
-        _selectedRolesSize.value = calculateSelectedRolesSize()
-    }
-
-    private fun calculateSelectedRolesSize(): Int {
-        val hasSimpleMafia = selectedRoles.contains(Role(name = simpleMafia))
-        val hasSimpleCitizen = selectedRoles.contains(Role(name = simpleCitizen))
-
-        return when {
-            hasSimpleCitizen && hasSimpleMafia ->
-                selectedRoles.size + _simpleMafiaCounter.value!! + _simpleCitizenCounter.value!! -
-                    2
-
-            hasSimpleCitizen && !hasSimpleMafia ->
-                selectedRoles.size + _simpleCitizenCounter.value!! - 1
-
-            !hasSimpleCitizen &&
-                hasSimpleMafia -> selectedRoles.size + _simpleMafiaCounter.value!! - 1
-
-            else -> selectedRoles.size
-        }
-    }
-
-    private fun calculateSimpleCitizenCounter(): Int {
-        val hasSimpleCitizen =
-            selectedRoles.contains(Role(name = simpleCitizen))
-        val hasSimpleMafia = selectedRoles.contains(Role(name = simpleMafia))
-        return when {
-            hasSimpleCitizen && hasSimpleMafia ->
-                playersSize - selectedRoles.size - _simpleMafiaCounter.value!! + 2
-
-            hasSimpleCitizen -> playersSize - selectedRoles.size + 1
-
-            else -> 0
+            mafiaSize < playersSize / 2
         }
     }
 
@@ -126,19 +68,14 @@ class RoleViewModel(
         return 0
     }
 
-    fun checkRolesIsOk(): Boolean {
-        val selectedRolesSize = selectedRolesSize.value!!
-        val mafiaSize = selectedRoles.filter { getSide(it.name) == R.string.mafia_side }.size
-        val isMafiaSizeOk =
-            if (playersSize % 2 == 1) mafiaSize <= playersSize / 2 else mafiaSize < playersSize / 2
-        return playersSize == selectedRolesSize && isMafiaSizeOk
-    }
-
-    fun generateRoles() {
+    fun generateRoles(
+        simpleMafiaCounter: Int,
+        simpleCitizenCounter: Int
+    ) {
         if (selectedRoles.size < playersSize) {
-            for (i in 1..<_simpleMafiaCounter.value!!)
+            for (i in 1..<simpleMafiaCounter)
                 selectedRoles.add(Role(name = simpleMafia))
-            for (i in 1..<_simpleCitizenCounter.value!!)
+            for (i in 1..<simpleCitizenCounter)
                 selectedRoles.add(Role(name = simpleCitizen))
         }
         SharedData.setRoles(selectedRoles)

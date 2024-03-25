@@ -8,12 +8,18 @@
     <string name="narrator">راوی</string>
     <string name="settings">تنظیمات</string>
 
+    <string name="players_size">تعداد بازیکنان: %1$d</string>
+    <string name="independent_size">تعداد نقش‌های مستقل: %1$d</string>
+    <string name="citizen_size">تعداد شهروندان: %1$d</string>
+    <string name="mafia_size">تعداد مافیا</string>
+
     <string name="player_not_enough">حداقل ۳ نفر باید انتخاب کنید</string>
     <string name="roles_not_match">Players and Roles doesn\'t match</string>
     <string name="select_all">انتخاب همه</string>
     <string name="delete_player">حذف بازیکن</string>
     <string name="refresh">تازه کردن</string>
     <string name="ok_button">متوجه شدم</string>
+    <string name="confirm_button">تایید</string>
 
     <string name="citizen_roles">نقش‌های شهروندان</string>
     <string name="mafia_roles">نقش‌های مافیا</string>

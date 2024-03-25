@@ -95,6 +95,50 @@ class RoleViewModelTest {
     }
 
     @Test
+    fun setSelectedRoles_withSomeSimpleCitizenSomeSimpleMafia_errorDontWork() {
+        roleViewModel.playersSize = 9
+        roleViewModel.setSelectedRoles(
+            arrayListOf(
+                Role(name = R.string.simple_mafia),
+                Role(name = R.string.godfather),
+                Role(name = R.string.dr_lecter),
+                Role(name = R.string.silencer),
+                Role(name = R.string.simple_citizen),
+                Role(name = R.string.unknown)
+            )
+        )
+
+        // must not effective
+        roleViewModel.setSelectedRoles(
+            arrayListOf(
+                Role(name = R.string.simple_mafia),
+                Role(name = R.string.godfather),
+                Role(name = R.string.dr_lecter),
+                Role(name = R.string.silencer),
+                Role(name = R.string.bomber),
+                Role(name = R.string.simple_citizen),
+                Role(name = R.string.unknown)
+            )
+        )
+
+        roleViewModel.generateRoles()
+        println(roleViewModel.getSelectedRoles())
+        assertEquals(9, roleViewModel.selectedRolesSize.value)
+        assertEquals(4, roleViewModel.simpleCitizenCounter.value)
+        assertEquals(1, roleViewModel.simpleMafiaCounter.value)
+        assertEquals(1, roleViewModel.minSimpleMafia.value)
+        assertEquals(1, roleViewModel.maxSimpleMafia.value)
+        assertTrue(
+            roleViewModel.getSelectedRoles().filter { it.name == R.string.simple_citizen }.size ==
+                roleViewModel.simpleCitizenCounter.value
+        )
+        assertTrue(
+            roleViewModel.getSelectedRoles().filter { it.name == R.string.simple_mafia }.size ==
+                roleViewModel.simpleMafiaCounter.value
+        )
+    }
+
+    @Test
     fun setSimpleMafiaCounter_lessThanMin() {
         roleViewModel.setSelectedRoles(
             arrayListOf(
