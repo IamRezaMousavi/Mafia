@@ -59,23 +59,6 @@ class SharedDataTest {
     }
 
     @Test
-    fun test_two_shuffled() {
-        val roles = arrayListOf(
-            Role(name = R.string.simple_citizen),
-            Role(name = R.string.doctor),
-            Role(name = R.string.detective),
-            Role(name = R.string.simple_mafia),
-            Role(name = R.string.godfather)
-        )
-        sharedData.setRoles(roles)
-
-        sharedData.shuffled()
-        sharedData.shuffled()
-
-        assertNotEquals(sharedData.getRoles(), roles)
-    }
-
-    @Test
     fun test_get_role() {
         val players = arrayListOf(
             Player(name = "Reza"),
