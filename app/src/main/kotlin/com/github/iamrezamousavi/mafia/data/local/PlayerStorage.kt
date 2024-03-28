@@ -1,11 +1,11 @@
-package com.github.iamrezamousavi.mafia.data.source
+package com.github.iamrezamousavi.mafia.data.local
 
 import android.content.Context
 import com.github.iamrezamousavi.mafia.data.model.Player
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 
-class SharedPreferencesManager(
+class PlayerStorage(
     applicationContext: Context
 ) {
     private val sharedPreferences =

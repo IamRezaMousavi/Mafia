@@ -1,5 +1,6 @@
 package com.github.iamrezamousavi.mafia.view
 
+import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.widget.Toast
@@ -10,14 +11,27 @@ import com.github.iamrezamousavi.mafia.R
 import com.github.iamrezamousavi.mafia.data.model.Player
 import com.github.iamrezamousavi.mafia.databinding.ActivityMainBinding
 import com.github.iamrezamousavi.mafia.utils.SharedData
+import com.github.iamrezamousavi.mafia.utils.changeLanguage
 import com.github.iamrezamousavi.mafia.viewmodel.PlayerViewModel
+import com.github.iamrezamousavi.mafia.viewmodel.SettingsViewModel
 
 class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
 
+    private lateinit var settingsViewModel: SettingsViewModel
+
     private lateinit var playerAdapter: PlayerAdapter
-    private val viewModel: PlayerViewModel by viewModels {
+
+    private val viewModel by viewModels<PlayerViewModel> {
         PlayerViewModel.Factory
+    }
+
+    override fun attachBaseContext(newBase: Context?) {
+        newBase?.let { context ->
+            settingsViewModel = SettingsViewModel(context)
+            changeLanguage(context, settingsViewModel.language.value!!.code)
+        }
+        super.attachBaseContext(newBase)
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {

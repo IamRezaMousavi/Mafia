@@ -1,15 +1,13 @@
 package com.github.iamrezamousavi.mafia.data.repository
 
+import com.github.iamrezamousavi.mafia.data.local.PlayerStorage
 import com.github.iamrezamousavi.mafia.data.model.Player
-import com.github.iamrezamousavi.mafia.data.source.SharedPreferencesManager
 
 class PlayerRepository(
-    private val sharedPreferencesManager: SharedPreferencesManager
+    private val playerStorage: PlayerStorage
 ) {
 
-    fun getPlayers(): ArrayList<Player> = sharedPreferencesManager.getPlayers()
+    fun getPlayers(): ArrayList<Player> = playerStorage.getPlayers()
 
-    fun savePlayers(players: ArrayList<Player>) {
-        sharedPreferencesManager.savePlayers(players)
-    }
+    fun savePlayers(players: ArrayList<Player>) = playerStorage.savePlayers(players)
 }
