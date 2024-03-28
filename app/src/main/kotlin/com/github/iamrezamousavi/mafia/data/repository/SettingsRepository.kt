@@ -9,5 +9,4 @@ class SettingsRepository(
 
     fun getLanguage() = settingsStorage.getLanguage()
     fun saveLanguage(language: Language) = settingsStorage.saveLanguage(language)
-
 }

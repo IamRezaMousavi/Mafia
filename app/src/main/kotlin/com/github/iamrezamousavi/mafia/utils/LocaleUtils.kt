@@ -6,9 +6,11 @@ import android.os.Build
 import com.github.iamrezamousavi.mafia.data.model.Language
 import java.util.Locale
 
-
 @Suppress("DEPRECATION")
-fun changeLanguage(context: Context, languageCode: String): ContextWrapper {
+fun changeLanguage(
+    context: Context,
+    languageCode: String
+): ContextWrapper {
     val resources = context.resources
     val configuration = resources.configuration
 
@@ -16,13 +18,15 @@ fun changeLanguage(context: Context, languageCode: String): ContextWrapper {
     Locale.setDefault(locale)
 
     val currentLocale =
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N)
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
             configuration.getLocales().get(0)
-        else
+        } else {
             configuration.locale
+        }
 
-    if (currentLocale.language == languageCode)
+    if (currentLocale.language == languageCode) {
         return ContextWrapper(context)
+    }
 
     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR1) {
         configuration.setLocale(locale)
@@ -34,7 +38,6 @@ fun changeLanguage(context: Context, languageCode: String): ContextWrapper {
         context.createConfigurationContext(configuration)
     }
     resources.updateConfiguration(configuration, resources.displayMetrics)
-
 
     return ContextWrapper(context)
 }
@@ -62,8 +65,9 @@ fun getCurrentLocale(context: Context): Locale {
     val resources = context.resources
     val configuration = resources.configuration
 
-    return if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N)
+    return if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
         configuration.getLocales().get(0)
-    else
+    } else {
         configuration.locale
+    }
 }

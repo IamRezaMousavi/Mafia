@@ -3,7 +3,6 @@ package com.github.iamrezamousavi.mafia.view
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
-import android.util.Log
 import android.view.View
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
@@ -37,7 +36,6 @@ class SettingsActivity : AppCompatActivity() {
         setContentView(binding.root)
 
         setupLanguageSpinner()
-
     }
 
     private fun setupLanguageSpinner() {
@@ -62,7 +60,10 @@ class SettingsActivity : AppCompatActivity() {
             adapter = arrayAdapter
             onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
                 override fun onItemSelected(
-                    parent: AdapterView<*>, view: View?, position: Int, id: Long
+                    parent: AdapterView<*>,
+                    view: View?,
+                    position: Int,
+                    id: Long
                 ) {
                     val selectedItem = parent.getItemAtPosition(position).toString()
                     val language = nameToLanguage(selectedItem)
