@@ -7,14 +7,14 @@ import androidx.lifecycle.ViewModelProvider.AndroidViewModelFactory.Companion.AP
 import androidx.lifecycle.viewmodel.CreationExtras
 import com.github.iamrezamousavi.mafia.data.model.Player
 import com.github.iamrezamousavi.mafia.data.repository.PlayerRepository
-import com.github.iamrezamousavi.mafia.data.source.SharedPreferencesManager
+import com.github.iamrezamousavi.mafia.data.local.PlayerStorage
 import com.github.iamrezamousavi.mafia.utils.SharedData
 
 class PlayerViewModel(
     context: Context
 ) : ViewModel() {
 
-    private val repository = PlayerRepository(SharedPreferencesManager(context))
+    private val repository = PlayerRepository(PlayerStorage(context))
 
     fun loadPlayers(): ArrayList<Player> {
         val loadedPlayers = repository.getPlayers()
