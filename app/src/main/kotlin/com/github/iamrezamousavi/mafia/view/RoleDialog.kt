@@ -34,8 +34,7 @@ class RoleDialog(
         setIndependentSection()
 
         roleViewModel.citizenSize.observe(this) {
-            binding.citizenCounterText.text =
-                context.getString(R.string.citizen_size, it)
+            binding.citizenCounterText.text = context.getString(R.string.citizen_size, it)
         }
 
         roleViewModel.mafiaSize.observe(this) {
@@ -46,11 +45,9 @@ class RoleDialog(
             binding.citizenRoles.text =
                 it.filter { role ->
                     getSide(role.name) == R.string.citizen_side
-                }
-                    .map { role ->
-                        context.getString(role.name)
-                    }
-                    .toString()
+                }.map { role ->
+                    context.getString(role.name)
+                }.toString()
                     .replace("[", "")
                     .replace("]", "")
                     .replace(",", context.getString(R.string.comma))
@@ -58,11 +55,9 @@ class RoleDialog(
             binding.mafiaRoles.text =
                 it.filter { role ->
                     getSide(role.name) == R.string.mafia_side
-                }
-                    .map { role ->
-                        context.getString(role.name)
-                    }
-                    .toString()
+                }.map { role ->
+                    context.getString(role.name)
+                }.toString()
                     .replace("[", "")
                     .replace("]", "")
                     .replace(",", context.getString(R.string.comma))
@@ -99,21 +94,18 @@ class RoleDialog(
     }
 
     private fun setIndependentSection() {
-        val independentRoles =
-            roleViewModel.selectedRoles.filter {
-                getSide(it.name) == R.string.independent_side
-            }
+        val independentRoles = roleViewModel.selectedRoles.filter {
+            getSide(it.name) == R.string.independent_side
+        }
         if (independentRoles.isEmpty()) {
             binding.independentCard.visibility = View.GONE
         } else {
             binding.independentCounterText.text =
                 context.getString(R.string.independent_size, independentRoles.size)
             binding.independentRoles.text =
-                independentRoles
-                    .map { role ->
-                        context.getString(role.name)
-                    }
-                    .toString()
+                independentRoles.map { role ->
+                    context.getString(role.name)
+                }.toString()
                     .replace("[", "")
                     .replace("]", "")
                     .replace(",", context.getString(R.string.comma))

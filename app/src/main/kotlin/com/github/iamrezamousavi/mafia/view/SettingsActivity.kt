@@ -9,10 +9,7 @@ import android.widget.ArrayAdapter
 import androidx.appcompat.app.AppCompatActivity
 import com.github.iamrezamousavi.mafia.data.model.Language
 import com.github.iamrezamousavi.mafia.databinding.ActivitySettingsBinding
-import com.github.iamrezamousavi.mafia.utils.changeLanguage
-import com.github.iamrezamousavi.mafia.utils.codeToLanguage
-import com.github.iamrezamousavi.mafia.utils.getCurrentLocale
-import com.github.iamrezamousavi.mafia.utils.nameToLanguage
+import com.github.iamrezamousavi.mafia.utils.LangData
 import com.github.iamrezamousavi.mafia.viewmodel.SettingsViewModel
 
 class SettingsActivity : AppCompatActivity() {
@@ -24,8 +21,7 @@ class SettingsActivity : AppCompatActivity() {
     override fun attachBaseContext(newBase: Context?) {
         newBase?.let { context ->
             settingsViewModel = SettingsViewModel(context)
-            val code = settingsViewModel.language.value!!.code
-            changeLanguage(context, code)
+            LangData.getContextWrapper(context, settingsViewModel.language.code)
         }
         super.attachBaseContext(newBase)
     }
@@ -39,7 +35,7 @@ class SettingsActivity : AppCompatActivity() {
     }
 
     private fun setupLanguageSpinner() {
-        val currentLanguage = codeToLanguage(getCurrentLocale(this).language)
+        val currentLanguage = LangData.getCurrentLanguage(this)
         val items = Language
             .entries
             .map { it.nativeName }
@@ -66,13 +62,13 @@ class SettingsActivity : AppCompatActivity() {
                     id: Long
                 ) {
                     val selectedItem = parent.getItemAtPosition(position).toString()
-                    val language = nameToLanguage(selectedItem)
-                    val currentLocale = getCurrentLocale(this@SettingsActivity)
-                    if (language.code == currentLocale.language) return
+                    val language = LangData.languageFromName(selectedItem)
+                    val currentLang = LangData.getCurrentLanguage(this@SettingsActivity)
+                    if (language == currentLang) return
 
                     when (selectedItem) {
-                        Language.FA.nativeName -> settingsViewModel.setLanguage(Language.FA)
-                        Language.EN.nativeName -> settingsViewModel.setLanguage(Language.EN)
+                        Language.FA.nativeName -> settingsViewModel.language = Language.FA
+                        Language.EN.nativeName -> settingsViewModel.language = Language.EN
                     }
                     restartActivity()
                 }

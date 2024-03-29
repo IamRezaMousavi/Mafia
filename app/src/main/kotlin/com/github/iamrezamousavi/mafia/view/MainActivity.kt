@@ -10,17 +10,17 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.github.iamrezamousavi.mafia.R
 import com.github.iamrezamousavi.mafia.data.model.Player
 import com.github.iamrezamousavi.mafia.databinding.ActivityMainBinding
+import com.github.iamrezamousavi.mafia.utils.LangData
 import com.github.iamrezamousavi.mafia.utils.SharedData
-import com.github.iamrezamousavi.mafia.utils.changeLanguage
 import com.github.iamrezamousavi.mafia.viewmodel.PlayerViewModel
 import com.github.iamrezamousavi.mafia.viewmodel.SettingsViewModel
 
 class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
 
-    private lateinit var settingsViewModel: SettingsViewModel
-
     private lateinit var playerAdapter: PlayerAdapter
+
+    private lateinit var settingsViewModel: SettingsViewModel
 
     private val viewModel by viewModels<PlayerViewModel> {
         PlayerViewModel.Factory
@@ -29,7 +29,7 @@ class MainActivity : AppCompatActivity() {
     override fun attachBaseContext(newBase: Context?) {
         newBase?.let { context ->
             settingsViewModel = SettingsViewModel(context)
-            changeLanguage(context, settingsViewModel.language.value!!.code)
+            LangData.getContextWrapper(context, settingsViewModel.language.code)
         }
         super.attachBaseContext(newBase)
     }
@@ -39,16 +39,12 @@ class MainActivity : AppCompatActivity() {
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        playerAdapter = PlayerAdapter(
-            SharedData.getPlayers(),
-            onSelect = { player, isChecked ->
-                player.isChecked = isChecked
-                viewModel.updatePlayer(player)
-            },
-            onDeleteClicked = { player ->
-                viewModel.removePlayer(player.id)
-            }
-        )
+        playerAdapter = PlayerAdapter(SharedData.getPlayers(), onSelect = { player, isChecked ->
+            player.isChecked = isChecked
+            viewModel.updatePlayer(player)
+        }, onDeleteClicked = { player ->
+            viewModel.removePlayer(player.id)
+        })
         binding.peopleList.adapter = playerAdapter
         binding.peopleList.layoutManager = LinearLayoutManager(this)
 
@@ -96,6 +92,18 @@ class MainActivity : AppCompatActivity() {
                 }
             }
         }
+
+        LangData.language.observe(this) {
+            // TODO
+        }
+    }
+
+    @Suppress("DEPRECATION")
+    private fun restartActivity() {
+        startActivity(Intent(this, this::class.java))
+        overridePendingTransition(0, 0)
+        finish()
+        overridePendingTransition(0, 0)
     }
 
     override fun onPause() {

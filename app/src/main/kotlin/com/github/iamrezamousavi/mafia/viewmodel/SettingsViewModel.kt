@@ -1,8 +1,7 @@
 package com.github.iamrezamousavi.mafia.viewmodel
 
 import android.content.Context
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
+import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewModelScope
@@ -10,6 +9,7 @@ import androidx.lifecycle.viewmodel.CreationExtras
 import com.github.iamrezamousavi.mafia.data.local.SettingsStorage
 import com.github.iamrezamousavi.mafia.data.model.Language
 import com.github.iamrezamousavi.mafia.data.repository.SettingsRepository
+import com.github.iamrezamousavi.mafia.utils.LangData
 import kotlinx.coroutines.launch
 
 class SettingsViewModel(
@@ -17,28 +17,26 @@ class SettingsViewModel(
 ) : ViewModel() {
     private val settingsRepository = SettingsRepository(SettingsStorage(context))
 
-    private val _language = MutableLiveData(Language.FA)
-    val language: LiveData<Language> = _language
+    var language: Language
+        get() = LangData.getLanguage()
+        set(value) {
+            LangData.setLanguage(value)
+            saveVariables()
+        }
 
     init {
-        loadVariables()
+        Log.d("TAG", "LANG: SettingViewModel initialised")
+        loadLanguage()
     }
 
-    private fun loadVariables() {
-        viewModelScope.launch {
-            _language.value = settingsRepository.getLanguage()
-        }
+    private fun loadLanguage() {
+        LangData.setLanguage(settingsRepository.getLanguage())
     }
 
     private fun saveVariables() {
         viewModelScope.launch {
-            settingsRepository.saveLanguage(_language.value!!)
+            settingsRepository.saveLanguage(LangData.language.value!!)
         }
-    }
-
-    fun setLanguage(language: Language) {
-        _language.value = language
-        saveVariables()
     }
 
     companion object {

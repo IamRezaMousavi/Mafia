@@ -19,31 +19,29 @@
             android:text="@string/player_name"
             android:textColor="@color/md_theme_onSecondaryContainer"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toStartOf="@id/playerCheckBox"
-            app:layout_constraintStart_toEndOf="@id/playerRemoveButton"
+            app:layout_constraintEnd_toStartOf="@id/playerRemoveButton"
+            app:layout_constraintStart_toEndOf="@id/playerCheckBox"
             app:layout_constraintTop_toTopOf="parent" />
 
         <CheckBox
             android:id="@+id/playerCheckBox"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginEnd="8dp"
-            android:layout_marginRight="8dp"
+            android:layout_marginStart="8dp"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
         <ImageButton
             android:id="@+id/playerRemoveButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="8dp"
-            android:layout_marginLeft="8dp"
+            android:layout_marginEnd="8dp"
             android:background="@android:color/transparent"
             android:contentDescription="@string/delete_player"
             android:src="@drawable/baseline_clear_24"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 </androidx.cardview.widget.CardView>

@@ -18,7 +18,7 @@ class SettingsStorage(
     }
 
     fun getLanguage(): Language {
-        val languageCode = sharedPreferences.getString(languageKey, "en")!!
+        val languageCode = sharedPreferences.getString(languageKey, "fa")!!
         return when (languageCode) {
             Language.EN.code -> Language.EN
             Language.FA.code -> Language.FA
