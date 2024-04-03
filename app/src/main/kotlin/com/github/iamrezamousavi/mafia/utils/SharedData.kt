@@ -11,7 +11,7 @@ object SharedData {
     val players: LiveData<ArrayList<Player>>
         get() = _players
 
-    private val _roles = MutableLiveData<ArrayList<Role>>()
+    private val _roles = MutableLiveData(ArrayList<Role>())
     val roles: LiveData<ArrayList<Role>>
         get() = _roles
 
@@ -27,12 +27,15 @@ object SharedData {
         _roles.value = roles
     }
 
-    fun getRoles(): ArrayList<Role> {
-        return ArrayList(_roles.value ?: ArrayList())
-    }
+    fun getRoles(): ArrayList<Role> = _roles.value!!
 
     fun shuffled() {
-        _roles.value = _roles.value?.shuffled()?.let { ArrayList(it) }
+        val currentRoles = _roles.value
+        var nextRoles: ArrayList<Role>
+        do {
+            nextRoles = ArrayList(_roles.value!!.shuffled())
+        } while (nextRoles == currentRoles)
+        _roles.value = nextRoles
     }
 
     fun getRole(player: Player): Role {
