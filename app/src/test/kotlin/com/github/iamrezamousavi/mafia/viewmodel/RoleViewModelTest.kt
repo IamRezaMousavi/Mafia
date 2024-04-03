@@ -4,6 +4,8 @@ import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import com.github.iamrezamousavi.mafia.R
 import com.github.iamrezamousavi.mafia.data.model.Player
 import com.github.iamrezamousavi.mafia.data.model.Role
+import com.github.iamrezamousavi.mafia.utils.MafiaError
+import com.github.iamrezamousavi.mafia.utils.ResultType
 import org.junit.Assert.assertEquals
 import org.junit.Assert.assertFalse
 import org.junit.Assert.assertTrue
@@ -121,7 +123,7 @@ class RoleViewModelTest {
                 Role(name = R.string.unknown)
             )
         )
-        assertTrue(result)
+        assertTrue(result.isSuccess)
     }
 
     @Test
@@ -140,7 +142,8 @@ class RoleViewModelTest {
                 Role(name = R.string.unknown)
             )
         )
-        assertFalse(result)
+        assertFalse(result.isSuccess)
+        assertEquals(ResultType.error(MafiaError.MafiaRoleTooMatch), result)
     }
 
     @Test
@@ -158,7 +161,7 @@ class RoleViewModelTest {
             Role(name = R.string.unknown)
         )
         val result = roleViewModel.setSelectedRoles(roles)
-        assertTrue(result)
+        assertTrue(result.isSuccess)
         assertEquals(roles, roleViewModel.selectedRoles)
         assertEquals(5, roleViewModel.citizenSize.value)
         assertEquals(4, roleViewModel.mafiaSize.value)
@@ -179,10 +182,40 @@ class RoleViewModelTest {
             Role(name = R.string.unknown)
         )
         val result = roleViewModel.setSelectedRoles(roles)
-        assertFalse(result)
+        assertFalse(result.isSuccess)
+        assertEquals(ResultType.error(MafiaError.MafiaRoleTooMatch), result)
+
+        assertEquals(roles, roleViewModel.selectedRoles)
+        assertEquals(10, roleViewModel.selectedRolesSize.value)
 
         // must be the default values
-        assertEquals(arrayListOf<Role>(), roleViewModel.selectedRoles)
+        assertEquals(1, roleViewModel.citizenSize.value)
+        assertEquals(1, roleViewModel.mafiaSize.value)
+    }
+
+    @Test
+    fun setSelectedRoles_whenSizeIsOver_rolesIsWrong() {
+        val roles = arrayListOf(
+            Role(name = R.string.simple_mafia),
+            Role(name = R.string.godfather),
+            Role(name = R.string.dr_lecter),
+            Role(name = R.string.silencer),
+            Role(name = R.string.simple_citizen),
+            Role(name = R.string.doctor),
+            Role(name = R.string.sniper),
+            Role(name = R.string.professional),
+            Role(name = R.string.detective),
+            Role(name = R.string.mayor),
+            Role(name = R.string.unknown)
+        )
+        val result = roleViewModel.setSelectedRoles(roles)
+        assertFalse(result.isSuccess)
+        assertEquals(ResultType.error(MafiaError.SelectedRoleTooMuch), result)
+
+        assertEquals(roles, roleViewModel.selectedRoles)
+        assertEquals(11, roleViewModel.selectedRolesSize.value)
+
+        // must be the default values
         assertEquals(1, roleViewModel.citizenSize.value)
         assertEquals(1, roleViewModel.mafiaSize.value)
     }

@@ -8,6 +8,8 @@ import androidx.lifecycle.viewmodel.CreationExtras
 import com.github.iamrezamousavi.mafia.R
 import com.github.iamrezamousavi.mafia.data.model.Player
 import com.github.iamrezamousavi.mafia.data.model.Role
+import com.github.iamrezamousavi.mafia.utils.MafiaError
+import com.github.iamrezamousavi.mafia.utils.ResultType
 import com.github.iamrezamousavi.mafia.utils.SharedData
 import com.github.iamrezamousavi.mafia.utils.getSide
 
@@ -61,24 +63,33 @@ class RoleViewModel(
         _generatedRoles.value = generateRoles()
     }
 
-    fun checkSelectedRolesIsOk(selectedRoles: ArrayList<Role>): Boolean {
+    fun checkSelectedRolesIsOk(selectedRoles: ArrayList<Role>): ResultType<Boolean, MafiaError> {
         val mafiaSize = selectedRoles.filter { getSide(it.name) == R.string.mafia_side }.size
-        return if (playersSize % 2 == 1) {
+        val isMafiaRoleOk = if (playersSize % 2 == 1) {
             mafiaSize <= playersSize / 2
         } else {
             mafiaSize < playersSize / 2
         }
+
+        val isRoleSizeOk = _selectedRolesSize.value!! <= playersSize
+
+        return when {
+            isMafiaRoleOk && isRoleSizeOk -> ResultType.success(true)
+            isMafiaRoleOk && !isRoleSizeOk -> ResultType.error(MafiaError.SelectedRoleTooMuch)
+            else -> ResultType.error(MafiaError.MafiaRoleTooMatch)
+        }
     }
 
-    fun setSelectedRoles(selectedRoles: ArrayList<Role>): Boolean {
-        if (!checkSelectedRolesIsOk(selectedRoles)) {
-            return false
-        }
+    fun setSelectedRoles(selectedRoles: ArrayList<Role>): ResultType<Boolean, MafiaError> {
         this.selectedRoles = selectedRoles
         _selectedRolesSize.value = selectedRoles.size
-        _mafiaSize.value = calculateMinMafia()
-        _citizenSize.value = calculateCitizenSize()
-        return true
+
+        val checkResult = checkSelectedRolesIsOk(selectedRoles)
+        if (checkResult.isSuccess) {
+            _mafiaSize.value = calculateMinMafia()
+            _citizenSize.value = calculateCitizenSize()
+        }
+        return checkResult
     }
 
     private fun generateRoles(): ArrayList<Role> {

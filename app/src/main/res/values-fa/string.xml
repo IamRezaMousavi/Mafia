@@ -14,7 +14,8 @@
     <string name="mafia_size">تعداد مافیا</string>
 
     <string name="player_not_enough">حداقل ۳ نفر باید انتخاب کنید</string>
-    <string name="roles_not_match">Players and Roles doesn\'t match</string>
+    <string name="roles_not_match">تعداد نقش‌های انتخابی با تعداد بازیکن‌ها مطابقت ندارد</string>
+    <string name="mafia_roles_too_much">تعداد نقش‌های مافیا زیاد است</string>
     <string name="select_all">انتخاب همه</string>
     <string name="delete_player">حذف بازیکن</string>
     <string name="refresh">تازه کردن</string>
@@ -104,5 +105,4 @@
     <string name="killer_desc">هر شب یک نفر را می‌کشد.</string>
     <string name="thousand_faces_desc">هر شخصی که در روز از بازی خارج شود قابلیت آن شخص را به مدت یک روز می‌گیرد و همچنین در شب هر شخصی روی آن کاری بکند به خود آن شخص بر می گردد.</string>
     <string name="syndicate_desc">او تمام نقش‌های مهم بازی را می‌شناسد. در شب کسی نمی‌تواند او را بکشد اما در روز بسیار اسیب‌پذیر است. شرط پیروزی ماندن بین سه نفر آخر است.</string>
-    <string name="mafia_roles_too_much">تعداد نقش‌های مافیا زیاد است</string>
 </resources>

@@ -7,6 +7,7 @@ import androidx.appcompat.app.AppCompatActivity
 import com.github.iamrezamousavi.mafia.R
 import com.github.iamrezamousavi.mafia.data.model.Role
 import com.github.iamrezamousavi.mafia.databinding.ActivityRoleBinding
+import com.github.iamrezamousavi.mafia.utils.MafiaError
 import com.github.iamrezamousavi.mafia.utils.getRoleId
 import com.github.iamrezamousavi.mafia.viewmodel.RoleViewModel
 import com.google.android.material.chip.Chip
@@ -47,11 +48,21 @@ class RoleActivity : AppCompatActivity() {
 
         binding.button.setOnClickListener {
             val selectedRoles = getSelectedRoles()
-            if (roleViewModel.checkSelectedRolesIsOk(selectedRoles)) {
+            val checkResult = roleViewModel.checkSelectedRolesIsOk(selectedRoles)
+
+            checkResult.onSuccess {
                 val roleDialog = RoleDialog(this, roleViewModel)
                 roleDialog.show()
-            } else {
-                Toast.makeText(this, R.string.mafia_roles_too_much, Toast.LENGTH_SHORT).show()
+            }.onError { error ->
+                when (error) {
+                    MafiaError.SelectedRoleTooMuch ->
+                        Toast.makeText(this, R.string.roles_not_match, Toast.LENGTH_SHORT)
+                            .show()
+
+                    MafiaError.MafiaRoleTooMatch ->
+                        Toast.makeText(this, R.string.mafia_roles_too_much, Toast.LENGTH_SHORT)
+                            .show()
+                }
             }
         }
     }
