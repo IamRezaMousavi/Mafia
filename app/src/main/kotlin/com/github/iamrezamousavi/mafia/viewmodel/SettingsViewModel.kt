@@ -1,7 +1,6 @@
 package com.github.iamrezamousavi.mafia.viewmodel
 
 import android.content.Context
-import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewModelScope
@@ -25,7 +24,6 @@ class SettingsViewModel(
         }
 
     init {
-        Log.d("TAG", "LANG: SettingViewModel initialised")
         loadLanguage()
     }
 

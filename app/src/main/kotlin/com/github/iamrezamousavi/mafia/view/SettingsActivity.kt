@@ -7,6 +7,7 @@ import android.view.View
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import androidx.appcompat.app.AppCompatActivity
+import com.github.iamrezamousavi.mafia.R
 import com.github.iamrezamousavi.mafia.data.model.Language
 import com.github.iamrezamousavi.mafia.databinding.ActivitySettingsBinding
 import com.github.iamrezamousavi.mafia.utils.LangData
@@ -76,6 +77,12 @@ class SettingsActivity : AppCompatActivity() {
                 override fun onNothingSelected(parent: AdapterView<*>?) {}
             }
         }
+    }
+
+    @Deprecated("Deprecated in Java")
+    override fun onBackPressed() {
+        super.onBackPressed()
+        overridePendingTransition(R.anim.static_anim, R.anim.zoom_out)
     }
 
     @Suppress("DEPRECATION")

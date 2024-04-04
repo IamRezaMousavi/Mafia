@@ -3,7 +3,6 @@ package com.github.iamrezamousavi.mafia.utils
 import android.content.Context
 import android.content.ContextWrapper
 import android.os.Build
-import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.github.iamrezamousavi.mafia.data.model.Language
@@ -16,7 +15,6 @@ object LangData {
 
     fun setLanguage(language: Language) {
         _language.postValue(language)
-        Log.d("TAG", "LANG: language ${language.nativeName} set")
     }
 
     fun getLanguage(): Language {

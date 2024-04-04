@@ -29,6 +29,12 @@ object SharedData {
 
     fun getRoles(): ArrayList<Role> = _roles.value!!
 
+    fun isPlayersOk(): Boolean {
+        val playersList = getPlayers()
+        val checkedPlayers = playersList.filter { it.isChecked }
+        return checkedPlayers.size >= 3
+    }
+
     fun shuffled() {
         val currentRoles = _roles.value
         var nextRoles: ArrayList<Role>

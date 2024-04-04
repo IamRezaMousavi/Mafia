@@ -39,12 +39,16 @@ class MainActivity : AppCompatActivity() {
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        playerAdapter = PlayerAdapter(SharedData.getPlayers(), onSelect = { player, isChecked ->
-            player.isChecked = isChecked
-            viewModel.updatePlayer(player)
-        }, onDeleteClicked = { player ->
-            viewModel.removePlayer(player.id)
-        })
+        playerAdapter = PlayerAdapter(
+            SharedData.getPlayers(),
+            onSelect = { player, isChecked ->
+                player.isChecked = isChecked
+                viewModel.updatePlayer(player)
+            },
+            onDeleteClicked = { player ->
+                viewModel.removePlayer(player.id)
+            }
+        )
         binding.peopleList.adapter = playerAdapter
         binding.peopleList.layoutManager = LinearLayoutManager(this)
 
@@ -55,14 +59,10 @@ class MainActivity : AppCompatActivity() {
         }
 
         binding.button1.setOnClickListener {
-            val players = SharedData.getPlayers()
-            if (players.size == 0) return@setOnClickListener
-
-            val playerCheckedSize = players.filter { it.isChecked }.size
-            if (playerCheckedSize < 3) {
-                Toast.makeText(this, R.string.player_not_enough, Toast.LENGTH_SHORT).show()
-            } else {
+            if (SharedData.isPlayersOk()) {
                 startActivity(Intent(this, RoleActivity::class.java))
+            } else {
+                Toast.makeText(this, R.string.player_not_enough, Toast.LENGTH_SHORT).show()
             }
         }
 
@@ -77,6 +77,7 @@ class MainActivity : AppCompatActivity() {
 
         binding.mainToolBar.setNavigationOnClickListener {
             startActivity(Intent(this, SettingsActivity::class.java))
+            overridePendingTransition(R.anim.zoom_in, R.anim.static_anim)
         }
 
         binding.mainToolBar.setOnMenuItemClickListener { menuItem ->
@@ -96,14 +97,6 @@ class MainActivity : AppCompatActivity() {
         LangData.language.observe(this) {
             // TODO
         }
-    }
-
-    @Suppress("DEPRECATION")
-    private fun restartActivity() {
-        startActivity(Intent(this, this::class.java))
-        overridePendingTransition(0, 0)
-        finish()
-        overridePendingTransition(0, 0)
     }
 
     override fun onPause() {
