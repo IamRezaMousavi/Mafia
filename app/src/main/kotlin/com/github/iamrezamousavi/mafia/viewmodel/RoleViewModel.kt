@@ -3,8 +3,6 @@ package com.github.iamrezamousavi.mafia.viewmodel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import androidx.lifecycle.ViewModelProvider
-import androidx.lifecycle.viewmodel.CreationExtras
 import com.github.iamrezamousavi.mafia.R
 import com.github.iamrezamousavi.mafia.data.model.Player
 import com.github.iamrezamousavi.mafia.data.model.Role
@@ -115,21 +113,5 @@ class RoleViewModel(
 
         roles.sortBy { it.name }
         return roles
-    }
-
-    companion object {
-
-        val Factory = object : ViewModelProvider.Factory {
-            @Suppress("UNCHECKED_CAST")
-            override fun <T : ViewModel> create(
-                modelClass: Class<T>,
-                extras: CreationExtras
-            ): T {
-                if (modelClass.isAssignableFrom(RoleViewModel::class.java)) {
-                    return RoleViewModel(SharedData.getPlayers()) as T
-                }
-                return super.create(modelClass)
-            }
-        }
     }
 }

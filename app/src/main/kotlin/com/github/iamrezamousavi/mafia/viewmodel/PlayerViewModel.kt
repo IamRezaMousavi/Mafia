@@ -4,11 +4,13 @@ import android.content.Context
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.ViewModelProvider.AndroidViewModelFactory.Companion.APPLICATION_KEY
+import androidx.lifecycle.viewModelScope
 import androidx.lifecycle.viewmodel.CreationExtras
 import com.github.iamrezamousavi.mafia.data.local.PlayerStorage
 import com.github.iamrezamousavi.mafia.data.model.Player
 import com.github.iamrezamousavi.mafia.data.repository.PlayerRepository
 import com.github.iamrezamousavi.mafia.utils.SharedData
+import kotlinx.coroutines.launch
 
 class PlayerViewModel(
     context: Context
@@ -16,17 +18,19 @@ class PlayerViewModel(
 
     private val repository = PlayerRepository(PlayerStorage(context))
 
-    fun loadPlayers(): ArrayList<Player> {
-        val loadedPlayers = repository.getPlayers()
-        SharedData.setPlayers(loadedPlayers)
-        return loadedPlayers
+    fun loadPlayers() {
+        viewModelScope.launch {
+            val loadedPlayers = repository.getPlayers()
+            SharedData.setPlayers(loadedPlayers)
+        }
     }
 
-    fun addPlayer(player: Player) {
+    fun addPlayer(name: String) {
         val updatedPlayers = SharedData.getPlayers()
         val lastIndex = updatedPlayers.lastIndex
-        player.id = lastIndex + 1
-        updatedPlayers.add(player)
+        updatedPlayers.add(
+            Player(id = lastIndex + 1, name = name)
+        )
         SharedData.setPlayers(updatedPlayers)
     }
 
@@ -47,8 +51,6 @@ class PlayerViewModel(
 
     fun selectAllPlayer() {
         val updatedPlayers = SharedData.getPlayers()
-        if (updatedPlayers.size == 0) return
-
         updatedPlayers.forEach { player ->
             player.isChecked = true
         }
@@ -56,7 +58,9 @@ class PlayerViewModel(
     }
 
     fun savePlayers() {
-        repository.savePlayers(SharedData.getPlayers())
+        viewModelScope.launch {
+            repository.savePlayers(SharedData.getPlayers())
+        }
     }
 
     companion object {

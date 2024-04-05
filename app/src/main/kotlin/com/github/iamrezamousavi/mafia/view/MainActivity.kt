@@ -8,7 +8,6 @@ import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.github.iamrezamousavi.mafia.R
-import com.github.iamrezamousavi.mafia.data.model.Player
 import com.github.iamrezamousavi.mafia.databinding.ActivityMainBinding
 import com.github.iamrezamousavi.mafia.utils.LangData
 import com.github.iamrezamousavi.mafia.utils.SharedData
@@ -69,7 +68,7 @@ class MainActivity : AppCompatActivity() {
         binding.textField.setEndIconOnClickListener {
             val name = binding.textField.editText?.text.toString()
             if (name.isNotEmpty()) {
-                viewModel.addPlayer(Player(name = name))
+                viewModel.addPlayer(name)
                 binding.textField.editText?.setText("")
                 Toast.makeText(this, name, Toast.LENGTH_SHORT).show()
             }
@@ -77,6 +76,7 @@ class MainActivity : AppCompatActivity() {
 
         binding.mainToolBar.setNavigationOnClickListener {
             startActivity(Intent(this, SettingsActivity::class.java))
+            @Suppress("DEPRECATION")
             overridePendingTransition(R.anim.zoom_in, R.anim.static_anim)
         }
 

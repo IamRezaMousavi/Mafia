@@ -18,7 +18,13 @@ class RoleViewModelTest {
     val instantTaskExecutorRule = InstantTaskExecutorRule()
 
     private val roleViewModel =
-        RoleViewModel(ArrayList((1..10).map { Player(name = "Player $it", isChecked = true) }))
+        RoleViewModel(
+            ArrayList(
+                (1..10).map {
+                    Player(id = it, name = "Player $it", isChecked = true)
+                }
+            )
+        )
 
     @Test
     fun calculateMaxMafia_whenPlayerSizeIsOdd() {

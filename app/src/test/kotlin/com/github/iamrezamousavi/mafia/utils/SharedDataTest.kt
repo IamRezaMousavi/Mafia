@@ -19,11 +19,11 @@ class SharedDataTest {
     @Test
     fun test_set_player() {
         val players = arrayListOf(
-            Player(name = "Reza"),
-            Player(name = "Ali"),
-            Player(name = "Alice"),
-            Player(name = "Bob"),
-            Player(name = "Charlie")
+            Player(id = 0, name = "Reza"),
+            Player(id = 1, name = "Ali"),
+            Player(id = 2, name = "Alice"),
+            Player(id = 3, name = "Bob"),
+            Player(id = 4, name = "Charlie")
         )
         sharedData.setPlayers(players)
         assertEquals(sharedData.getPlayers(), players)
@@ -61,11 +61,11 @@ class SharedDataTest {
     @Test
     fun test_get_role() {
         val players = arrayListOf(
-            Player(name = "Reza"),
-            Player(name = "Ali"),
-            Player(name = "Alice"),
-            Player(name = "Bob"),
-            Player(name = "Charlie")
+            Player(id = 0, name = "Reza"),
+            Player(id = 1, name = "Ali"),
+            Player(id = 2, name = "Alice"),
+            Player(id = 3, name = "Bob"),
+            Player(id = 4, name = "Charlie")
         )
         sharedData.setPlayers(players)
         val roles = arrayListOf(
