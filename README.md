@@ -33,7 +33,7 @@
 
 ## About The Project
 
-The Main Page | The Role Page | The Player Roles Page | The Role Dialog
+The Main Page | The Role Page | The Player Roles Dialog | The Role Dialog
 --- | --- | --- | ---
 ![main-page](./screenshots/Screenshot1.jpg) | ![role-page](./screenshots/Screenshot2.jpg) | ![player-role-page](./screenshots/Screenshot3.jpg) | ![role-dialog](./screenshots/Screenshot4.jpg)
 
