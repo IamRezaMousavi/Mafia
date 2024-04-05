@@ -21,9 +21,7 @@ class MainActivity : AppCompatActivity() {
 
     private lateinit var settingsViewModel: SettingsViewModel
 
-    private val viewModel by viewModels<PlayerViewModel> {
-        PlayerViewModel.Factory
-    }
+    private val viewModel: PlayerViewModel by viewModels { PlayerViewModel.Factory }
 
     override fun attachBaseContext(newBase: Context?) {
         newBase?.let { context ->

@@ -16,7 +16,7 @@ class RoleActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityRoleBinding
 
-    private val roleViewModel by viewModels<RoleViewModel>()
+    private val roleViewModel: RoleViewModel by viewModels { RoleViewModel.Factory }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
