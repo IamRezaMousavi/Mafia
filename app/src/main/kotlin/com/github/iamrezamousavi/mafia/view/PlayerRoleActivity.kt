@@ -19,13 +19,26 @@ class PlayerRoleActivity : AppCompatActivity() {
         binding = ActivityPlayerRoleBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        SharedData.shuffled()
+        SharedData.refresh()
 
         playerRoleAdapter = PlayerRoleAdapter(
             SharedData.getPlayers(),
             onSelect = { player ->
                 val role = SharedData.getRole(player)
-                val playerDialog = PlayerDialog(this, role)
+                val playerDialog = PlayerDialog(this, role).also {
+                    it.setOnDismissListener {
+                        if (SharedData.isAllPlayersGetRoles()) {
+                            RoleDoneDialog(
+                                this,
+                                onOkClicked = {
+                                },
+                                onRefreshClicked = {
+                                    SharedData.refresh()
+                                }
+                            ).show()
+                        }
+                    }
+                }
                 playerDialog.show()
             }
         )
@@ -39,8 +52,8 @@ class PlayerRoleActivity : AppCompatActivity() {
         binding.peopleRoleToolBar.setOnMenuItemClickListener { menuItem ->
             when (menuItem.itemId) {
                 R.id.menuItemRefresh -> {
-                    SharedData.shuffled()
-                    Toast.makeText(this, R.string.refresh, Toast.LENGTH_SHORT).show()
+                    SharedData.refresh()
+                    Toast.makeText(this, R.string.role_refresh, Toast.LENGTH_SHORT).show()
                     true
                 }
 

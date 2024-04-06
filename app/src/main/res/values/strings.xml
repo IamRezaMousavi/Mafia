@@ -15,9 +15,11 @@
     <string name="player_not_enough">You must choose at least 3 players</string>
     <string name="roles_not_match">Players and selected roles size doesn\'t match</string>
     <string name="mafia_roles_too_much">Mafia roles size is too much</string>
+    <string name="goto_narrator_page_desc">All players have seen their roles.\nWould you like to enter the Narrator page?</string>
     <string name="select_all">Select All</string>
     <string name="delete_player">Delete Player</string>
-    <string name="refresh">Refresh</string>
+    <string name="role_refresh">Refresh Roles</string>
+    <string name="goto_narrator_page">Go to Narrator page</string>
     <string name="ok_button">Understand</string>
     <string name="confirm_button">OK</string>
     <string name="comma">,</string>

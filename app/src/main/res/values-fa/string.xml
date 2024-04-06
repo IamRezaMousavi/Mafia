@@ -16,9 +16,11 @@
     <string name="player_not_enough">حداقل ۳ نفر باید انتخاب کنید</string>
     <string name="roles_not_match">تعداد نقش‌های انتخابی با تعداد بازیکن‌ها مطابقت ندارد</string>
     <string name="mafia_roles_too_much">تعداد نقش‌های مافیا زیاد است</string>
+    <string name="goto_narrator_page_desc">همه بازیکن‌ها نقش‌های خود را دیدند.\nآیا میخواهید وارد صفحه راوی شوید؟</string>
     <string name="select_all">انتخاب همه</string>
     <string name="delete_player">حذف بازیکن</string>
-    <string name="refresh">تازه کردن</string>
+    <string name="role_refresh">بازپخش نقش‌ها</string>
+    <string name="goto_narrator_page">ورود به صفحه راوی</string>
     <string name="ok_button">متوجه شدم</string>
     <string name="confirm_button">تایید</string>
     <string name="comma">،</string>

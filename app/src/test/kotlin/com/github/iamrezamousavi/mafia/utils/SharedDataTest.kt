@@ -43,7 +43,7 @@ class SharedDataTest {
     }
 
     @Test
-    fun test_shuffled() {
+    fun test_refresh() {
         val roles = arrayListOf(
             Role(name = R.string.simple_citizen),
             Role(name = R.string.doctor),
@@ -53,7 +53,7 @@ class SharedDataTest {
         )
         sharedData.setRoles(roles)
 
-        sharedData.shuffled()
+        sharedData.refresh()
 
         assertNotEquals(sharedData.getRoles(), roles)
     }
