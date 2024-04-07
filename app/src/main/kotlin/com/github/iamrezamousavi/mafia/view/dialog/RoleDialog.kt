@@ -1,4 +1,4 @@
-package com.github.iamrezamousavi.mafia.view
+package com.github.iamrezamousavi.mafia.view.dialog
 
 import android.content.Context
 import android.content.Intent
@@ -10,6 +10,7 @@ import androidx.appcompat.app.AlertDialog
 import com.github.iamrezamousavi.mafia.R
 import com.github.iamrezamousavi.mafia.databinding.DialogRoleBinding
 import com.github.iamrezamousavi.mafia.utils.getSide
+import com.github.iamrezamousavi.mafia.view.PlayerRoleActivity
 import com.github.iamrezamousavi.mafia.view.counterview.CounterViewListener
 import com.github.iamrezamousavi.mafia.viewmodel.RoleViewModel
 

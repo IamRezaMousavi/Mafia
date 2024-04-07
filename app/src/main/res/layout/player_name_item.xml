@@ -8,7 +8,7 @@
     android:clickable="true"
     android:focusable="true"
     app:cardBackgroundColor="@color/md_theme_secondaryContainer"
-    app:cardCornerRadius="10dp"
+    app:cardCornerRadius="15dp"
     app:contentPadding="30dp">
 
     <androidx.constraintlayout.widget.ConstraintLayout

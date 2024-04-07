@@ -61,11 +61,11 @@ class PlayersDataTest {
     @Test
     fun test_get_role() {
         val players = arrayListOf(
-            Player(id = 0, name = "Reza"),
-            Player(id = 1, name = "Ali"),
-            Player(id = 2, name = "Alice"),
-            Player(id = 3, name = "Bob"),
-            Player(id = 4, name = "Charlie")
+            Player(id = 1, name = "Ali", isChecked = true),
+            Player(id = 2, name = "Alice", isChecked = true),
+            Player(id = 3, name = "Bob", isChecked = true),
+            Player(id = 4, name = "Charlie", isChecked = true),
+            Player(id = 0, name = "Reza", isChecked = true)
         )
         sharedData.setPlayers(players)
         val roles = arrayListOf(

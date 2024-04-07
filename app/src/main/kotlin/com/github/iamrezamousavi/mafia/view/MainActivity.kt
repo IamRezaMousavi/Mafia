@@ -47,7 +47,7 @@ class MainActivity : AppCompatActivity() {
             }
         )
 
-        binding.peopleList.apply {
+        binding.playersList.apply {
             layoutManager = LinearLayoutManager(this@MainActivity)
             addItemDecoration(
                 DividerItemDecoration(
@@ -77,6 +77,7 @@ class MainActivity : AppCompatActivity() {
             val name = binding.textField.editText?.text.toString()
             if (name.isNotEmpty()) {
                 viewModel.addPlayer(name)
+                playerAdapter.notifyRebuild()
                 binding.textField.editText?.setText("")
                 Toast.makeText(this, name, Toast.LENGTH_SHORT).show()
             }

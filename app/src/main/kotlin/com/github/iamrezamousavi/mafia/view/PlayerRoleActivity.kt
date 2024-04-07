@@ -1,5 +1,6 @@
 package com.github.iamrezamousavi.mafia.view
 
+import android.content.Intent
 import android.os.Bundle
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
@@ -7,13 +8,15 @@ import androidx.recyclerview.widget.GridLayoutManager
 import com.github.iamrezamousavi.mafia.R
 import com.github.iamrezamousavi.mafia.databinding.ActivityPlayerRoleBinding
 import com.github.iamrezamousavi.mafia.utils.PlayersData
-import com.github.iamrezamousavi.mafia.view.adapter.PlayerRoleAdapter
+import com.github.iamrezamousavi.mafia.view.adapter.PlayerNameAdapter
+import com.github.iamrezamousavi.mafia.view.dialog.PlayerDialog
+import com.github.iamrezamousavi.mafia.view.dialog.RoleDoneDialog
 
 class PlayerRoleActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityPlayerRoleBinding
 
-    private lateinit var playerRoleAdapter: PlayerRoleAdapter
+    private lateinit var playerNameAdapter: PlayerNameAdapter
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -22,8 +25,8 @@ class PlayerRoleActivity : AppCompatActivity() {
 
         PlayersData.refresh()
 
-        playerRoleAdapter = PlayerRoleAdapter(
-            PlayersData.getPlayers(),
+        playerNameAdapter = PlayerNameAdapter(
+            PlayersData.selectedPlayers,
             onSelect = { player ->
                 val role = PlayersData.getRole(player)
                 val playerDialog = PlayerDialog(this, role).also {
@@ -32,6 +35,7 @@ class PlayerRoleActivity : AppCompatActivity() {
                             RoleDoneDialog(
                                 this,
                                 onOkClicked = {
+                                    startActivity(Intent(this, NarratorActivity::class.java))
                                 },
                                 onRefreshClicked = {
                                     PlayersData.refresh()
@@ -43,14 +47,14 @@ class PlayerRoleActivity : AppCompatActivity() {
                 playerDialog.show()
             }
         )
-        binding.playerRoleList.adapter = playerRoleAdapter
+        binding.playerRoleList.adapter = playerNameAdapter
         binding.playerRoleList.layoutManager = GridLayoutManager(this, 3)
 
         PlayersData.roles.observe(this) { _ ->
-            playerRoleAdapter.refresh()
+            playerNameAdapter.refresh()
         }
 
-        binding.peopleRoleToolBar.setOnMenuItemClickListener { menuItem ->
+        binding.playerRoleToolBar.setOnMenuItemClickListener { menuItem ->
             when (menuItem.itemId) {
                 R.id.menuItemRefresh -> {
                     PlayersData.refresh()

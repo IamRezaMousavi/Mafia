@@ -9,6 +9,7 @@ import com.github.iamrezamousavi.mafia.data.model.Role
 import com.github.iamrezamousavi.mafia.databinding.ActivityRoleBinding
 import com.github.iamrezamousavi.mafia.utils.MafiaError
 import com.github.iamrezamousavi.mafia.utils.getRoleId
+import com.github.iamrezamousavi.mafia.view.dialog.RoleDialog
 import com.github.iamrezamousavi.mafia.viewmodel.RoleViewModel
 import com.google.android.material.chip.Chip
 

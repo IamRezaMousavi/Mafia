@@ -11,8 +11,7 @@ object PlayersData {
     val players: LiveData<ArrayList<Player>>
         get() = _players
 
-    private val selectedPlayers: List<Player>
-        get() = _players.value!!.filter { it.isChecked }
+    val selectedPlayers = ArrayList<Player>()
 
     private val _roles = MutableLiveData(ArrayList<Role>())
     val roles: LiveData<ArrayList<Role>>
@@ -22,17 +21,21 @@ object PlayersData {
 
     fun setPlayers(players: ArrayList<Player>) {
         _players.value = players
+        selectedPlayers.clear()
+        selectedPlayers.addAll(
+            players.filter { it.isChecked }
+        )
     }
 
     fun getPlayers(): ArrayList<Player> {
-        return ArrayList(_players.value ?: ArrayList())
+        return ArrayList(_players.value.orEmpty())
     }
 
     fun setRoles(roles: ArrayList<Role>) {
         _roles.value = roles
     }
 
-    fun getRoles(): ArrayList<Role> = _roles.value!!
+    fun getRoles(): ArrayList<Role> = ArrayList(_roles.value.orEmpty())
 
     fun isPlayersOk(): Boolean {
         val playersList = getPlayers()
@@ -45,18 +48,19 @@ object PlayersData {
     }
 
     fun refresh() {
-        val currentRoles = _roles.value
+        val currentRoles = getRoles()
         var nextRoles: ArrayList<Role>
         do {
-            nextRoles = ArrayList(_roles.value!!.shuffled())
+            nextRoles = ArrayList(currentRoles.shuffled())
         } while (nextRoles == currentRoles)
         _roles.value = nextRoles
         playersRoles.clear()
     }
 
     fun getRole(player: Player): Role {
-        val index = _players.value!!.indexOf(player)
-        val role = _roles.value!![index]
+        val index = selectedPlayers.indexOf(player)
+        val roles = getRoles()
+        val role = roles[index]
         playersRoles[player] = role
         return role
     }

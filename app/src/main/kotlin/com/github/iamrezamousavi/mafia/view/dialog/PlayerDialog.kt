@@ -1,4 +1,4 @@
-package com.github.iamrezamousavi.mafia.view
+package com.github.iamrezamousavi.mafia.view.dialog
 
 import android.content.Context
 import android.graphics.Color

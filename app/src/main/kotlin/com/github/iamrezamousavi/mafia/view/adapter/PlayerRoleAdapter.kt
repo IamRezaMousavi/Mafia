@@ -1,28 +1,44 @@
 package com.github.iamrezamousavi.mafia.view.adapter
 
-import android.annotation.SuppressLint
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
+import androidx.recyclerview.widget.DiffUtil
+import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.github.iamrezamousavi.mafia.data.model.Player
-import com.github.iamrezamousavi.mafia.databinding.PlayerRoleItemBinding
+import com.github.iamrezamousavi.mafia.databinding.PlayerRoleAliveItemBinding
 
 class PlayerRoleAdapter(
-    private var players: ArrayList<Player>,
-    private val onSelect: (Player) -> Unit
-) : RecyclerView.Adapter<PlayerRoleAdapter.ViewHolder>() {
+    private val onOffClicked: (player: Player) -> Unit
+) : ListAdapter<Player, PlayerRoleAdapter.ViewHolder>(PlayerDiffUtil()) {
 
     inner class ViewHolder(
-        private val binding: PlayerRoleItemBinding
+        private val binding: PlayerRoleAliveItemBinding
     ) : RecyclerView.ViewHolder(binding.root) {
         fun bind(player: Player) {
-            binding.playerName.text = player.name
-            binding.playerRoleItem.visibility = View.VISIBLE
-            binding.playerRoleItem.setOnClickListener {
-                onSelect(player)
-                binding.playerRoleItem.visibility = View.GONE
+            binding.apply {
+                playerName.text = player.name
+                playerRole.text = player.name
+                playerOffButton.setOnClickListener {
+                    onOffClicked(player)
+                }
             }
+        }
+    }
+
+    class PlayerDiffUtil : DiffUtil.ItemCallback<Player>() {
+        override fun areItemsTheSame(
+            oldItem: Player,
+            newItem: Player
+        ): Boolean {
+            return oldItem.id == newItem.id
+        }
+
+        override fun areContentsTheSame(
+            oldItem: Player,
+            newItem: Player
+        ): Boolean {
+            return oldItem == newItem
         }
     }
 
@@ -31,7 +47,7 @@ class PlayerRoleAdapter(
         viewType: Int
     ): ViewHolder {
         val binding =
-            PlayerRoleItemBinding.inflate(LayoutInflater.from(parent.context), parent, false)
+            PlayerRoleAliveItemBinding.inflate(LayoutInflater.from(parent.context), parent, false)
         return ViewHolder(binding)
     }
 
@@ -39,13 +55,6 @@ class PlayerRoleAdapter(
         holder: ViewHolder,
         position: Int
     ) {
-        holder.bind(players[position])
-    }
-
-    override fun getItemCount(): Int = players.size
-
-    @SuppressLint("NotifyDataSetChanged")
-    fun refresh() {
-        notifyDataSetChanged()
+        holder.bind(getItem(position))
     }
 }

@@ -1,46 +1,59 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:id="@+id/player_item"
+    android:id="@+id/player_role_dead_item"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_margin="10dp"
-    app:cardBackgroundColor="@color/md_theme_secondaryContainer"
+    app:cardBackgroundColor="@color/mafia_md_theme_primaryContainer"
     app:cardCornerRadius="20dp">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <TextView
-            android:id="@+id/playerName"
+        <ImageView
+            android:id="@+id/playerIcon"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/player_name"
-            android:textColor="@color/md_theme_onSecondaryContainer"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toStartOf="@id/playerRemoveButton"
-            app:layout_constraintStart_toEndOf="@id/playerCheckBox"
-            app:layout_constraintTop_toTopOf="parent" />
-
-        <CheckBox
-            android:id="@+id/playerCheckBox"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="8dp"
+            android:layout_margin="8dp"
+            android:contentDescription="@string/citizen_roles"
+            android:src="@drawable/baseline_person_citizen_24"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
+        <TextView
+            android:id="@+id/playerName"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="8dp"
+            android:text="@string/player_name"
+            android:textColor="@color/mafia_md_theme_onPrimaryContainer"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toEndOf="@id/playerIcon"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/playerRole"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="8dp"
+            android:text="@string/simple_citizen"
+            android:textColor="@color/mafia_md_theme_onPrimaryContainer"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/playerOffButton"
+            app:layout_constraintStart_toEndOf="@id/playerIcon"
+            app:layout_constraintTop_toTopOf="parent" />
+
         <ImageButton
-            android:id="@+id/playerRemoveButton"
+            android:id="@+id/playerOffButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginEnd="8dp"
             android:background="@android:color/transparent"
             android:contentDescription="@string/delete_player"
-            android:padding="10dp"
-            android:src="@drawable/baseline_clear_24"
+            android:src="@drawable/baseline_power_settings_new_dead_24"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
