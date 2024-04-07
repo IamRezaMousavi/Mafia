@@ -9,7 +9,7 @@ import androidx.lifecycle.viewmodel.CreationExtras
 import com.github.iamrezamousavi.mafia.data.local.PlayerStorage
 import com.github.iamrezamousavi.mafia.data.model.Player
 import com.github.iamrezamousavi.mafia.data.repository.PlayerRepository
-import com.github.iamrezamousavi.mafia.utils.SharedData
+import com.github.iamrezamousavi.mafia.utils.PlayersData
 import kotlinx.coroutines.launch
 
 class PlayerViewModel(
@@ -21,45 +21,52 @@ class PlayerViewModel(
     fun loadPlayers() {
         viewModelScope.launch {
             val loadedPlayers = repository.getPlayers()
-            SharedData.setPlayers(loadedPlayers)
+            setPlayers(loadedPlayers)
         }
     }
 
+    private fun setPlayers(players: ArrayList<Player>) {
+        // sort by !isChecked to show checked items on top of list
+        players.sortBy { it.name }
+        players.sortBy { !it.isChecked }
+        PlayersData.setPlayers(players)
+    }
+
     fun addPlayer(name: String) {
-        val updatedPlayers = SharedData.getPlayers()
+        val updatedPlayers = PlayersData.getPlayers()
         val lastIndex = updatedPlayers.lastIndex
         updatedPlayers.add(
             Player(id = lastIndex + 1, name = name)
         )
-        SharedData.setPlayers(updatedPlayers)
+        setPlayers(updatedPlayers)
     }
 
     fun removePlayer(playerId: Int) {
-        val updatedPlayers = SharedData.getPlayers()
+        val updatedPlayers = PlayersData.getPlayers()
         updatedPlayers.removeAll { it.id == playerId }
-        SharedData.setPlayers(updatedPlayers)
+        setPlayers(updatedPlayers)
     }
 
     fun updatePlayer(updatedPlayer: Player) {
-        val updatedPlayers = SharedData.getPlayers()
+        val updatedPlayers = PlayersData.getPlayers()
         val playerIndex = updatedPlayers.indexOfFirst { it.id == updatedPlayer.id }
         if (playerIndex != -1) {
             updatedPlayers[playerIndex] = updatedPlayer
-            SharedData.setPlayers(updatedPlayers)
+            setPlayers(updatedPlayers)
         }
     }
 
     fun selectAllPlayer() {
-        val updatedPlayers = SharedData.getPlayers()
+        val updatedPlayers = PlayersData.getPlayers()
         updatedPlayers.forEach { player ->
             player.isChecked = true
         }
-        SharedData.setPlayers(updatedPlayers)
+        setPlayers(updatedPlayers)
     }
 
     fun savePlayers() {
         viewModelScope.launch {
-            repository.savePlayers(SharedData.getPlayers())
+            repository.savePlayers(PlayersData.getPlayers())
         }
     }
 

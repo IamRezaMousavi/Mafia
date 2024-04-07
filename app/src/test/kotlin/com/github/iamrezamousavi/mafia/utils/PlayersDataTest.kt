@@ -9,12 +9,12 @@ import org.junit.Assert.assertNotEquals
 import org.junit.Rule
 import org.junit.Test
 
-class SharedDataTest {
+class PlayersDataTest {
 
     @get:Rule
     val instantTaskExecutorRule = InstantTaskExecutorRule()
 
-    private val sharedData = SharedData
+    private val sharedData = PlayersData
 
     @Test
     fun test_set_player() {

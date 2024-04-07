@@ -6,18 +6,19 @@ import android.os.Bundle
 import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
+import androidx.recyclerview.widget.DefaultItemAnimator
+import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.github.iamrezamousavi.mafia.R
 import com.github.iamrezamousavi.mafia.databinding.ActivityMainBinding
 import com.github.iamrezamousavi.mafia.utils.LangData
-import com.github.iamrezamousavi.mafia.utils.SharedData
+import com.github.iamrezamousavi.mafia.utils.PlayersData
+import com.github.iamrezamousavi.mafia.view.adapter.PlayerAdapter
 import com.github.iamrezamousavi.mafia.viewmodel.PlayerViewModel
 import com.github.iamrezamousavi.mafia.viewmodel.SettingsViewModel
 
 class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
-
-    private lateinit var playerAdapter: PlayerAdapter
 
     private lateinit var settingsViewModel: SettingsViewModel
 
@@ -36,8 +37,7 @@ class MainActivity : AppCompatActivity() {
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        playerAdapter = PlayerAdapter(
-            SharedData.getPlayers(),
+        val playerAdapter = PlayerAdapter(
             onSelect = { player, isChecked ->
                 player.isChecked = isChecked
                 viewModel.updatePlayer(player)
@@ -46,17 +46,27 @@ class MainActivity : AppCompatActivity() {
                 viewModel.removePlayer(player.id)
             }
         )
-        binding.peopleList.adapter = playerAdapter
-        binding.peopleList.layoutManager = LinearLayoutManager(this)
 
-        SharedData.players.observe(this) { players ->
-            playerAdapter.updatePlayers(players ?: ArrayList())
+        binding.peopleList.apply {
+            layoutManager = LinearLayoutManager(this@MainActivity)
+            addItemDecoration(
+                DividerItemDecoration(
+                    this@MainActivity,
+                    DividerItemDecoration.VERTICAL
+                )
+            )
+            itemAnimator = DefaultItemAnimator()
+            adapter = playerAdapter
+        }
+
+        PlayersData.players.observe(this) { players ->
+            playerAdapter.submitList(players.toList())
             binding.button1.text =
                 getString(R.string.select_roles, players.filter { it.isChecked }.size)
         }
 
         binding.button1.setOnClickListener {
-            if (SharedData.isPlayersOk()) {
+            if (PlayersData.isPlayersOk()) {
                 startActivity(Intent(this, RoleActivity::class.java))
             } else {
                 Toast.makeText(this, R.string.player_not_enough, Toast.LENGTH_SHORT).show()
@@ -82,6 +92,7 @@ class MainActivity : AppCompatActivity() {
             when (menuItem.itemId) {
                 R.id.menuItemSelectAll -> {
                     viewModel.selectAllPlayer()
+                    playerAdapter.notifyRebuild()
                     Toast.makeText(this, R.string.select_all, Toast.LENGTH_SHORT).show()
                     true
                 }

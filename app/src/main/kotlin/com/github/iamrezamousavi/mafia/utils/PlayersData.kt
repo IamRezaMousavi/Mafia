@@ -5,7 +5,7 @@ import androidx.lifecycle.MutableLiveData
 import com.github.iamrezamousavi.mafia.data.model.Player
 import com.github.iamrezamousavi.mafia.data.model.Role
 
-object SharedData {
+object PlayersData {
 
     private val _players = MutableLiveData<ArrayList<Player>>()
     val players: LiveData<ArrayList<Player>>

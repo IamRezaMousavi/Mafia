@@ -8,8 +8,8 @@ import com.github.iamrezamousavi.mafia.R
 import com.github.iamrezamousavi.mafia.data.model.Player
 import com.github.iamrezamousavi.mafia.data.model.Role
 import com.github.iamrezamousavi.mafia.utils.MafiaError
+import com.github.iamrezamousavi.mafia.utils.PlayersData
 import com.github.iamrezamousavi.mafia.utils.ResultType
-import com.github.iamrezamousavi.mafia.utils.SharedData
 import com.github.iamrezamousavi.mafia.utils.getSide
 
 class RoleViewModel(
@@ -110,7 +110,7 @@ class RoleViewModel(
             citizenSizeInSelectedRoles += 1
         }
 
-        SharedData.setRoles(roles)
+        PlayersData.setRoles(roles)
 
         roles.sortBy { it.name }
         return roles
@@ -122,7 +122,7 @@ class RoleViewModel(
             @Suppress("UNCHECKED_CAST")
             override fun <T : ViewModel> create(modelClass: Class<T>): T {
                 if (modelClass.isAssignableFrom(RoleViewModel::class.java)) {
-                    return RoleViewModel(SharedData.getPlayers()) as T
+                    return RoleViewModel(PlayersData.getPlayers()) as T
                 }
                 return super.create(modelClass)
             }
