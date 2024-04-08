@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.DefaultItemAnimator
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.github.iamrezamousavi.mafia.data.model.NarratorItem
 import com.github.iamrezamousavi.mafia.databinding.ActivityNarratorBinding
 import com.github.iamrezamousavi.mafia.utils.PlayersData
 import com.github.iamrezamousavi.mafia.view.adapter.PlayerRoleAdapter
@@ -17,7 +18,7 @@ class NarratorActivity : AppCompatActivity() {
         binding = ActivityNarratorBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        val playerRoleAdapter = PlayerRoleAdapter {
+        val playerRoleAdapter = PlayerRoleAdapter(this) {
         }
 
         binding.playerRoleList.apply {
@@ -32,6 +33,15 @@ class NarratorActivity : AppCompatActivity() {
             adapter = playerRoleAdapter
         }
 
-        playerRoleAdapter.submitList(PlayersData.selectedPlayers)
+        playerRoleAdapter.submitList(
+            PlayersData.selectedPlayers.map { player ->
+                NarratorItem(
+                    id = player.id,
+                    player = player,
+                    role = PlayersData.getRole(player),
+                    isAlive = true
+                )
+            }
+        )
     }
 }

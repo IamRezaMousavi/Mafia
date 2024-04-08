@@ -1,42 +1,56 @@
 package com.github.iamrezamousavi.mafia.view.adapter
 
+import android.content.Context
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
-import com.github.iamrezamousavi.mafia.data.model.Player
-import com.github.iamrezamousavi.mafia.databinding.PlayerRoleAliveItemBinding
+import com.github.iamrezamousavi.mafia.R
+import com.github.iamrezamousavi.mafia.data.model.NarratorItem
+import com.github.iamrezamousavi.mafia.databinding.PlayerRoleItemBinding
 
 class PlayerRoleAdapter(
-    private val onOffClicked: (player: Player) -> Unit
-) : ListAdapter<Player, PlayerRoleAdapter.ViewHolder>(PlayerDiffUtil()) {
+    private val context: Context,
+    private val onOffClicked: (item: NarratorItem) -> Unit
+) : ListAdapter<NarratorItem, PlayerRoleAdapter.ViewHolder>(PlayerDiffUtil()) {
 
     inner class ViewHolder(
-        private val binding: PlayerRoleAliveItemBinding
+        private val binding: PlayerRoleItemBinding
     ) : RecyclerView.ViewHolder(binding.root) {
-        fun bind(player: Player) {
+
+        @Suppress("DEPRECATION")
+        fun bind(item: NarratorItem) {
             binding.apply {
-                playerName.text = player.name
-                playerRole.text = player.name
+                playerName.text = item.player.name
+                playerRole.text = context.getString(item.role.name)
+                playerRoleItemCard.setCardBackgroundColor(
+                    if (item.isAlive) {
+                        context.resources.getColor(R.color.citizen_md_theme_primaryContainer)
+                    } else {
+                        context.resources.getColor(R.color.citizen_md_theme_background)
+                    }
+                )
                 playerOffButton.setOnClickListener {
-                    onOffClicked(player)
+                    item.isAlive = !item.isAlive
+                    notifyItemChanged(adapterPosition)
+                    onOffClicked(item)
                 }
             }
         }
     }
 
-    class PlayerDiffUtil : DiffUtil.ItemCallback<Player>() {
+    class PlayerDiffUtil : DiffUtil.ItemCallback<NarratorItem>() {
         override fun areItemsTheSame(
-            oldItem: Player,
-            newItem: Player
+            oldItem: NarratorItem,
+            newItem: NarratorItem
         ): Boolean {
             return oldItem.id == newItem.id
         }
 
         override fun areContentsTheSame(
-            oldItem: Player,
-            newItem: Player
+            oldItem: NarratorItem,
+            newItem: NarratorItem
         ): Boolean {
             return oldItem == newItem
         }
@@ -47,7 +61,7 @@ class PlayerRoleAdapter(
         viewType: Int
     ): ViewHolder {
         val binding =
-            PlayerRoleAliveItemBinding.inflate(LayoutInflater.from(parent.context), parent, false)
+            PlayerRoleItemBinding.inflate(LayoutInflater.from(parent.context), parent, false)
         return ViewHolder(binding)
     }
 

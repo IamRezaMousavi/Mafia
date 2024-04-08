@@ -35,6 +35,6 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/narratorTopBar"
-        tools:listitem="@layout/player_role_alive_item" />
+        tools:listitem="@layout/player_role_item" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
