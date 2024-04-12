@@ -105,7 +105,7 @@ class MainActivity : AppCompatActivity() {
         }
 
         LangData.language.observe(this) {
-            // TODO
+            // TODO: Change Language in settings page must change language here too
         }
     }
 

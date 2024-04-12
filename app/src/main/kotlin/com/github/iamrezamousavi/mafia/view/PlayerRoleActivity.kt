@@ -1,5 +1,6 @@
 package com.github.iamrezamousavi.mafia.view
 
+import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.widget.Toast
@@ -7,16 +8,26 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.GridLayoutManager
 import com.github.iamrezamousavi.mafia.R
 import com.github.iamrezamousavi.mafia.databinding.ActivityPlayerRoleBinding
+import com.github.iamrezamousavi.mafia.utils.LangData
 import com.github.iamrezamousavi.mafia.utils.PlayersData
 import com.github.iamrezamousavi.mafia.view.adapter.PlayerNameAdapter
 import com.github.iamrezamousavi.mafia.view.dialog.PlayerDialog
 import com.github.iamrezamousavi.mafia.view.dialog.RoleDoneDialog
+import com.github.iamrezamousavi.mafia.viewmodel.SettingsViewModel
 
 class PlayerRoleActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityPlayerRoleBinding
 
     private lateinit var playerNameAdapter: PlayerNameAdapter
+
+    override fun attachBaseContext(newBase: Context?) {
+        newBase?.let { context ->
+            val settingsViewModel = SettingsViewModel(context)
+            LangData.getContextWrapper(context, settingsViewModel.language.code)
+        }
+        super.attachBaseContext(newBase)
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

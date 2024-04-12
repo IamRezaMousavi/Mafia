@@ -1,5 +1,6 @@
 package com.github.iamrezamousavi.mafia.view
 
+import android.content.Context
 import android.os.Bundle
 import android.widget.Toast
 import androidx.activity.viewModels
@@ -7,10 +8,12 @@ import androidx.appcompat.app.AppCompatActivity
 import com.github.iamrezamousavi.mafia.R
 import com.github.iamrezamousavi.mafia.data.model.Role
 import com.github.iamrezamousavi.mafia.databinding.ActivityRoleBinding
+import com.github.iamrezamousavi.mafia.utils.LangData
 import com.github.iamrezamousavi.mafia.utils.MafiaError
 import com.github.iamrezamousavi.mafia.utils.getRoleId
 import com.github.iamrezamousavi.mafia.view.dialog.RoleDialog
 import com.github.iamrezamousavi.mafia.viewmodel.RoleViewModel
+import com.github.iamrezamousavi.mafia.viewmodel.SettingsViewModel
 import com.google.android.material.chip.Chip
 
 class RoleActivity : AppCompatActivity() {
@@ -18,6 +21,14 @@ class RoleActivity : AppCompatActivity() {
     private lateinit var binding: ActivityRoleBinding
 
     private val roleViewModel: RoleViewModel by viewModels { RoleViewModel.Factory }
+
+    override fun attachBaseContext(newBase: Context?) {
+        newBase?.let { context ->
+            val settingsViewModel = SettingsViewModel(context)
+            LangData.getContextWrapper(context, settingsViewModel.language.code)
+        }
+        super.attachBaseContext(newBase)
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
