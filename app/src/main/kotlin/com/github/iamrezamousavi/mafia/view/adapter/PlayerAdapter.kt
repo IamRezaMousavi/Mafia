@@ -7,7 +7,7 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.github.iamrezamousavi.mafia.data.model.Player
-import com.github.iamrezamousavi.mafia.databinding.PlayerItemBinding
+import com.github.iamrezamousavi.mafia.databinding.ItemPlayerBinding
 
 class PlayerAdapter(
     private val onSelect: (player: Player, isChecked: Boolean) -> Unit,
@@ -15,7 +15,7 @@ class PlayerAdapter(
 ) : ListAdapter<Player, PlayerAdapter.ViewHolder>(PlayerDiffUtil()) {
 
     inner class ViewHolder(
-        private val binding: PlayerItemBinding
+        private val binding: ItemPlayerBinding
     ) : RecyclerView.ViewHolder(binding.root) {
         fun bind(player: Player) {
             binding.apply {
@@ -52,7 +52,7 @@ class PlayerAdapter(
         parent: ViewGroup,
         viewType: Int
     ): ViewHolder {
-        val binding = PlayerItemBinding.inflate(LayoutInflater.from(parent.context), parent, false)
+        val binding = ItemPlayerBinding.inflate(LayoutInflater.from(parent.context), parent, false)
         return ViewHolder(binding)
     }
 

@@ -6,7 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.github.iamrezamousavi.mafia.data.model.Player
-import com.github.iamrezamousavi.mafia.databinding.PlayerNameItemBinding
+import com.github.iamrezamousavi.mafia.databinding.ItemPlayerNameBinding
 
 class PlayerNameAdapter(
     private var players: ArrayList<Player>,
@@ -14,7 +14,7 @@ class PlayerNameAdapter(
 ) : RecyclerView.Adapter<PlayerNameAdapter.ViewHolder>() {
 
     inner class ViewHolder(
-        private val binding: PlayerNameItemBinding
+        private val binding: ItemPlayerNameBinding
     ) : RecyclerView.ViewHolder(binding.root) {
         fun bind(player: Player) {
             binding.playerName.text = player.name
@@ -31,7 +31,7 @@ class PlayerNameAdapter(
         viewType: Int
     ): ViewHolder {
         val binding =
-            PlayerNameItemBinding.inflate(LayoutInflater.from(parent.context), parent, false)
+            ItemPlayerNameBinding.inflate(LayoutInflater.from(parent.context), parent, false)
         return ViewHolder(binding)
     }
 

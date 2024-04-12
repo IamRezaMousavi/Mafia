@@ -8,7 +8,7 @@ import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.github.iamrezamousavi.mafia.R
 import com.github.iamrezamousavi.mafia.data.model.NarratorItem
-import com.github.iamrezamousavi.mafia.databinding.PlayerRoleItemBinding
+import com.github.iamrezamousavi.mafia.databinding.ItemPlayerRoleBinding
 
 class PlayerRoleAdapter(
     private val context: Context,
@@ -16,7 +16,7 @@ class PlayerRoleAdapter(
 ) : ListAdapter<NarratorItem, PlayerRoleAdapter.ViewHolder>(PlayerDiffUtil()) {
 
     inner class ViewHolder(
-        private val binding: PlayerRoleItemBinding
+        private val binding: ItemPlayerRoleBinding
     ) : RecyclerView.ViewHolder(binding.root) {
 
         @Suppress("DEPRECATION")
@@ -61,7 +61,7 @@ class PlayerRoleAdapter(
         viewType: Int
     ): ViewHolder {
         val binding =
-            PlayerRoleItemBinding.inflate(LayoutInflater.from(parent.context), parent, false)
+            ItemPlayerRoleBinding.inflate(LayoutInflater.from(parent.context), parent, false)
         return ViewHolder(binding)
     }
 

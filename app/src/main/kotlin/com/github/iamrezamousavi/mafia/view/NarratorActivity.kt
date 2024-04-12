@@ -4,7 +4,6 @@ import android.content.Context
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.DefaultItemAnimator
-import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.github.iamrezamousavi.mafia.data.model.NarratorItem
 import com.github.iamrezamousavi.mafia.databinding.ActivityNarratorBinding
@@ -35,12 +34,6 @@ class NarratorActivity : AppCompatActivity() {
 
         binding.playerRoleList.apply {
             layoutManager = LinearLayoutManager(this@NarratorActivity)
-            addItemDecoration(
-                DividerItemDecoration(
-                    this@NarratorActivity,
-                    DividerItemDecoration.VERTICAL
-                )
-            )
             itemAnimator = DefaultItemAnimator()
             adapter = playerRoleAdapter
         }

@@ -47,7 +47,7 @@
 
         <include
             android:id="@+id/citizen"
-            layout="@layout/citizen_chipgroup"
+            layout="@layout/chipgroup_citizen"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginStart="5dp"
@@ -71,7 +71,7 @@
 
         <include
             android:id="@+id/mafia"
-            layout="@layout/mafia_chipgroup"
+            layout="@layout/chipgroup_mafia"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginStart="5dp"
@@ -95,7 +95,7 @@
 
         <include
             android:id="@+id/independent"
-            layout="@layout/independent_chipgroup"
+            layout="@layout/chipgroup_independent"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginStart="5dp"
