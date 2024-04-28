@@ -19,7 +19,7 @@ jobs:
     - name: Grant execute permission for gradlew
       run: chmod +x gradlew
 
-    - name: Lint with Gradle
+    - name: Run android lint
       run: ./gradlew lint
     
     - name: Run ktlint

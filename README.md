@@ -8,10 +8,10 @@
   <h3 align="center">Mafia Party Game</h3>
 
   <p align="center">
-    A Mafia party game app for Android using Clean Architecture, MVVM, Kotlin and Data Binding Build with ❤️
+    A Mafia party game app for Android using Clean Architecture, MVVM, Kotlin and View Binding Build with ❤️
     <br/>
     <br/>
-    <a href="https://github.com/IamRezaMousavi/Mafia"><strong>Explore the docs »</strong></a>
+    <a href="./docs/mafia-en.md"><strong>Explore the docs »</strong></a>
     <br/>
     <br/>
     <a href="https://github.com/IamRezaMousavi/Mafia/issues">Report Bug</a>
@@ -68,6 +68,6 @@ Distributed under the GPL-3.0 License. See [LICENSE](https://github.com/IamRezaM
 
 ## Authors
 
-* **Reza Mousavi** - *Comp Sci Student* - [Reza Mousavi](https://github.com/IamRezaMousavi/) - *Maintainer*
+* **Reza Mousavi** - *Comp Eng Student* - [Reza Mousavi](https://github.com/IamRezaMousavi/) - *Maintainer*
 
 ---
