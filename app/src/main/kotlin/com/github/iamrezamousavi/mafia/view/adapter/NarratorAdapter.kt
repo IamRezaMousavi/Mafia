@@ -8,15 +8,15 @@ import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.github.iamrezamousavi.mafia.R
 import com.github.iamrezamousavi.mafia.data.model.NarratorItem
-import com.github.iamrezamousavi.mafia.databinding.ItemPlayerRoleBinding
+import com.github.iamrezamousavi.mafia.databinding.ItemNarratorBinding
 
-class PlayerRoleAdapter(
+class NarratorAdapter(
     private val context: Context,
     private val onOffClicked: (item: NarratorItem) -> Unit
-) : ListAdapter<NarratorItem, PlayerRoleAdapter.ViewHolder>(PlayerDiffUtil()) {
+) : ListAdapter<NarratorItem, NarratorAdapter.ViewHolder>(NarratorDiffUtil()) {
 
     inner class ViewHolder(
-        private val binding: ItemPlayerRoleBinding
+        private val binding: ItemNarratorBinding
     ) : RecyclerView.ViewHolder(binding.root) {
 
         @Suppress("DEPRECATION")
@@ -40,7 +40,7 @@ class PlayerRoleAdapter(
         }
     }
 
-    class PlayerDiffUtil : DiffUtil.ItemCallback<NarratorItem>() {
+    class NarratorDiffUtil : DiffUtil.ItemCallback<NarratorItem>() {
         override fun areItemsTheSame(
             oldItem: NarratorItem,
             newItem: NarratorItem
@@ -61,7 +61,7 @@ class PlayerRoleAdapter(
         viewType: Int
     ): ViewHolder {
         val binding =
-            ItemPlayerRoleBinding.inflate(LayoutInflater.from(parent.context), parent, false)
+            ItemNarratorBinding.inflate(LayoutInflater.from(parent.context), parent, false)
         return ViewHolder(binding)
     }
 
