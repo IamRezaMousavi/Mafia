@@ -3,9 +3,7 @@ package com.github.iamrezamousavi.mafia.data.local
 import android.content.Context
 import com.github.iamrezamousavi.mafia.data.model.Language
 
-class SettingsStorage(
-    applicationContext: Context
-) {
+class SettingsStorage(applicationContext: Context) {
     private val sharedPreferences =
         applicationContext.getSharedPreferences("settings_prefs", Context.MODE_PRIVATE)
     private val languageKey = "Language"

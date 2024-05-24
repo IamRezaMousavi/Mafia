@@ -5,9 +5,7 @@ import com.github.iamrezamousavi.mafia.data.model.Player
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 
-class PlayerStorage(
-    applicationContext: Context
-) {
+class PlayerStorage(applicationContext: Context) {
     private val sharedPreferences =
         applicationContext.getSharedPreferences("player_prefs", Context.MODE_PRIVATE)
     private val playersKey = "Players"

@@ -12,9 +12,7 @@ import com.github.iamrezamousavi.mafia.utils.PlayersData
 import com.github.iamrezamousavi.mafia.utils.ResultType
 import com.github.iamrezamousavi.mafia.utils.getSide
 
-class RoleViewModel(
-    players: ArrayList<Player>
-) : ViewModel() {
+class RoleViewModel(players: ArrayList<Player>) : ViewModel() {
 
     var playersSize = players.filter { it.isChecked }.size
 

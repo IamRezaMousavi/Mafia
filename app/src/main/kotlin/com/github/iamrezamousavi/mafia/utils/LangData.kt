@@ -22,10 +22,7 @@ object LangData {
     }
 
     @Suppress("DEPRECATION")
-    fun getContextWrapper(
-        context: Context,
-        languageCode: String
-    ): ContextWrapper {
+    fun getContextWrapper(context: Context, languageCode: String): ContextWrapper {
         val resources = context.resources
         val configuration = resources.configuration
 

@@ -87,10 +87,7 @@ fun getDescription(@StringRes role: Int): Int = when (role) {
 }
 
 @StringRes
-fun getRoleId(
-    context: Context,
-    roleName: String
-): Int = when (roleName) {
+fun getRoleId(context: Context, roleName: String): Int = when (roleName) {
     context.getString(R.string.simple_citizen) -> R.string.simple_citizen
     context.getString(R.string.doctor) -> R.string.doctor
     context.getString(R.string.detective) -> R.string.detective

@@ -58,8 +58,9 @@ object PlayersData {
     }
 
     private fun roleArrayEqual(arr1: ArrayList<Role>, arr2: ArrayList<Role>): Boolean {
-        if (arr1.size != arr2.size)
+        if (arr1.size != arr2.size) {
             return false
+        }
         val pairArr = arr1.zip(arr2)
         return pairArr.all { (e1, e2) -> e1 == e2 }
     }

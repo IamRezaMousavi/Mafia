@@ -13,9 +13,8 @@ class PlayerNameAdapter(
     private val onSelect: (Player) -> Unit
 ) : RecyclerView.Adapter<PlayerNameAdapter.ViewHolder>() {
 
-    inner class ViewHolder(
-        private val binding: ItemPlayerNameBinding
-    ) : RecyclerView.ViewHolder(binding.root) {
+    inner class ViewHolder(private val binding: ItemPlayerNameBinding) :
+        RecyclerView.ViewHolder(binding.root) {
         fun bind(player: Player) {
             binding.playerName.text = player.name
             binding.playerRoleItem.visibility = View.VISIBLE
@@ -26,19 +25,13 @@ class PlayerNameAdapter(
         }
     }
 
-    override fun onCreateViewHolder(
-        parent: ViewGroup,
-        viewType: Int
-    ): ViewHolder {
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val binding =
             ItemPlayerNameBinding.inflate(LayoutInflater.from(parent.context), parent, false)
         return ViewHolder(binding)
     }
 
-    override fun onBindViewHolder(
-        holder: ViewHolder,
-        position: Int
-    ) {
+    override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         holder.bind(players[position])
     }
 

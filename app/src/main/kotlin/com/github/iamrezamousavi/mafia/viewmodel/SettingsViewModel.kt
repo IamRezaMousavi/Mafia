@@ -9,9 +9,7 @@ import com.github.iamrezamousavi.mafia.data.repository.SettingsRepository
 import com.github.iamrezamousavi.mafia.utils.LangData
 import kotlinx.coroutines.launch
 
-class SettingsViewModel(
-    context: Context
-) : ViewModel() {
+class SettingsViewModel(context: Context) : ViewModel() {
     private val settingsRepository = SettingsRepository(SettingsStorage(context))
 
     var language: Language

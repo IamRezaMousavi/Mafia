@@ -12,9 +12,7 @@ import com.github.iamrezamousavi.mafia.data.repository.PlayerRepository
 import com.github.iamrezamousavi.mafia.utils.PlayersData
 import kotlinx.coroutines.launch
 
-class PlayerViewModel(
-    context: Context
-) : ViewModel() {
+class PlayerViewModel(context: Context) : ViewModel() {
 
     private val repository = PlayerRepository(PlayerStorage(context))
 
@@ -74,10 +72,7 @@ class PlayerViewModel(
 
         val Factory = object : ViewModelProvider.Factory {
             @Suppress("UNCHECKED_CAST")
-            override fun <T : ViewModel> create(
-                modelClass: Class<T>,
-                extras: CreationExtras
-            ): T {
+            override fun <T : ViewModel> create(modelClass: Class<T>, extras: CreationExtras): T {
                 val application = checkNotNull(extras[APPLICATION_KEY])
                 if (modelClass.isAssignableFrom(PlayerViewModel::class.java)) {
                     return PlayerViewModel(application.baseContext) as T

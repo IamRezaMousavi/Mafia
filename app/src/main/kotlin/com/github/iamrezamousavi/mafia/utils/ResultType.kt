@@ -4,13 +4,9 @@ import java.io.Serializable
 
 sealed class ResultType<out T, out E> : Serializable {
 
-    internal data class Success<out T>(
-        val value: T
-    ) : ResultType<T, Nothing>()
+    internal data class Success<out T>(val value: T) : ResultType<T, Nothing>()
 
-    internal data class Error<out E>(
-        val error: E
-    ) : ResultType<Nothing, E>()
+    internal data class Error<out E>(val error: E) : ResultType<Nothing, E>()
 
     val isSuccess: Boolean
         get() = this is Success
