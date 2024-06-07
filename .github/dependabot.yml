@@ -9,10 +9,6 @@ updates:
     directory: "/"
     schedule:
       interval: "weekly"
-    groups:
-      gradle-dependencies:
-        patterns:
-          - "*"
     open-pull-requests-limit: 5
 
   - package-ecosystem: "github-actions"
