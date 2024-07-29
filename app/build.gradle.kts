@@ -52,7 +52,7 @@ dependencies {
     androidTestImplementation("androidx.test.espresso:espresso-core:3.5.1")
 
     implementation("com.google.code.gson:gson:2.11.0")
-    implementation("androidx.activity:activity-ktx:1.9.0")
+    implementation("androidx.activity:activity-ktx:1.9.1")
 
     testImplementation("androidx.arch.core:core-testing:2.2.0")
 }
