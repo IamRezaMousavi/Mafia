@@ -76,6 +76,7 @@ class RoleDialog(
                     roleViewModel.setMafiaSize(newValue)
                 }
 
+                @Suppress("EmptyFunctionBlock")
                 override fun onValueChanged(value: Int) {
                 }
             })

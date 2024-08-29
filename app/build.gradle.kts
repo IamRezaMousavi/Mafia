@@ -1,7 +1,10 @@
+import io.gitlab.arturbosch.detekt.Detekt
+
 plugins {
     id("com.android.application")
     id("org.jetbrains.kotlin.android")
-    id("org.jlleitschuh.gradle.ktlint") version "12.1.1"
+    id("org.jlleitschuh.gradle.ktlint").version("12.1.1")
+    id("io.gitlab.arturbosch.detekt").version("1.23.3")
 }
 
 android {
@@ -15,11 +18,21 @@ android {
         versionCode = 1
         versionName = "1.0"
 
+        setProperty("archivesBaseName", "Mafia-$versionName")
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }
 
     buildFeatures {
         viewBinding = true
+    }
+
+    signingConfigs {
+        create("ci") {
+            storeFile = System.getenv("ANDROID_NIGHTLY_KEYSTORE")?.let { file(it) }
+            storePassword = System.getenv("ANDROID_NIGHTLY_KEYSTORE_PASSWORD")
+            keyAlias = System.getenv("ANDROID_NIGHTLY_KEYSTORE_ALIAS")
+            keyPassword = System.getenv("ANDROID_NIGHTLY_KEYSTORE_PASSWORD")
+        }
     }
 
     buildTypes {
@@ -31,6 +44,16 @@ android {
                 "proguard-rules.pro"
             )
         }
+
+        create("nightly") {
+            initWith(getByName("release"))
+            matchingFallbacks += "release"
+
+            applicationIdSuffix = ".nightly"
+            versionNameSuffix = "-NIGHTLY"
+            manifestPlaceholders["appName"] = "Mafia Nightly"
+            signingConfig = signingConfigs.findByName("ci")
+        }
     }
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_1_8
@@ -38,6 +61,21 @@ android {
     }
     kotlinOptions {
         jvmTarget = "1.8"
+    }
+}
+
+kotlin {
+    jvmToolchain(17)
+}
+
+detekt {
+    config.setFrom("$rootDir/detekt.yml")
+}
+
+tasks.withType<Detekt>().configureEach {
+    jvmTarget = "17"
+    reports {
+        html.required = true
     }
 }
 

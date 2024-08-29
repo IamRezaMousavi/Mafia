@@ -31,6 +31,7 @@ class MainActivity : AppCompatActivity() {
         super.attachBaseContext(newBase)
     }
 
+    @Suppress("LongMethod")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)

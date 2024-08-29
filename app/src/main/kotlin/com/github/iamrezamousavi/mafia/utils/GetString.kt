@@ -45,6 +45,7 @@ fun getSide(@StringRes role: Int): Int = when (role) {
     else -> R.string.citizen_side
 }
 
+@Suppress("CyclomaticComplexMethod")
 @StringRes
 fun getDescription(@StringRes role: Int): Int = when (role) {
     R.string.simple_citizen -> R.string.simple_citizen_desc
@@ -86,6 +87,7 @@ fun getDescription(@StringRes role: Int): Int = when (role) {
     else -> R.string.simple_citizen_desc
 }
 
+@Suppress("CyclomaticComplexMethod")
 @StringRes
 fun getRoleId(context: Context, roleName: String): Int = when (roleName) {
     context.getString(R.string.simple_citizen) -> R.string.simple_citizen

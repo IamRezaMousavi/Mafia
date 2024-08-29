@@ -59,6 +59,7 @@ class PlayerRoleActivity : AppCompatActivity() {
             }
         )
         binding.playerRoleList.adapter = playerNameAdapter
+        @Suppress("MagicNumber")
         binding.playerRoleList.layoutManager = GridLayoutManager(this, 3)
 
         PlayersData.roles.observe(this) { _ ->

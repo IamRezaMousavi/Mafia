@@ -1,0 +1,39 @@
+name: Gradle wrapper update
+
+on:
+  workflow_dispatch: # to run the workflow manually if needed
+  schedule:
+    - cron: '0 12 * * *'
+
+jobs:
+  update:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+      pull-requests: write
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up JDK
+        uses: actions/setup-java@v4
+        with:
+          java-version: '22'
+          distribution: 'temurin'
+          cache: gradle
+
+      - name: Upgrade gradle wrapper
+        run: |
+          ./gradlew wrapper --gradle-version latest
+          ./gradlew wrapper --gradle-version latest
+
+      - name: Create Pull Request
+        uses: peter-evans/create-pull-request@v6
+        with:
+          title: 'Upgrade Gradle version'
+          body: ''
+          delete-branch: false
+          branch: 'upgrade-gradle-version'
+          commit-message: 'upgrade gradle version'
+

@@ -74,6 +74,7 @@ class SettingsActivity : AppCompatActivity() {
                     restartActivity()
                 }
 
+                @Suppress("EmptyFunctionBlock")
                 override fun onNothingSelected(parent: AdapterView<*>?) {}
             }
         }

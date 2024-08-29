@@ -40,6 +40,7 @@ object PlayersData {
     fun isPlayersOk(): Boolean {
         val playersList = getPlayers()
         val checkedPlayers = playersList.filter { it.isChecked }
+        @Suppress("MagicNumber")
         return checkedPlayers.size >= 3
     }
 

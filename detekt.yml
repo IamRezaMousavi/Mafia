@@ -1,0 +1,7 @@
+style:
+  ForbiddenComment:
+    active: false
+  MaxLineLength:
+    active: false # Overlaps with MaximumLineLength, ktlint preferred because of auto-correct
+  NewLineAtEndOfFile:
+    active: false # Overlaps with FinalNewline, ktlint preferred because of auto-correct
