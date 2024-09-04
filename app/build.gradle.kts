@@ -1,10 +1,10 @@
 import io.gitlab.arturbosch.detekt.Detekt
 
 plugins {
-    id("com.android.application")
-    id("org.jetbrains.kotlin.android")
-    id("org.jlleitschuh.gradle.ktlint").version("12.1.1")
-    id("io.gitlab.arturbosch.detekt").version("1.23.3")
+    alias(libs.plugins.android.application)
+    alias(libs.plugins.kotlin.android)
+    alias(libs.plugins.ktlint)
+    alias(libs.plugins.detekt)
 }
 
 android {
@@ -65,7 +65,7 @@ android {
 }
 
 kotlin {
-    jvmToolchain(17)
+    jvmToolchain(libs.versions.jdk.get().toInt())
 }
 
 detekt {
@@ -73,7 +73,7 @@ detekt {
 }
 
 tasks.withType<Detekt>().configureEach {
-    jvmTarget = "17"
+    jvmTarget = libs.versions.jdk.get()
     reports {
         html.required = true
     }
@@ -81,25 +81,20 @@ tasks.withType<Detekt>().configureEach {
 
 dependencies {
 
-    implementation("androidx.core:core-ktx:1.13.1")
-    implementation("androidx.appcompat:appcompat:1.6.1")
-    implementation("com.google.android.material:material:1.12.0")
-    implementation("androidx.constraintlayout:constraintlayout:2.1.4")
-    implementation("androidx.legacy:legacy-support-v4:1.0.0")
-    implementation("androidx.lifecycle:lifecycle-livedata-ktx:2.6.1")
-    implementation("androidx.lifecycle:lifecycle-viewmodel-ktx:2.6.1")
-    implementation("androidx.fragment:fragment-ktx:1.5.6")
+    implementation(libs.core.ktx)
+    implementation(libs.appcompat)
+    implementation(libs.material)
+    implementation(libs.constraintlayout)
+    implementation(libs.lifecycle.ktx)
+    implementation(libs.activity.ktx)
+    implementation(libs.fragment.ktx)
 
-    testImplementation("junit:junit:4.13.2")
-    androidTestImplementation("androidx.test.ext:junit:1.2.1")
-    androidTestImplementation("androidx.test.espresso:espresso-core:3.6.1")
+    testImplementation(libs.junit)
+    androidTestImplementation(libs.android.junit)
+    testImplementation(libs.core.testing)
 
-    implementation("com.google.code.gson:gson:2.11.0")
-    implementation("androidx.activity:activity-ktx:1.9.1")
+    implementation(libs.gson)
 
-    val navVersion = "2.7.7"
-    implementation("androidx.navigation:navigation-fragment-ktx:$navVersion")
-    implementation("androidx.navigation:navigation-ui-ktx:$navVersion")
-
-    testImplementation("androidx.arch.core:core-testing:2.2.0")
+    implementation(libs.navigation.fragment.ktx)
+    implementation(libs.navigation.ui.ktx)
 }

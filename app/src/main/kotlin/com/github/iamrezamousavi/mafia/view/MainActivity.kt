@@ -7,8 +7,8 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.NavController
 import androidx.navigation.fragment.NavHostFragment
 import com.github.iamrezamousavi.mafia.R
-import com.github.iamrezamousavi.mafia.data.local.LanguageKey
-import com.github.iamrezamousavi.mafia.data.local.SettingsSP
+import com.github.iamrezamousavi.mafia.data.local.LANG_KEY
+import com.github.iamrezamousavi.mafia.data.local.SETTINGS_SHARED
 import com.github.iamrezamousavi.mafia.databinding.ActivityMainBinding
 import com.github.iamrezamousavi.mafia.utils.LangData
 import com.github.iamrezamousavi.mafia.viewmodel.SettingsViewModel
@@ -42,12 +42,12 @@ class MainActivity :
             supportFragmentManager.findFragmentById(R.id.fragmentContainerView) as NavHostFragment
         navController = navHostFragment.navController
 
-        sharedPreferences = getSharedPreferences(SettingsSP, Context.MODE_PRIVATE)
+        sharedPreferences = getSharedPreferences(SETTINGS_SHARED, Context.MODE_PRIVATE)
         sharedPreferences.registerOnSharedPreferenceChangeListener(this)
     }
 
     override fun onSharedPreferenceChanged(sharedPreferences: SharedPreferences?, key: String?) {
-        if (key == LanguageKey) {
+        if (key == LANG_KEY) {
             recreate()
         }
     }
