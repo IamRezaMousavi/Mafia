@@ -12,12 +12,18 @@
         tools:layout="@layout/fragment_main">
         <action
             android:id="@+id/action_mainFragment_to_roleFragment"
-            app:destination="@id/roleFragment" />
+            app:destination="@id/roleFragment"
+            app:enterAnim="@anim/slide_from_next"
+            app:exitAnim="@anim/slide_to_previous"
+            app:popEnterAnim="@anim/slide_from_previous"
+            app:popExitAnim="@anim/slide_to_next" />
         <action
             android:id="@+id/action_mainFragment_to_settingsFragment"
             app:destination="@id/settingsFragment"
             app:enterAnim="@anim/zoom_in"
-            app:exitAnim="@anim/static_anim" />
+            app:exitAnim="@anim/static_anim"
+            app:popEnterAnim="@anim/static_anim"
+            app:popExitAnim="@anim/zoom_out" />
     </fragment>
     <fragment
         android:id="@+id/roleFragment"
@@ -26,17 +32,12 @@
         tools:layout="@layout/fragment_role">
         <action
             android:id="@+id/action_roleFragment_to_playerRoleFragment"
-            app:destination="@id/playerRoleFragment" />
+            app:destination="@id/playerRoleFragment"
+            app:enterAnim="@anim/slide_from_next"
+            app:exitAnim="@anim/slide_to_previous"
+            app:popEnterAnim="@anim/slide_from_previous"
+            app:popExitAnim="@anim/slide_to_next" />
     </fragment>
-    <fragment
-        android:id="@+id/settingsFragment"
-        android:name="com.github.iamrezamousavi.mafia.view.SettingsFragment"
-        android:label="SettingsFragment" />
-    <fragment
-        android:id="@+id/narratorFragment"
-        android:name="com.github.iamrezamousavi.mafia.view.NarratorFragment"
-        android:label="fragment_narrator"
-        tools:layout="@layout/fragment_narrator" />
     <fragment
         android:id="@+id/playerRoleFragment"
         android:name="com.github.iamrezamousavi.mafia.view.PlayerRoleFragment"
@@ -44,6 +45,19 @@
         tools:layout="@layout/fragment_player_role">
         <action
             android:id="@+id/action_playerRoleFragment_to_narratorFragment"
-            app:destination="@id/narratorFragment" />
+            app:destination="@id/narratorFragment"
+            app:enterAnim="@anim/slide_from_next"
+            app:exitAnim="@anim/slide_to_previous"
+            app:popEnterAnim="@anim/slide_from_previous"
+            app:popExitAnim="@anim/slide_to_next" />
     </fragment>
+    <fragment
+        android:id="@+id/narratorFragment"
+        android:name="com.github.iamrezamousavi.mafia.view.NarratorFragment"
+        android:label="fragment_narrator"
+        tools:layout="@layout/fragment_narrator" />
+    <fragment
+        android:id="@+id/settingsFragment"
+        android:name="com.github.iamrezamousavi.mafia.view.SettingsFragment"
+        android:label="SettingsFragment" />
 </navigation>
