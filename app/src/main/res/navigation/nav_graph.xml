@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav_graph"
+    app:startDestination="@id/mainFragment">
+
+    <fragment
+        android:id="@+id/mainFragment"
+        android:name="com.github.iamrezamousavi.mafia.view.MainFragment"
+        android:label="fragment_main"
+        tools:layout="@layout/fragment_main">
+        <action
+            android:id="@+id/action_mainFragment_to_roleFragment"
+            app:destination="@id/roleFragment" />
+        <action
+            android:id="@+id/action_mainFragment_to_settingsFragment"
+            app:destination="@id/settingsFragment"
+            app:enterAnim="@anim/zoom_in"
+            app:exitAnim="@anim/static_anim" />
+    </fragment>
+    <fragment
+        android:id="@+id/roleFragment"
+        android:name="com.github.iamrezamousavi.mafia.view.RoleFragment"
+        android:label="fragment_role"
+        tools:layout="@layout/fragment_role">
+        <action
+            android:id="@+id/action_roleFragment_to_playerRoleFragment"
+            app:destination="@id/playerRoleFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/settingsFragment"
+        android:name="com.github.iamrezamousavi.mafia.view.SettingsFragment"
+        android:label="SettingsFragment" />
+    <fragment
+        android:id="@+id/narratorFragment"
+        android:name="com.github.iamrezamousavi.mafia.view.NarratorFragment"
+        android:label="fragment_narrator"
+        tools:layout="@layout/fragment_narrator" />
+    <fragment
+        android:id="@+id/playerRoleFragment"
+        android:name="com.github.iamrezamousavi.mafia.view.PlayerRoleFragment"
+        android:label="fragment_player_role"
+        tools:layout="@layout/fragment_player_role">
+        <action
+            android:id="@+id/action_playerRoleFragment_to_narratorFragment"
+            app:destination="@id/narratorFragment" />
+    </fragment>
+</navigation>

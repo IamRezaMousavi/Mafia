@@ -1,7 +1,6 @@
 package com.github.iamrezamousavi.mafia.view.dialog
 
 import android.content.Context
-import android.content.Intent
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
@@ -10,13 +9,13 @@ import androidx.appcompat.app.AlertDialog
 import com.github.iamrezamousavi.mafia.R
 import com.github.iamrezamousavi.mafia.databinding.DialogRoleBinding
 import com.github.iamrezamousavi.mafia.utils.getSide
-import com.github.iamrezamousavi.mafia.view.PlayerRoleActivity
 import com.github.iamrezamousavi.mafia.view.counterview.CounterViewListener
 import com.github.iamrezamousavi.mafia.viewmodel.RoleViewModel
 
 class RoleDialog(
     context: Context,
-    private val roleViewModel: RoleViewModel
+    private val roleViewModel: RoleViewModel,
+    private val onOkClicked: () -> Unit
 ) : AlertDialog(context) {
     private lateinit var binding: DialogRoleBinding
 
@@ -89,8 +88,7 @@ class RoleDialog(
         }
 
         binding.okButton.setOnClickListener {
-            val intent = Intent(context, PlayerRoleActivity::class.java)
-            context.startActivity(intent)
+            onOkClicked()
             dismiss()
         }
     }

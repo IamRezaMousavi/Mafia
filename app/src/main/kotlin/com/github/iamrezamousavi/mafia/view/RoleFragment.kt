@@ -1,39 +1,39 @@
 package com.github.iamrezamousavi.mafia.view
 
-import android.content.Context
 import android.os.Bundle
+import android.view.LayoutInflater
+import android.view.View
+import android.view.ViewGroup
 import android.widget.Toast
-import androidx.activity.viewModels
-import androidx.appcompat.app.AppCompatActivity
+import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.findNavController
 import com.github.iamrezamousavi.mafia.R
 import com.github.iamrezamousavi.mafia.data.model.Role
-import com.github.iamrezamousavi.mafia.databinding.ActivityRoleBinding
-import com.github.iamrezamousavi.mafia.utils.LangData
+import com.github.iamrezamousavi.mafia.databinding.FragmentRoleBinding
 import com.github.iamrezamousavi.mafia.utils.MafiaError
 import com.github.iamrezamousavi.mafia.utils.getRoleId
 import com.github.iamrezamousavi.mafia.view.dialog.RoleDialog
 import com.github.iamrezamousavi.mafia.viewmodel.RoleViewModel
-import com.github.iamrezamousavi.mafia.viewmodel.SettingsViewModel
 import com.google.android.material.chip.Chip
 
-class RoleActivity : AppCompatActivity() {
+class RoleFragment : Fragment() {
 
-    private lateinit var binding: ActivityRoleBinding
+    private lateinit var binding: FragmentRoleBinding
 
     private val roleViewModel: RoleViewModel by viewModels { RoleViewModel.Factory }
 
-    override fun attachBaseContext(newBase: Context?) {
-        newBase?.let { context ->
-            val settingsViewModel = SettingsViewModel(context)
-            LangData.getContextWrapper(context, settingsViewModel.language.code)
-        }
-        super.attachBaseContext(newBase)
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View {
+        binding = FragmentRoleBinding.inflate(inflater, container, false)
+        return binding.root
     }
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        binding = ActivityRoleBinding.inflate(layoutInflater)
-        setContentView(binding.root)
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
 
         binding.roleToolBar.title =
             getString(R.string.select_roles, roleViewModel.playersSize)
@@ -52,7 +52,7 @@ class RoleActivity : AppCompatActivity() {
             }
         }
 
-        roleViewModel.selectedRolesSize.observe(this) {
+        roleViewModel.selectedRolesSize.observe(viewLifecycleOwner) {
             binding.button.text = getString(R.string.division_roles, it)
         }
 
@@ -61,16 +61,18 @@ class RoleActivity : AppCompatActivity() {
             val checkResult = roleViewModel.checkSelectedRolesIsOk(selectedRoles)
 
             checkResult.onSuccess {
-                val roleDialog = RoleDialog(this, roleViewModel)
+                val roleDialog = RoleDialog(requireContext(), roleViewModel) {
+                    findNavController().navigate(R.id.action_roleFragment_to_playerRoleFragment)
+                }
                 roleDialog.show()
             }.onError { error ->
                 when (error) {
                     MafiaError.SelectedRoleTooMuch ->
-                        Toast.makeText(this, R.string.roles_not_match, Toast.LENGTH_SHORT)
+                        Toast.makeText(context, R.string.roles_not_match, Toast.LENGTH_SHORT)
                             .show()
 
                     MafiaError.MafiaRoleTooMatch ->
-                        Toast.makeText(this, R.string.mafia_roles_too_much, Toast.LENGTH_SHORT)
+                        Toast.makeText(context, R.string.mafia_roles_too_much, Toast.LENGTH_SHORT)
                             .show()
                 }
             }
@@ -83,7 +85,12 @@ class RoleActivity : AppCompatActivity() {
                 binding.mafia.chipGroup2.checkedChipIds +
                 binding.independent.chipGroup3.checkedChipIds
             ).map {
-            Role(name = getRoleId(this, findViewById<Chip>(it).text.toString()))
+            Role(
+                name = getRoleId(
+                    requireContext(),
+                    requireView().findViewById<Chip>(it).text.toString()
+                )
+            )
         }
         return ArrayList(selectedRoles)
     }

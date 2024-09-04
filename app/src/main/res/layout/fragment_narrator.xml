@@ -1,13 +1,12 @@
-<?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".view.PlayerRoleActivity">
+    tools:context=".view.NarratorFragment">
 
     <com.google.android.material.appbar.AppBarLayout
-        android:id="@+id/playerRoleTopBar"
+        android:id="@+id/narratorTopBar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layoutDirection="ltr"
@@ -16,12 +15,12 @@
         app:layout_constraintTop_toTopOf="parent">
 
         <com.google.android.material.appbar.MaterialToolbar
-            android:id="@+id/playerRoleToolBar"
+            android:id="@+id/narratorToolBar"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:minHeight="?attr/actionBarSize"
             app:menu="@menu/player_role_app_bar"
-            app:title="@string/division_roles_title"
+            app:title="@string/narrator"
             app:titleCentered="true" />
 
     </com.google.android.material.appbar.AppBarLayout>
@@ -30,11 +29,13 @@
         android:id="@+id/playerRoleList"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
+        android:divider="@null"
+        android:dividerHeight="0dp"
+        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/playerRoleTopBar"
-        app:spanCount="3"
-        tools:listitem="@layout/item_player_name" />
+        app:layout_constraintTop_toBottomOf="@id/narratorTopBar"
+        tools:listitem="@layout/item_narrator" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>

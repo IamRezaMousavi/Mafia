@@ -20,18 +20,6 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity
-            android:name=".view.RoleActivity"
-            android:exported="false" />
-        <activity
-            android:name=".view.PlayerRoleActivity"
-            android:exported="false" />
-        <activity
-            android:name=".view.NarratorActivity"
-            android:exported="false" />
-        <activity
-            android:name=".view.SettingsActivity"
-            android:exported="false" />
     </application>
 
 </manifest>

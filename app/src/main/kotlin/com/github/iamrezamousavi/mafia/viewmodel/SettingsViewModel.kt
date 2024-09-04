@@ -6,30 +6,18 @@ import androidx.lifecycle.viewModelScope
 import com.github.iamrezamousavi.mafia.data.local.SettingsStorage
 import com.github.iamrezamousavi.mafia.data.model.Language
 import com.github.iamrezamousavi.mafia.data.repository.SettingsRepository
-import com.github.iamrezamousavi.mafia.utils.LangData
 import kotlinx.coroutines.launch
 
 class SettingsViewModel(context: Context) : ViewModel() {
     private val settingsRepository = SettingsRepository(SettingsStorage(context))
 
-    var language: Language
-        get() = LangData.getLanguage()
-        set(value) {
-            LangData.setLanguage(value)
-            saveVariables()
-        }
+    private var _language = settingsRepository.getLanguage()
+    val language = _language
 
-    init {
-        loadLanguage()
-    }
-
-    private fun loadLanguage() {
-        LangData.setLanguage(settingsRepository.getLanguage())
-    }
-
-    private fun saveVariables() {
+    fun setLanguage(newLanguage: Language) {
+        _language = newLanguage
         viewModelScope.launch {
-            settingsRepository.saveLanguage(LangData.language.value!!)
+            settingsRepository.saveLanguage(newLanguage)
         }
     }
 }

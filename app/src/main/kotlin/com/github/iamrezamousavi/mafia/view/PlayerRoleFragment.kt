@@ -1,38 +1,37 @@
 package com.github.iamrezamousavi.mafia.view
 
-import android.content.Context
-import android.content.Intent
 import android.os.Bundle
+import android.view.LayoutInflater
+import android.view.View
+import android.view.ViewGroup
 import android.widget.Toast
-import androidx.appcompat.app.AppCompatActivity
+import androidx.fragment.app.Fragment
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
 import com.github.iamrezamousavi.mafia.R
-import com.github.iamrezamousavi.mafia.databinding.ActivityPlayerRoleBinding
-import com.github.iamrezamousavi.mafia.utils.LangData
+import com.github.iamrezamousavi.mafia.databinding.FragmentPlayerRoleBinding
 import com.github.iamrezamousavi.mafia.utils.PlayersData
 import com.github.iamrezamousavi.mafia.view.adapter.PlayerNameAdapter
 import com.github.iamrezamousavi.mafia.view.dialog.PlayerDialog
 import com.github.iamrezamousavi.mafia.view.dialog.RoleDoneDialog
-import com.github.iamrezamousavi.mafia.viewmodel.SettingsViewModel
 
-class PlayerRoleActivity : AppCompatActivity() {
+class PlayerRoleFragment : Fragment() {
 
-    private lateinit var binding: ActivityPlayerRoleBinding
+    private lateinit var binding: FragmentPlayerRoleBinding
 
     private lateinit var playerNameAdapter: PlayerNameAdapter
 
-    override fun attachBaseContext(newBase: Context?) {
-        newBase?.let { context ->
-            val settingsViewModel = SettingsViewModel(context)
-            LangData.getContextWrapper(context, settingsViewModel.language.code)
-        }
-        super.attachBaseContext(newBase)
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View {
+        binding = FragmentPlayerRoleBinding.inflate(inflater, container, false)
+        return binding.root
     }
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        binding = ActivityPlayerRoleBinding.inflate(layoutInflater)
-        setContentView(binding.root)
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
 
         PlayersData.refresh()
 
@@ -40,13 +39,16 @@ class PlayerRoleActivity : AppCompatActivity() {
             PlayersData.selectedPlayers,
             onSelect = { player ->
                 val role = PlayersData.getRole(player)
-                val playerDialog = PlayerDialog(this, role).also {
+                val playerDialog = PlayerDialog(requireContext(), role).also {
                     it.setOnDismissListener {
                         if (PlayersData.isAllPlayersGetRoles()) {
                             RoleDoneDialog(
-                                this,
+                                requireContext(),
                                 onOkClicked = {
-                                    startActivity(Intent(this, NarratorActivity::class.java))
+                                    findNavController()
+                                        .navigate(
+                                            R.id.action_playerRoleFragment_to_narratorFragment
+                                        )
                                 },
                                 onRefreshClicked = {
                                     PlayersData.refresh()
@@ -60,9 +62,9 @@ class PlayerRoleActivity : AppCompatActivity() {
         )
         binding.playerRoleList.adapter = playerNameAdapter
         @Suppress("MagicNumber")
-        binding.playerRoleList.layoutManager = GridLayoutManager(this, 3)
+        binding.playerRoleList.layoutManager = GridLayoutManager(context, 3)
 
-        PlayersData.roles.observe(this) { _ ->
+        PlayersData.roles.observe(viewLifecycleOwner) { _ ->
             playerNameAdapter.refresh()
         }
 
@@ -70,7 +72,7 @@ class PlayerRoleActivity : AppCompatActivity() {
             when (menuItem.itemId) {
                 R.id.menuItemRefresh -> {
                     PlayersData.refresh()
-                    Toast.makeText(this, R.string.role_refresh, Toast.LENGTH_SHORT).show()
+                    Toast.makeText(context, R.string.role_refresh, Toast.LENGTH_SHORT).show()
                     true
                 }
 
