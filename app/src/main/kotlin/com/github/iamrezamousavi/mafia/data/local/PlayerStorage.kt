@@ -12,7 +12,7 @@ class PlayerStorage(applicationContext: Context) {
 
     private val gson = Gson()
 
-    fun savePlayers(players: ArrayList<Player>) {
+    fun savePlayers(players: List<Player>) {
         val playersJson = gson.toJson(players)
         sharedPreferences
             .edit()
@@ -20,13 +20,13 @@ class PlayerStorage(applicationContext: Context) {
             .apply()
     }
 
-    fun getPlayers(): ArrayList<Player> {
+    fun getPlayers(): List<Player> {
         val playersJson = sharedPreferences.getString(playersKey, null)
         return if (playersJson != null) {
-            val type = object : TypeToken<ArrayList<Player>>() {}.type
+            val type = object : TypeToken<List<Player>>() {}.type
             gson.fromJson(playersJson, type)
         } else {
-            ArrayList()
+            emptyList()
         }
     }
 }

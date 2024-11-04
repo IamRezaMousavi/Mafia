@@ -6,22 +6,22 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.viewModels
+import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
+import com.github.iamrezamousavi.mafia.MainViewModel
 import com.github.iamrezamousavi.mafia.R
 import com.github.iamrezamousavi.mafia.data.model.Role
 import com.github.iamrezamousavi.mafia.databinding.FragmentRoleBinding
 import com.github.iamrezamousavi.mafia.utils.MafiaError
 import com.github.iamrezamousavi.mafia.utils.getRoleId
 import com.github.iamrezamousavi.mafia.view.dialog.RoleDialog
-import com.github.iamrezamousavi.mafia.viewmodel.RoleViewModel
 import com.google.android.material.chip.Chip
 
 class RoleFragment : Fragment() {
 
     private lateinit var binding: FragmentRoleBinding
 
-    private val roleViewModel: RoleViewModel by viewModels { RoleViewModel.Factory }
+    private val mainViewModel: MainViewModel by activityViewModels()
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -36,10 +36,10 @@ class RoleFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         binding.roleToolBar.title =
-            getString(R.string.select_roles, roleViewModel.playersSize)
+            getString(R.string.select_roles, mainViewModel.playersSize)
 
         val roles = getSelectedRoles()
-        roleViewModel.setSelectedRoles(roles)
+        mainViewModel.setSelectedRoles(roles)
 
         listOf(
             binding.citizen.chipGroup1,
@@ -48,20 +48,19 @@ class RoleFragment : Fragment() {
         ).forEach { chipGroup ->
             chipGroup.setOnCheckedStateChangeListener { _, _ ->
                 val selectedRoles = getSelectedRoles()
-                roleViewModel.setSelectedRoles(selectedRoles)
+                mainViewModel.setSelectedRoles(selectedRoles)
             }
         }
 
-        roleViewModel.selectedRolesSize.observe(viewLifecycleOwner) {
+        mainViewModel.selectedRolesSize.observe(viewLifecycleOwner) {
             binding.button.text = getString(R.string.division_roles, it)
         }
 
         binding.button.setOnClickListener {
-            val selectedRoles = getSelectedRoles()
-            val checkResult = roleViewModel.checkSelectedRolesIsOk(selectedRoles)
+            val checkResult = mainViewModel.checkSelectedRolesIsOk()
 
             checkResult.onSuccess {
-                val roleDialog = RoleDialog(requireContext(), roleViewModel) {
+                val roleDialog = RoleDialog(requireContext(), mainViewModel) {
                     findNavController().navigate(R.id.action_roleFragment_to_playerRoleFragment)
                 }
                 roleDialog.show()
@@ -79,7 +78,7 @@ class RoleFragment : Fragment() {
         }
     }
 
-    private fun getSelectedRoles(): ArrayList<Role> {
+    private fun getSelectedRoles(): List<Role> {
         val selectedRoles = (
             binding.citizen.chipGroup1.checkedChipIds +
                 binding.mafia.chipGroup2.checkedChipIds +
@@ -92,6 +91,6 @@ class RoleFragment : Fragment() {
                 )
             )
         }
-        return ArrayList(selectedRoles)
+        return selectedRoles
     }
 }
