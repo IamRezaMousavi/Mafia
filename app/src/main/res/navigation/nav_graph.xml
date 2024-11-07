@@ -17,13 +17,6 @@
             app:exitAnim="@anim/slide_to_previous"
             app:popEnterAnim="@anim/slide_from_previous"
             app:popExitAnim="@anim/slide_to_next" />
-        <action
-            android:id="@+id/action_mainFragment_to_settingsFragment"
-            app:destination="@id/settingsFragment"
-            app:enterAnim="@anim/zoom_in"
-            app:exitAnim="@anim/static_anim"
-            app:popEnterAnim="@anim/static_anim"
-            app:popExitAnim="@anim/zoom_out" />
     </fragment>
     <fragment
         android:id="@+id/roleFragment"
@@ -56,8 +49,4 @@
         android:name="com.github.iamrezamousavi.mafia.view.NarratorFragment"
         android:label="fragment_narrator"
         tools:layout="@layout/fragment_narrator" />
-    <fragment
-        android:id="@+id/settingsFragment"
-        android:name="com.github.iamrezamousavi.mafia.view.SettingsFragment"
-        android:label="SettingsFragment" />
 </navigation>

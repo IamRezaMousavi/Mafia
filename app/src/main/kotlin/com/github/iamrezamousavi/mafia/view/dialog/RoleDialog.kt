@@ -6,15 +6,15 @@ import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
 import android.view.View
 import androidx.appcompat.app.AlertDialog
+import com.github.iamrezamousavi.mafia.MainViewModel
 import com.github.iamrezamousavi.mafia.R
 import com.github.iamrezamousavi.mafia.databinding.DialogRoleBinding
 import com.github.iamrezamousavi.mafia.utils.getSide
 import com.github.iamrezamousavi.mafia.view.counterview.CounterViewListener
-import com.github.iamrezamousavi.mafia.viewmodel.RoleViewModel
 
 class RoleDialog(
     context: Context,
-    private val roleViewModel: RoleViewModel,
+    private val mainViewModel: MainViewModel,
     private val onOkClicked: () -> Unit
 ) : AlertDialog(context) {
     private lateinit var binding: DialogRoleBinding
@@ -29,19 +29,19 @@ class RoleDialog(
         }
 
         binding.playerSizeText.text =
-            context.getString(R.string.players_size, roleViewModel.playersSize)
+            context.getString(R.string.players_size, mainViewModel.playersSize)
 
         setIndependentSection()
 
-        roleViewModel.citizenSize.observe(this) {
+        mainViewModel.citizenSize.observe(this) {
             binding.citizenCounterText.text = context.getString(R.string.citizen_size, it)
         }
 
-        roleViewModel.mafiaSize.observe(this) {
+        mainViewModel.mafiaSize.observe(this) {
             binding.mafiaCounter.value = it
         }
 
-        roleViewModel.generatedRoles.observe(this) {
+        mainViewModel.roles.observe(this) {
             binding.citizenRoles.text =
                 it.filter { role ->
                     getSide(role.name) == R.string.citizen_side
@@ -67,12 +67,12 @@ class RoleDialog(
             it.setCounterListener(object : CounterViewListener {
                 override fun onIncrease() {
                     val newValue = binding.mafiaCounter.value
-                    roleViewModel.setMafiaSize(newValue)
+                    mainViewModel.setMafiaSize(newValue)
                 }
 
                 override fun onDecrease() {
                     val newValue = binding.mafiaCounter.value
-                    roleViewModel.setMafiaSize(newValue)
+                    mainViewModel.setMafiaSize(newValue)
                 }
 
                 @Suppress("EmptyFunctionBlock")
@@ -81,10 +81,10 @@ class RoleDialog(
             })
 
             it.isReadOnly = true
-            it.maxValue = roleViewModel.calculateMaxMafia()
-            it.minValue = roleViewModel.calculateMinMafia()
-            it.value = roleViewModel.calculateMinMafia()
-            roleViewModel.setMafiaSize(it.value)
+            it.maxValue = mainViewModel.calculateMaxMafia()
+            it.minValue = mainViewModel.calculateMinMafia()
+            it.value = mainViewModel.calculateMinMafia()
+            mainViewModel.setMafiaSize(it.value)
         }
 
         binding.okButton.setOnClickListener {
@@ -94,7 +94,7 @@ class RoleDialog(
     }
 
     private fun setIndependentSection() {
-        val independentRoles = roleViewModel.selectedRoles.filter {
+        val independentRoles = mainViewModel.selectedRoles.filter {
             getSide(it.name) == R.string.independent_side
         }
         if (independentRoles.isEmpty()) {

@@ -9,7 +9,7 @@ import com.github.iamrezamousavi.mafia.data.model.Player
 import com.github.iamrezamousavi.mafia.databinding.ItemPlayerNameBinding
 
 class PlayerNameAdapter(
-    private var players: ArrayList<Player>,
+    private var players: List<Player>,
     private val onSelect: (Player) -> Unit
 ) : RecyclerView.Adapter<PlayerNameAdapter.ViewHolder>() {
 

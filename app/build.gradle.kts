@@ -52,7 +52,6 @@ android {
 
             applicationIdSuffix = ".nightly"
             versionNameSuffix = "-NIGHTLY"
-            manifestPlaceholders["appName"] = "Mafia Nightly"
             signingConfig = signingConfigs.findByName("ci")
         }
     }

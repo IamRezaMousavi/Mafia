@@ -6,11 +6,12 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
+import com.github.iamrezamousavi.mafia.MainViewModel
 import com.github.iamrezamousavi.mafia.R
 import com.github.iamrezamousavi.mafia.databinding.FragmentPlayerRoleBinding
-import com.github.iamrezamousavi.mafia.utils.PlayersData
 import com.github.iamrezamousavi.mafia.view.adapter.PlayerNameAdapter
 import com.github.iamrezamousavi.mafia.view.dialog.PlayerDialog
 import com.github.iamrezamousavi.mafia.view.dialog.RoleDoneDialog
@@ -20,6 +21,8 @@ class PlayerRoleFragment : Fragment() {
     private lateinit var binding: FragmentPlayerRoleBinding
 
     private lateinit var playerNameAdapter: PlayerNameAdapter
+
+    private val mainViewModel: MainViewModel by activityViewModels()
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -33,15 +36,15 @@ class PlayerRoleFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        PlayersData.refresh()
+        mainViewModel.refreshRoles()
 
         playerNameAdapter = PlayerNameAdapter(
-            PlayersData.selectedPlayers,
+            mainViewModel.selectedPlayers,
             onSelect = { player ->
-                val role = PlayersData.getRole(player)
+                val role = mainViewModel.getRole(player)
                 val playerDialog = PlayerDialog(requireContext(), role).also {
                     it.setOnDismissListener {
-                        if (PlayersData.isAllPlayersGetRoles()) {
+                        if (mainViewModel.isAllPlayersGetRoles()) {
                             RoleDoneDialog(
                                 requireContext(),
                                 onOkClicked = {
@@ -51,7 +54,7 @@ class PlayerRoleFragment : Fragment() {
                                         )
                                 },
                                 onRefreshClicked = {
-                                    PlayersData.refresh()
+                                    mainViewModel.refreshRoles()
                                 }
                             ).show()
                         }
@@ -64,14 +67,14 @@ class PlayerRoleFragment : Fragment() {
         @Suppress("MagicNumber")
         binding.playerRoleList.layoutManager = GridLayoutManager(context, 3)
 
-        PlayersData.roles.observe(viewLifecycleOwner) { _ ->
+        mainViewModel.roles.observe(viewLifecycleOwner) { _ ->
             playerNameAdapter.refresh()
         }
 
         binding.playerRoleToolBar.setOnMenuItemClickListener { menuItem ->
             when (menuItem.itemId) {
                 R.id.menuItemRefresh -> {
-                    PlayersData.refresh()
+                    mainViewModel.refreshRoles()
                     Toast.makeText(context, R.string.role_refresh, Toast.LENGTH_SHORT).show()
                     true
                 }
