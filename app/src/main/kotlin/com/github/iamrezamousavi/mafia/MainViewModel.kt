@@ -216,7 +216,7 @@ class MainViewModel : ViewModel() {
 
     fun loadPlayers(context: Context) {
         val storage = PlayerStorage(context)
-        _players.value = storage.getPlayers()
+        setPlayers(storage.getPlayers())
     }
 
     fun savePlayers(context: Context) {
