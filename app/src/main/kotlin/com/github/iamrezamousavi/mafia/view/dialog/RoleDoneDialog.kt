@@ -23,6 +23,7 @@ class RoleDoneDialog(
         if (window != null) {
             window!!.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
         }
+        setCanceledOnTouchOutside(false)
 
         binding.apply {
             okButton.setOnClickListener {
