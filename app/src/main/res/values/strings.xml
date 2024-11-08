@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">مافیا</string>
+    <string name="app_name">Mafia</string>
     <string name="player_name">نام بازیکن</string>
     <string name="select_roles">انتخاب نقش‌ها (%1$d)</string>
     <string name="player_list">لیست بازیکن‌ها</string>

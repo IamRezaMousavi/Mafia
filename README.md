@@ -35,7 +35,7 @@
 
 The Main Page | The Role Page | The Player Roles Dialog | The Role Dialog
 --- | --- | --- | ---
-![main-page](./screenshots/Screenshot1.jpg) | ![role-page](./screenshots/Screenshot2.jpg) | ![player-role-page](./screenshots/Screenshot3.jpg) | ![role-dialog](./screenshots/Screenshot4.jpg)
+![main-page](./fastlane/metadata/en-US/images/phoneScreenshots/1.jpg) | ![role-page](./fastlane/metadata/en-US/images/phoneScreenshots/2.jpg) | ![player-role-page](./fastlane/metadata/en-US/images/phoneScreenshots/3.jpg) | ![role-dialog](./fastlane/metadata/en-US/images/phoneScreenshots/4.jpg)
 
 See full documentation: [English](./docs/mafia-en.md), [فارسی](./docs/mafia-fa.md)
 
