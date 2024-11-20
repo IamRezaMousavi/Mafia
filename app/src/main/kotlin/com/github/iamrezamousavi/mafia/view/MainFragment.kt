@@ -73,6 +73,10 @@ class MainFragment : Fragment() {
             }
         }
 
+        binding.mainToolBar.setNavigationOnClickListener {
+            findNavController().navigate(R.id.action_mainFragment_to_settingsFragment)
+        }
+
         binding.mainToolBar.setOnMenuItemClickListener { menuItem ->
             when (menuItem.itemId) {
                 R.id.menuItemSelectAll -> {
