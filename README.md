@@ -23,6 +23,10 @@
 
 ![Downloads](https://img.shields.io/github/downloads/IamRezaMousavi/Mafia/total) ![Contributors](https://img.shields.io/github/contributors/IamRezaMousavi/Mafia?color=dark-green) ![Issues](https://img.shields.io/github/issues/IamRezaMousavi/Mafia) ![License](https://img.shields.io/github/license/IamRezaMousavi/Mafia)
 
+[<img src="https://f-droid.org/badge/get-it-on.png"
+    alt="Get it on F-Droid"
+    height="80">](https://f-droid.org/packages/com.github.iamrezamousavi.mafia)
+
 ## Table Of Contents
 
 * [About the Project](#about-the-project)
