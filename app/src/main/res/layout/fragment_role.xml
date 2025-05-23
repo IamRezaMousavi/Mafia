@@ -112,7 +112,6 @@
         android:layout_height="wrap_content"
         android:layout_margin="10dp"
         android:drawableEnd="@drawable/baseline_arrow_forward_24"
-        android:layoutDirection="ltr"
         android:text="@string/division_roles"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"

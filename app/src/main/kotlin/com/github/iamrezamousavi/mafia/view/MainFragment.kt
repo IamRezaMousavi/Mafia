@@ -74,15 +74,20 @@ class MainFragment : Fragment() {
         }
 
         binding.mainToolBar.setNavigationOnClickListener {
-            findNavController().navigate(R.id.action_mainFragment_to_settingsFragment)
+            mainViewModel.selectAllPlayer()
+            playerAdapter.notifyRebuild()
+            Toast.makeText(context, R.string.select_all, Toast.LENGTH_SHORT).show()
         }
 
         binding.mainToolBar.setOnMenuItemClickListener { menuItem ->
             when (menuItem.itemId) {
-                R.id.menuItemSelectAll -> {
-                    mainViewModel.selectAllPlayer()
-                    playerAdapter.notifyRebuild()
-                    Toast.makeText(context, R.string.select_all, Toast.LENGTH_SHORT).show()
+                R.id.menuItemSettings -> {
+                    findNavController().navigate(R.id.action_mainFragment_to_settingsFragment)
+                    true
+                }
+
+                R.id.menuItemAbout -> {
+                    findNavController().navigate(R.id.action_mainFragment_to_aboutFragment)
                     true
                 }
 
