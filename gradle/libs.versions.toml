@@ -1,6 +1,6 @@
 [versions]
 agp = "8.7.1"
-kotlin = "2.0.21"
+kotlin = "2.1.21"
 jdk = "17"
 
 core-ktx = "1.13.1"
