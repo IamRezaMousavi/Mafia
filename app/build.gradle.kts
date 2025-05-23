@@ -19,7 +19,6 @@ android {
         versionName = "0.1.0"
 
         multiDexEnabled = true
-        setProperty("archivesBaseName", "Mafia-$versionName")
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }
 

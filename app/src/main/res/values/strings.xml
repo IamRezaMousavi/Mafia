@@ -7,6 +7,7 @@
     <string name="division_roles">Roles Division (%1$d)</string>
     <string name="division_roles_title">Roles Division</string>
     <string name="narrator">Narrator</string>
+    <string name="more">More</string>
 
     <string name="players_size">Number of Players: %1$d</string>
     <string name="independent_size">Number of Independent Roles: %1$d</string>
@@ -27,6 +28,11 @@
 
     <string name="settings">Settings</string>
     <string name="language">Language</string>
+
+    <string name="about">About</string>
+    <string name="source_code">Source Code</string>
+    <string name="bug_report">Bug Report</string>
+    <string name="user_guide">User Guide</string>
 
     <string name="citizen_roles">Citizen Roles</string>
     <string name="mafia_roles">Mafia Roles</string>
