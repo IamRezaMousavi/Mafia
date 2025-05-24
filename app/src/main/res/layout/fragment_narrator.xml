@@ -9,7 +9,6 @@
         android:id="@+id/narratorTopBar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layoutDirection="ltr"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="parent">
@@ -19,7 +18,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:minHeight="?attr/actionBarSize"
-            app:menu="@menu/player_role_app_bar"
+            app:menu="@menu/narrator_menu"
             app:title="@string/narrator"
             app:titleCentered="true" />
 

@@ -21,6 +21,7 @@
     <string name="select_all">انتخاب همه</string>
     <string name="delete_player">حذف بازیکن</string>
     <string name="role_refresh">بازپخش نقش‌ها</string>
+    <string name="role_hide">پنهان کردن نقش‌ها</string>
     <string name="goto_narrator_page">ورود به صفحه راوی</string>
     <string name="ok_button">متوجه شدم</string>
     <string name="confirm_button">تایید</string>

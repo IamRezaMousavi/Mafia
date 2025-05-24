@@ -21,6 +21,7 @@
     <string name="select_all">Select All</string>
     <string name="delete_player">Delete Player</string>
     <string name="role_refresh">Refresh Roles</string>
+    <string name="role_hide">Hide Roles</string>
     <string name="goto_narrator_page">Go to Narrator page</string>
     <string name="ok_button">Understand</string>
     <string name="confirm_button">OK</string>

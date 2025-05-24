@@ -5,7 +5,6 @@
     android:layout_height="wrap_content"
     android:layout_gravity="center"
     android:gravity="center"
-    android:layoutDirection="ltr"
     app:cardBackgroundColor="@color/md_theme_inversePrimary"
     app:cardCornerRadius="16dp"
     app:cardUseCompatPadding="true">

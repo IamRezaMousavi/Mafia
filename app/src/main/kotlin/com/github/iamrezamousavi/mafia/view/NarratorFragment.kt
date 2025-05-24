@@ -46,13 +46,20 @@ class NarratorFragment : Fragment() {
 
         mainViewModel.narratorList.observe(viewLifecycleOwner) {
             narratorAdapter.submitList(it)
+            narratorAdapter.notifyRebuild()
         }
 
         binding.narratorToolBar.setOnMenuItemClickListener { menuItem ->
             when (menuItem.itemId) {
                 R.id.menuItemRefresh -> {
-                    mainViewModel.createNarratorItems()
+                    mainViewModel.refreshNarratorItems()
                     Toast.makeText(context, R.string.role_refresh, Toast.LENGTH_SHORT).show()
+                    true
+                }
+
+                R.id.menuItemReset -> {
+                    mainViewModel.hideNarratorItemRoles()
+                    Toast.makeText(context, R.string.role_hide, Toast.LENGTH_SHORT).show()
                     true
                 }
 
