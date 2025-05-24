@@ -1,8 +1,11 @@
 package com.github.iamrezamousavi.mafia.view.adapter
 
+import android.annotation.SuppressLint
 import android.content.Context
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
+import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
@@ -17,19 +20,26 @@ class NarratorAdapter(
 
     inner class ViewHolder(private val binding: ItemNarratorBinding) :
         RecyclerView.ViewHolder(binding.root) {
-
-        @Suppress("DEPRECATION")
         fun bind(item: NarratorItem) {
             binding.apply {
                 playerName.text = item.player.name
                 playerRole.text = context.getString(item.role.name)
                 playerRoleItemCard.setCardBackgroundColor(
                     if (item.isAlive) {
-                        context.resources.getColor(R.color.citizen_md_theme_primaryContainer)
+                        ContextCompat.getColor(context, R.color.citizen_md_theme_primaryContainer)
                     } else {
-                        context.resources.getColor(R.color.citizen_md_theme_background)
+                        ContextCompat.getColor(context, R.color.citizen_md_theme_background)
                     }
                 )
+                playerRoleItemCard.setOnClickListener {
+                    item.showRole = !item.showRole
+                    notifyItemChanged(adapterPosition)
+                }
+                playerRole.visibility = if (item.showRole) {
+                    View.VISIBLE
+                } else {
+                    View.GONE
+                }
                 playerOffButton.setOnClickListener {
                     item.isAlive = !item.isAlive
                     notifyItemChanged(adapterPosition)
@@ -57,5 +67,10 @@ class NarratorAdapter(
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         holder.bind(getItem(position))
+    }
+
+    @SuppressLint("NotifyDataSetChanged")
+    fun notifyRebuild() {
+        notifyDataSetChanged()
     }
 }

@@ -193,10 +193,21 @@ class MainViewModel : ViewModel() {
                 NarratorItem(
                     id = player.id,
                     player = player,
-                    role = getRole(player),
-                    isAlive = true
+                    role = getRole(player)
                 )
             }
+    }
+
+    fun refreshNarratorItems() {
+        val items = _narratorList.value.orEmpty().toMutableList()
+        items.forEach { it.isAlive = true }
+        setNarratorList(items)
+    }
+
+    fun hideNarratorItemRoles() {
+        val items = _narratorList.value.orEmpty().toMutableList()
+        items.forEach { it.showRole = false }
+        setNarratorList(items)
     }
 
     private fun setNarratorList(updatedList: List<NarratorItem>) {
