@@ -24,6 +24,21 @@
 
     </com.google.android.material.appbar.AppBarLayout>
 
+    <TextView
+        android:id="@+id/playerHelpMessage"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/badge_background"
+        android:gravity="center"
+        android:padding="8dp"
+        android:text="@string/player_help_message"
+        android:textAlignment="center"
+        android:textColor="@color/md_theme_onTertiaryContainer"
+        android:textSize="15sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/playerRoleTopBar" />
+
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/playerRoleList"
         android:layout_width="match_parent"
@@ -32,7 +47,7 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/playerRoleTopBar"
+        app:layout_constraintTop_toBottomOf="@id/playerHelpMessage"
         app:spanCount="3"
         tools:listitem="@layout/item_player_name" />
 </androidx.constraintlayout.widget.ConstraintLayout>

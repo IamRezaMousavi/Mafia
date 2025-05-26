@@ -45,6 +45,7 @@ class PlayerRoleFragment : Fragment() {
                 val playerDialog = PlayerDialog(requireContext(), role).also {
                     it.setOnDismissListener {
                         if (mainViewModel.isAllPlayersGetRoles()) {
+                            binding.playerHelpMessage.visibility = View.GONE
                             RoleDoneDialog(
                                 requireContext(),
                                 onOkClicked = {
@@ -55,6 +56,7 @@ class PlayerRoleFragment : Fragment() {
                                 },
                                 onRefreshClicked = {
                                     mainViewModel.refreshRoles()
+                                    binding.playerHelpMessage.visibility = View.VISIBLE
                                 }
                             ).show()
                         }
