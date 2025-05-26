@@ -17,6 +17,7 @@
     <string name="player_not_enough">At least 3 players must be selected</string>
     <string name="roles_not_match">The number of selected roles does not match the number of players</string>
     <string name="mafia_roles_too_much">Too many Mafia roles</string>
+    <string name="player_help_message">Tap your name to uncover your secret role. then it\'s someone else\'s turn!</string>
     <string name="goto_narrator_page_desc">All players have viewed their roles.\nWould you like to enter the Narrator page?</string>
     <string name="select_all">Select All</string>
     <string name="delete_player">Delete Player</string>
