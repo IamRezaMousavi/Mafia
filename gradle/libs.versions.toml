@@ -15,7 +15,7 @@ gson = "2.13.1"
 navigation = "2.7.7"
 
 ktlint = "12.3.0"
-detekt = "1.23.7"
+detekt = "1.23.8"
 
 junit = "4.13.2"
 android-junit = "1.2.1"
