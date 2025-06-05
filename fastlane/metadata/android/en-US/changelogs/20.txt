@@ -1,0 +1,4 @@
+- add about page
+- impl narrator page
+- add some hint messages
+- update dependencies
