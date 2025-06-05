@@ -2,7 +2,22 @@
 
 [به فارسی ببینید](./mafia-fa.md)
 
-**[Mafia](https://en.wikipedia.org/wiki/Mafia_(party_game))**, also known as **Werewolf**, is a Russian [social deduction game](https://en.wikipedia.org/wiki/Social_deduction_game) created by Dimitry Davidoff in 1986. The game models a conflict between two groups: an informed minority (the mafiosi or the werewolves) and an [uninformed](https://en.wikipedia.org/wiki/Information_asymmetry) majority (the villagers). At the start of the game, each player is secretly assigned a role affiliated with one of these teams. The game has two alternating phases: first, a night-phase, during which those with night-killing-powers may covertly kill other players, and second, a day-phase, in which all surviving players debate and vote to eliminate a suspect. The game continues until a faction achieves its [win-condition](https://en.wikipedia.org/wiki/Win_condition); for the village, this usually means eliminating the evil minority, while for the minority, this usually means reaching numerical parity with the village and eliminating any rival evil groups.
+**[Mafia](https://en.wikipedia.org/wiki/Mafia_(party_game))**, also known as **Werewolf**, is a Russian [social deduction game](https://en.wikipedia.org/wiki/Social_deduction_game) created by Dimitry Davidoff in 1986.
+The game models a conflict between two groups:
+
+* An informed minority (the mafiosi or the werewolves)
+* An uninformed majority (the villagers)
+
+At the start of the game, each player is secretly assigned a role affiliated with one of these teams.
+The game has two alternating phases:
+
+* **Night-phase**: during which those with night-killing-powers may covertly kill other players
+* **Day-phase**: in which all surviving players debate and vote to eliminate a suspect
+
+The game continues until a faction achieves its [win-condition](https://en.wikipedia.org/wiki/Win_condition):
+
+* For the village, this usually means eliminating the evil minority
+* While for the minority, this usually means reaching numerical parity with the village and eliminating any rival evil groups
 
 ---
 
