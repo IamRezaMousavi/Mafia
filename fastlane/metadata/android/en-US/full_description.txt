@@ -11,3 +11,8 @@ and second, a day-phase, in which all surviving players debate and vote to elimi
 The game continues until a faction achieves its win-condition;
     - for the village, this usually means eliminating the evil minority
     - while for the minority, this usually means reaching numerical parity with the village and eliminating any rival evil groups
+
+Supported Languages
+* English
+* Persian
+The app automatically launches in Persian, but you can change the language anytime in the settings.
