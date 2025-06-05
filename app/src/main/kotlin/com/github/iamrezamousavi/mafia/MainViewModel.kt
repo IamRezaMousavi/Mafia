@@ -8,9 +8,9 @@ import com.github.iamrezamousavi.mafia.data.local.PlayerStorage
 import com.github.iamrezamousavi.mafia.data.model.NarratorItem
 import com.github.iamrezamousavi.mafia.data.model.Player
 import com.github.iamrezamousavi.mafia.data.model.Role
+import com.github.iamrezamousavi.mafia.data.model.RoleSide
 import com.github.iamrezamousavi.mafia.utils.MafiaError
 import com.github.iamrezamousavi.mafia.utils.ResultType
-import com.github.iamrezamousavi.mafia.utils.getSide
 
 class MainViewModel : ViewModel() {
 
@@ -112,7 +112,7 @@ class MainViewModel : ViewModel() {
 
     fun calculateMinMafia(): Int {
         val minMafia = selectedRoles
-            .filter { getSide(it.name) == R.string.mafia_side }
+            .filter { it.side == RoleSide.MAFIA }
             .size
         return if (minMafia > 1) minMafia else 1
     }
@@ -120,11 +120,11 @@ class MainViewModel : ViewModel() {
     private fun calculateCitizenSize(): Int = playersSize - mafiaSize.value!! - getIndependentSize()
 
     private fun getIndependentSize(): Int =
-        selectedRoles.filter { getSide(it.name) == R.string.independent_side }.size
+        selectedRoles.filter { it.side == RoleSide.INDEPENDENT }.size
 
     fun checkSelectedRolesIsOk(): ResultType<Boolean, MafiaError> {
         val roles = selectedRoles
-        val mafiaSize = roles.filter { getSide(it.name) == R.string.mafia_side }.size
+        val mafiaSize = roles.filter { it.side == RoleSide.MAFIA }.size
         val isMafiaRoleOk = mafiaSize <= calculateMaxMafia()
 
         val isRoleSizeOk = roles.size <= playersSize
@@ -140,18 +140,18 @@ class MainViewModel : ViewModel() {
         val roles = selectedRoles.toMutableList()
 
         var mafiaSizeInRoles = roles
-            .filter { getSide(it.name) == R.string.mafia_side }
+            .filter { it.side == RoleSide.MAFIA }
             .size
         while (mafiaSizeInRoles < mafiaSize.value!!) {
-            roles.add(Role(name = R.string.simple_mafia))
+            roles.add(Role(name = R.string.simple_mafia, side = RoleSide.MAFIA))
             mafiaSizeInRoles += 1
         }
 
         var citizenSizeInRoles = roles
-            .filter { getSide(it.name) == R.string.citizen_side }
+            .filter { it.side == RoleSide.CITIZEN }
             .size
         while (citizenSizeInRoles < citizenSize.value!!) {
-            roles.add(Role(name = R.string.simple_citizen))
+            roles.add(Role(name = R.string.simple_citizen, side = RoleSide.CITIZEN))
             citizenSizeInRoles += 1
         }
 
@@ -223,6 +223,27 @@ class MainViewModel : ViewModel() {
             updatedItems[itemIndex] = item
             setNarratorList(updatedItems)
         }
+    }
+
+    fun checkWin(): RoleSide? {
+        val players = _narratorList.value.orEmpty().filter { it.isAlive }
+        val mafiaCount = players.filter { it.role.side == RoleSide.MAFIA }.size
+        val independentCount = players.filter { it.role.side == RoleSide.INDEPENDENT }.size
+        val citizenCount = players.filter { it.role.side == RoleSide.CITIZEN }.size
+
+        if (mafiaCount + independentCount == 0) {
+            return RoleSide.CITIZEN
+        }
+        if (citizenCount <= mafiaCount && independentCount == 0) {
+            return RoleSide.MAFIA
+        }
+        if (independentCount == 1 && mafiaCount == 0 && citizenCount <= 2) {
+            return RoleSide.INDEPENDENT
+        }
+        if (independentCount == 1 && mafiaCount <= 2 && citizenCount == 0) {
+            return RoleSide.INDEPENDENT
+        }
+        return null
     }
 
     fun loadPlayers(context: Context) {

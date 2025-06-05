@@ -3,46 +3,14 @@ package com.github.iamrezamousavi.mafia.utils
 import android.content.Context
 import androidx.annotation.StringRes
 import com.github.iamrezamousavi.mafia.R
+import com.github.iamrezamousavi.mafia.data.model.Role
+import com.github.iamrezamousavi.mafia.data.model.RoleSide
 
 @StringRes
-fun getSide(@StringRes role: Int): Int = when (role) {
-    R.string.simple_citizen,
-    R.string.doctor,
-    R.string.detective,
-    R.string.sniper,
-    R.string.mayor,
-    R.string.guardian,
-    R.string.psychologist,
-    R.string.professional,
-    R.string.gunman,
-    R.string.judge,
-    R.string.champion,
-    R.string.priest,
-    R.string.hacker,
-    R.string.angel,
-    R.string.vigilante,
-    R.string.bartender -> R.string.citizen_side
-
-    R.string.simple_mafia,
-    R.string.godfather,
-    R.string.dr_lecter,
-    R.string.silencer,
-    R.string.terrorist,
-    R.string.negotiator,
-    R.string.nato,
-    R.string.vandal,
-    R.string.magician,
-    R.string.hostage_taker,
-    R.string.bodyguard,
-    R.string.bomber -> R.string.mafia_side
-
-    R.string.unknown,
-    R.string.wolfs_rain,
-    R.string.killer,
-    R.string.thousand_faces,
-    R.string.syndicate -> R.string.independent_side
-
-    else -> R.string.citizen_side
+fun getSide(role: Role): Int = when (role.side) {
+    RoleSide.CITIZEN -> R.string.citizen_side
+    RoleSide.MAFIA -> R.string.mafia_side
+    RoleSide.INDEPENDENT -> R.string.independent_side
 }
 
 @Suppress("CyclomaticComplexMethod")

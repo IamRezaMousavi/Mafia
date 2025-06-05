@@ -5,12 +5,14 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.recyclerview.widget.DefaultItemAnimator
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.github.iamrezamousavi.mafia.MainViewModel
 import com.github.iamrezamousavi.mafia.R
+import com.github.iamrezamousavi.mafia.data.model.RoleSide
 import com.github.iamrezamousavi.mafia.databinding.FragmentNarratorBinding
 import com.github.iamrezamousavi.mafia.view.adapter.NarratorAdapter
 
@@ -47,6 +49,130 @@ class NarratorFragment : Fragment() {
         mainViewModel.narratorList.observe(viewLifecycleOwner) {
             narratorAdapter.submitList(it)
             narratorAdapter.notifyRebuild()
+            binding.alivePeople.text =
+                getString(R.string.alive_count, it.filter { player -> player.isAlive }.size)
+            binding.deadPeople.text =
+                getString(R.string.dead_count, it.filter { player -> player.isAlive.not() }.size)
+
+            binding.deadCitizen.text = getString(
+                R.string.citizen_count,
+                it.filter { player ->
+                    player.isAlive.not() && player.role.side == RoleSide.CITIZEN
+                }.size
+            )
+            binding.deadMafia.text = getString(
+                R.string.mafia_count,
+                it.filter { player ->
+                    player.isAlive.not() && player.role.side == RoleSide.MAFIA
+                }.size
+            )
+            binding.deadIndependent.text = getString(
+                R.string.independent_count,
+                it.filter { player ->
+                    player.isAlive.not() && player.role.side == RoleSide.INDEPENDENT
+                }.size
+            )
+
+            binding.aliveCitizen.text = getString(
+                R.string.citizen_count,
+                it.filter { player -> player.isAlive && player.role.side == RoleSide.CITIZEN }.size
+            )
+            binding.aliveMafia.text = getString(
+                R.string.mafia_count,
+                it.filter { player -> player.isAlive && player.role.side == RoleSide.MAFIA }.size
+            )
+            binding.aliveIndependent.text = getString(
+                R.string.independent_count,
+                it.filter { player ->
+                    player.isAlive && player.role.side == RoleSide.INDEPENDENT
+                }.size
+            )
+
+            when (mainViewModel.checkWin()) {
+                RoleSide.CITIZEN -> {
+                    binding.narratorCard.setCardBackgroundColor(
+                        ContextCompat.getColor(
+                            requireContext(),
+                            R.color.citizen_md_theme_primary
+                        )
+                    )
+                    binding.deadPeople.setTextColor(
+                        ContextCompat.getColor(
+                            requireContext(),
+                            R.color.citizen_md_theme_onPrimary
+                        )
+                    )
+                    binding.alivePeople.setTextColor(
+                        ContextCompat.getColor(
+                            requireContext(),
+                            R.color.citizen_md_theme_onPrimary
+                        )
+                    )
+                }
+
+                RoleSide.MAFIA -> {
+                    binding.narratorCard.setCardBackgroundColor(
+                        ContextCompat.getColor(
+                            requireContext(),
+                            R.color.mafia_md_theme_primary
+                        )
+                    )
+                    binding.deadPeople.setTextColor(
+                        ContextCompat.getColor(
+                            requireContext(),
+                            R.color.mafia_md_theme_onPrimary
+                        )
+                    )
+                    binding.alivePeople.setTextColor(
+                        ContextCompat.getColor(
+                            requireContext(),
+                            R.color.mafia_md_theme_onPrimary
+                        )
+                    )
+                }
+
+                RoleSide.INDEPENDENT -> {
+                    binding.narratorCard.setCardBackgroundColor(
+                        ContextCompat.getColor(
+                            requireContext(),
+                            R.color.independent_md_theme_primary
+                        )
+                    )
+                    binding.deadPeople.setTextColor(
+                        ContextCompat.getColor(
+                            requireContext(),
+                            R.color.independent_md_theme_onPrimary
+                        )
+                    )
+                    binding.alivePeople.setTextColor(
+                        ContextCompat.getColor(
+                            requireContext(),
+                            R.color.independent_md_theme_onPrimary
+                        )
+                    )
+                }
+
+                null -> {
+                    binding.narratorCard.setCardBackgroundColor(
+                        ContextCompat.getColor(
+                            requireContext(),
+                            R.color.md_theme_background
+                        )
+                    )
+                    binding.deadPeople.setTextColor(
+                        ContextCompat.getColor(
+                            requireContext(),
+                            R.color.mafia_md_theme_primary
+                        )
+                    )
+                    binding.alivePeople.setTextColor(
+                        ContextCompat.getColor(
+                            requireContext(),
+                            R.color.citizen_md_theme_primary
+                        )
+                    )
+                }
+            }
         }
 
         binding.narratorToolBar.setOnMenuItemClickListener { menuItem ->

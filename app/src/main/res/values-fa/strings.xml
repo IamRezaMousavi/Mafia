@@ -6,7 +6,6 @@
     <string name="player_list">لیست بازیکن‌ها</string>
     <string name="division_roles">تقسیم نقش‌ها (%1$d)</string>
     <string name="division_roles_title">تقسیم نقش‌ها</string>
-    <string name="narrator">راوی</string>
     <string name="more">بیشتر</string>
 
     <string name="players_size">تعداد بازیکنان: %1$d</string>
@@ -35,6 +34,13 @@
     <string name="source_code">کد منبع</string>
     <string name="bug_report">گزارش اشکال</string>
     <string name="user_guide">راهنمای کاربر</string>
+
+    <string name="narrator">راوی</string>
+    <string name="dead_count">افراد مرده: %1$d</string>
+    <string name="alive_count">افراد زنده: %1$d</string>
+    <string name="citizen_count">شهروندان: %1$d</string>
+    <string name="mafia_count">مافیا: %1$d</string>
+    <string name="independent_count">مستقل: %1$d</string>
 
     <string name="citizen_roles">نقش‌های شهروندان</string>
     <string name="mafia_roles">نقش‌های مافیا</string>

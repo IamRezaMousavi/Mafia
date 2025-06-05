@@ -28,7 +28,7 @@
         android:id="@+id/playerHelpMessage"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@drawable/badge_background"
+        android:background="@drawable/badge_info_background"
         android:gravity="center"
         android:padding="8dp"
         android:text="@string/player_help_message"

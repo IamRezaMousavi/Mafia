@@ -6,7 +6,6 @@
     <string name="player_list">Players List</string>
     <string name="division_roles">Roles Division (%1$d)</string>
     <string name="division_roles_title">Roles Division</string>
-    <string name="narrator">Narrator</string>
     <string name="more">More</string>
 
     <string name="players_size">Number of Players: %1$d</string>
@@ -35,6 +34,13 @@
     <string name="source_code">Source Code</string>
     <string name="bug_report">Bug Report</string>
     <string name="user_guide">User Guide</string>
+
+    <string name="narrator">Narrator</string>
+    <string name="dead_count">Dead People: %1$d</string>
+    <string name="alive_count">Alive People: %1$d</string>
+    <string name="citizen_count">Citizen: %1$d</string>
+    <string name="mafia_count">Mafia: %1$d</string>
+    <string name="independent_count">Independent: %1$d</string>
 
     <string name="citizen_roles">Citizen Roles</string>
     <string name="mafia_roles">Mafia Roles</string>

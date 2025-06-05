@@ -2,9 +2,9 @@ package com.github.iamrezamousavi.mafia.view.dialog
 
 import android.content.Context
 import android.graphics.Color
-import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
 import androidx.appcompat.app.AlertDialog
+import androidx.core.graphics.drawable.toDrawable
 import com.github.iamrezamousavi.mafia.data.model.Role
 import com.github.iamrezamousavi.mafia.databinding.DialogPlayerBinding
 import com.github.iamrezamousavi.mafia.utils.getDescription
@@ -22,12 +22,12 @@ class PlayerDialog(
         setContentView(binding.root)
 
         if (window != null) {
-            window!!.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
+            window!!.setBackgroundDrawable(Color.TRANSPARENT.toDrawable())
         }
 
         binding.titleText.text = context.getString(role.name)
 
-        binding.sideText.text = context.getString(getSide(role.name))
+        binding.sideText.text = context.getString(getSide(role))
 
         binding.descriptionText.text = context.getString(getDescription(role.name))
 
