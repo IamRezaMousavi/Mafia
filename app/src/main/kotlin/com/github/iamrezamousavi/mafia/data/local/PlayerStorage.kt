@@ -1,6 +1,7 @@
 package com.github.iamrezamousavi.mafia.data.local
 
 import android.content.Context
+import androidx.core.content.edit
 import com.github.iamrezamousavi.mafia.data.model.Player
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
@@ -15,9 +16,9 @@ class PlayerStorage(applicationContext: Context) {
     fun savePlayers(players: List<Player>) {
         val playersJson = gson.toJson(players)
         sharedPreferences
-            .edit()
-            .putString(playersKey, playersJson)
-            .apply()
+            .edit {
+                putString(playersKey, playersJson)
+            }
     }
 
     fun getPlayers(): List<Player> {

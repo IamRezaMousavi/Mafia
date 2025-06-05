@@ -11,6 +11,7 @@ import androidx.navigation.fragment.findNavController
 import com.github.iamrezamousavi.mafia.MainViewModel
 import com.github.iamrezamousavi.mafia.R
 import com.github.iamrezamousavi.mafia.data.model.Role
+import com.github.iamrezamousavi.mafia.data.model.RoleSide
 import com.github.iamrezamousavi.mafia.databinding.FragmentRoleBinding
 import com.github.iamrezamousavi.mafia.utils.MafiaError
 import com.github.iamrezamousavi.mafia.utils.getRoleId
@@ -79,18 +80,34 @@ class RoleFragment : Fragment() {
     }
 
     private fun getSelectedRoles(): List<Role> {
-        val selectedRoles = (
-            binding.citizen.chipGroup1.checkedChipIds +
-                binding.mafia.chipGroup2.checkedChipIds +
-                binding.independent.chipGroup3.checkedChipIds
-            ).map {
+        val citizenRoles = binding.citizen.chipGroup1.checkedChipIds.map {
             Role(
                 name = getRoleId(
                     requireContext(),
                     requireView().findViewById<Chip>(it).text.toString()
-                )
+                ),
+                side = RoleSide.CITIZEN
             )
         }
-        return selectedRoles
+        val mafiaRoles = binding.mafia.chipGroup2.checkedChipIds.map {
+            Role(
+                name = getRoleId(
+                    requireContext(),
+                    requireView().findViewById<Chip>(it).text.toString()
+                ),
+                side = RoleSide.MAFIA
+            )
+        }
+        val independentRoles = binding.independent.chipGroup3.checkedChipIds.map {
+            Role(
+                name = getRoleId(
+                    requireContext(),
+                    requireView().findViewById<Chip>(it).text.toString()
+                ),
+                side = RoleSide.INDEPENDENT
+            )
+        }
+
+        return citizenRoles + mafiaRoles + independentRoles
     }
 }

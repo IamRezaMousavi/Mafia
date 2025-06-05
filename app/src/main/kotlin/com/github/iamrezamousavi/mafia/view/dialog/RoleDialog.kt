@@ -2,14 +2,14 @@ package com.github.iamrezamousavi.mafia.view.dialog
 
 import android.content.Context
 import android.graphics.Color
-import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
 import android.view.View
 import androidx.appcompat.app.AlertDialog
+import androidx.core.graphics.drawable.toDrawable
 import com.github.iamrezamousavi.mafia.MainViewModel
 import com.github.iamrezamousavi.mafia.R
+import com.github.iamrezamousavi.mafia.data.model.RoleSide
 import com.github.iamrezamousavi.mafia.databinding.DialogRoleBinding
-import com.github.iamrezamousavi.mafia.utils.getSide
 import com.github.iamrezamousavi.mafia.view.counterview.CounterViewListener
 
 class RoleDialog(
@@ -25,7 +25,7 @@ class RoleDialog(
         setContentView(binding.root)
 
         if (window != null) {
-            window!!.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
+            window!!.setBackgroundDrawable(Color.TRANSPARENT.toDrawable())
         }
 
         binding.playerSizeText.text =
@@ -44,7 +44,7 @@ class RoleDialog(
         mainViewModel.roles.observe(this) {
             binding.citizenRoles.text =
                 it.filter { role ->
-                    getSide(role.name) == R.string.citizen_side
+                    role.side == RoleSide.CITIZEN
                 }.map { role ->
                     context.getString(role.name)
                 }.toString()
@@ -54,7 +54,7 @@ class RoleDialog(
 
             binding.mafiaRoles.text =
                 it.filter { role ->
-                    getSide(role.name) == R.string.mafia_side
+                    role.side == RoleSide.MAFIA
                 }.map { role ->
                     context.getString(role.name)
                 }.toString()
@@ -95,7 +95,7 @@ class RoleDialog(
 
     private fun setIndependentSection() {
         val independentRoles = mainViewModel.selectedRoles.filter {
-            getSide(it.name) == R.string.independent_side
+            it.side == RoleSide.INDEPENDENT
         }
         if (independentRoles.isEmpty()) {
             binding.independentCard.visibility = View.GONE

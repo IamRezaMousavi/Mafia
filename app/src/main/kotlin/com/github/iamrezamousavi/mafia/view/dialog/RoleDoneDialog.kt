@@ -2,9 +2,9 @@ package com.github.iamrezamousavi.mafia.view.dialog
 
 import android.content.Context
 import android.graphics.Color
-import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
 import androidx.appcompat.app.AlertDialog
+import androidx.core.graphics.drawable.toDrawable
 import com.github.iamrezamousavi.mafia.databinding.DialogRoleDoneBinding
 
 class RoleDoneDialog(
@@ -21,7 +21,7 @@ class RoleDoneDialog(
         setContentView(binding.root)
 
         if (window != null) {
-            window!!.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
+            window!!.setBackgroundDrawable(Color.TRANSPARENT.toDrawable())
         }
         setCanceledOnTouchOutside(false)
 
