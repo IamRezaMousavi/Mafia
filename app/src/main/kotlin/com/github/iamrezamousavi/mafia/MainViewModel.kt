@@ -4,13 +4,17 @@ import android.content.Context
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.github.iamrezamousavi.mafia.data.local.PlayerStorage
+import androidx.lifecycle.viewModelScope
+import com.github.iamrezamousavi.mafia.data.local.getPlayers
+import com.github.iamrezamousavi.mafia.data.local.preferences
+import com.github.iamrezamousavi.mafia.data.local.savePlayers
 import com.github.iamrezamousavi.mafia.data.model.NarratorItem
 import com.github.iamrezamousavi.mafia.data.model.Player
 import com.github.iamrezamousavi.mafia.data.model.Role
 import com.github.iamrezamousavi.mafia.data.model.RoleSide
 import com.github.iamrezamousavi.mafia.utils.MafiaError
 import com.github.iamrezamousavi.mafia.utils.ResultType
+import kotlinx.coroutines.launch
 
 class MainViewModel : ViewModel() {
 
@@ -247,12 +251,16 @@ class MainViewModel : ViewModel() {
     }
 
     fun loadPlayers(context: Context) {
-        val storage = PlayerStorage(context)
-        setPlayers(storage.getPlayers())
+        viewModelScope.launch {
+            val players = context.preferences.getPlayers()
+            setPlayers(players)
+        }
     }
 
     fun savePlayers(context: Context) {
-        val storage = PlayerStorage(context)
-        return storage.savePlayers(getPlayers())
+        viewModelScope.launch {
+            val players = getPlayers()
+            context.preferences.savePlayers(players)
+        }
     }
 }
