@@ -3,6 +3,7 @@ import io.gitlab.arturbosch.detekt.Detekt
 plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.kotlin.android)
+    alias(libs.plugins.kotlin.serialization)
     alias(libs.plugins.ktlint)
     alias(libs.plugins.detekt)
 }
@@ -97,7 +98,7 @@ dependencies {
     androidTestImplementation(libs.android.junit)
     testImplementation(libs.core.testing)
 
-    implementation(libs.gson)
+    implementation(libs.kotlinx.serialization.json)
 
     implementation(libs.navigation.fragment.ktx)
     implementation(libs.navigation.ui.ktx)
