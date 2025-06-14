@@ -121,7 +121,8 @@ class MainViewModel : ViewModel() {
         return if (minMafia > 1) minMafia else 1
     }
 
-    private fun calculateCitizenSize(): Int = playersSize - mafiaSize.value!! - getIndependentSize()
+    private fun calculateCitizenSize(): Int =
+        playersSize - mafiaSize.value.orDefault(1) - getIndependentSize()
 
     private fun getIndependentSize(): Int =
         selectedRoles.filter { it.side == RoleSide.INDEPENDENT }.size
@@ -146,7 +147,7 @@ class MainViewModel : ViewModel() {
         var mafiaSizeInRoles = roles
             .filter { it.side == RoleSide.MAFIA }
             .size
-        while (mafiaSizeInRoles < mafiaSize.value!!) {
+        while (mafiaSizeInRoles < mafiaSize.value.orDefault(1)) {
             roles.add(Role(name = R.string.simple_mafia, side = RoleSide.MAFIA))
             mafiaSizeInRoles += 1
         }
@@ -154,7 +155,7 @@ class MainViewModel : ViewModel() {
         var citizenSizeInRoles = roles
             .filter { it.side == RoleSide.CITIZEN }
             .size
-        while (citizenSizeInRoles < citizenSize.value!!) {
+        while (citizenSizeInRoles < citizenSize.value.orDefault(1)) {
             roles.add(Role(name = R.string.simple_citizen, side = RoleSide.CITIZEN))
             citizenSizeInRoles += 1
         }
@@ -264,3 +265,5 @@ class MainViewModel : ViewModel() {
         }
     }
 }
+
+fun Int?.orDefault(default: Int) = this ?: default

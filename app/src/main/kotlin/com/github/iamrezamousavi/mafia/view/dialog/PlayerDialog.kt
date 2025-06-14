@@ -7,8 +7,8 @@ import androidx.appcompat.app.AlertDialog
 import androidx.core.graphics.drawable.toDrawable
 import com.github.iamrezamousavi.mafia.data.model.Role
 import com.github.iamrezamousavi.mafia.databinding.DialogPlayerBinding
-import com.github.iamrezamousavi.mafia.utils.getDescription
-import com.github.iamrezamousavi.mafia.utils.getSide
+import com.github.iamrezamousavi.mafia.utils.descriptionStringRes
+import com.github.iamrezamousavi.mafia.utils.sideStringRes
 
 class PlayerDialog(
     context: Context,
@@ -21,15 +21,13 @@ class PlayerDialog(
         binding = DialogPlayerBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        if (window != null) {
-            window!!.setBackgroundDrawable(Color.TRANSPARENT.toDrawable())
-        }
+        window?.setBackgroundDrawable(Color.TRANSPARENT.toDrawable())
 
         binding.titleText.text = context.getString(role.name)
 
-        binding.sideText.text = context.getString(getSide(role))
+        binding.sideText.text = context.getString(role.sideStringRes())
 
-        binding.descriptionText.text = context.getString(getDescription(role.name))
+        binding.descriptionText.text = context.getString(role.descriptionStringRes())
 
         binding.okButton.setOnClickListener {
             dismiss()

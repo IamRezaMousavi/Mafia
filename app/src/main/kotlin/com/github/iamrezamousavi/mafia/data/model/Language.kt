@@ -15,3 +15,5 @@ enum class Language(
 fun String?.toLanguage() = Language.entries.find { it.code == this }
 
 fun String?.toNativeLanguage() = Language.entries.find { it.nativeName == this }
+
+fun Language?.orDefault() = this ?: Language.FA

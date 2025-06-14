@@ -7,7 +7,7 @@ import com.github.iamrezamousavi.mafia.data.model.Role
 import com.github.iamrezamousavi.mafia.data.model.RoleSide
 
 @StringRes
-fun getSide(role: Role): Int = when (role.side) {
+fun Role.sideStringRes(): Int = when (side) {
     RoleSide.CITIZEN -> R.string.citizen_side
     RoleSide.MAFIA -> R.string.mafia_side
     RoleSide.INDEPENDENT -> R.string.independent_side
@@ -15,7 +15,7 @@ fun getSide(role: Role): Int = when (role.side) {
 
 @Suppress("CyclomaticComplexMethod")
 @StringRes
-fun getDescription(@StringRes role: Int): Int = when (role) {
+fun Role.descriptionStringRes(): Int = when (name) {
     R.string.simple_citizen -> R.string.simple_citizen_desc
     R.string.doctor -> R.string.doctor_desc
     R.string.detective -> R.string.detective_desc
@@ -57,7 +57,7 @@ fun getDescription(@StringRes role: Int): Int = when (role) {
 
 @Suppress("CyclomaticComplexMethod")
 @StringRes
-fun getRoleId(context: Context, roleName: String): Int = when (roleName) {
+fun roleNameStringRes(context: Context, roleName: String): Int = when (roleName) {
     context.getString(R.string.simple_citizen) -> R.string.simple_citizen
     context.getString(R.string.doctor) -> R.string.doctor
     context.getString(R.string.detective) -> R.string.detective

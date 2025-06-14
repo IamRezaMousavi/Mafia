@@ -14,7 +14,7 @@ import com.github.iamrezamousavi.mafia.data.model.Role
 import com.github.iamrezamousavi.mafia.data.model.RoleSide
 import com.github.iamrezamousavi.mafia.databinding.FragmentRoleBinding
 import com.github.iamrezamousavi.mafia.utils.MafiaError
-import com.github.iamrezamousavi.mafia.utils.getRoleId
+import com.github.iamrezamousavi.mafia.utils.roleNameStringRes
 import com.github.iamrezamousavi.mafia.view.dialog.RoleDialog
 import com.google.android.material.chip.Chip
 
@@ -82,7 +82,7 @@ class RoleFragment : Fragment() {
     private fun getSelectedRoles(): List<Role> {
         val citizenRoles = binding.citizen.chipGroup1.checkedChipIds.map {
             Role(
-                name = getRoleId(
+                name = roleNameStringRes(
                     requireContext(),
                     requireView().findViewById<Chip>(it).text.toString()
                 ),
@@ -91,7 +91,7 @@ class RoleFragment : Fragment() {
         }
         val mafiaRoles = binding.mafia.chipGroup2.checkedChipIds.map {
             Role(
-                name = getRoleId(
+                name = roleNameStringRes(
                     requireContext(),
                     requireView().findViewById<Chip>(it).text.toString()
                 ),
@@ -100,7 +100,7 @@ class RoleFragment : Fragment() {
         }
         val independentRoles = binding.independent.chipGroup3.checkedChipIds.map {
             Role(
-                name = getRoleId(
+                name = roleNameStringRes(
                     requireContext(),
                     requireView().findViewById<Chip>(it).text.toString()
                 ),
