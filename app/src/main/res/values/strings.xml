@@ -8,10 +8,10 @@
     <string name="division_roles_title">Roles Division</string>
     <string name="more">More</string>
 
-    <string name="players_size">Number of Players: %1$d</string>
-    <string name="independent_size">Number of Independent Roles: %1$d</string>
-    <string name="citizen_size">Number of Citizen Roles: %1$d</string>
-    <string name="mafia_size">Number of Mafia Roles</string>
+    <string name="players_count">Number of Players: %1$d</string>
+    <string name="independent_count_text">Number of Independent Roles: %1$d</string>
+    <string name="citizen_count_text">Number of Citizen Roles: %1$d</string>
+    <string name="mafia_count_text">Number of Mafia Roles</string>
 
     <string name="player_not_enough">At least 3 players must be selected</string>
     <string name="roles_not_match">The number of selected roles does not match the number of players</string>

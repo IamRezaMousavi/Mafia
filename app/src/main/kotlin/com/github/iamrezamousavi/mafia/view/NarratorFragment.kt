@@ -50,42 +50,42 @@ class NarratorFragment : Fragment() {
             narratorAdapter.submitList(it)
             narratorAdapter.notifyRebuild()
             binding.alivePeople.text =
-                getString(R.string.alive_count, it.filter { player -> player.isAlive }.size)
+                getString(R.string.alive_count, it.count { player -> player.isAlive })
             binding.deadPeople.text =
-                getString(R.string.dead_count, it.filter { player -> player.isAlive.not() }.size)
+                getString(R.string.dead_count, it.count { player -> player.isAlive.not() })
 
             binding.deadCitizen.text = getString(
                 R.string.citizen_count,
-                it.filter { player ->
+                it.count { player ->
                     player.isAlive.not() && player.role.side == RoleSide.CITIZEN
-                }.size
+                }
             )
             binding.deadMafia.text = getString(
                 R.string.mafia_count,
-                it.filter { player ->
+                it.count { player ->
                     player.isAlive.not() && player.role.side == RoleSide.MAFIA
-                }.size
+                }
             )
             binding.deadIndependent.text = getString(
                 R.string.independent_count,
-                it.filter { player ->
+                it.count { player ->
                     player.isAlive.not() && player.role.side == RoleSide.INDEPENDENT
-                }.size
+                }
             )
 
             binding.aliveCitizen.text = getString(
                 R.string.citizen_count,
-                it.filter { player -> player.isAlive && player.role.side == RoleSide.CITIZEN }.size
+                it.count { player -> player.isAlive && player.role.side == RoleSide.CITIZEN }
             )
             binding.aliveMafia.text = getString(
                 R.string.mafia_count,
-                it.filter { player -> player.isAlive && player.role.side == RoleSide.MAFIA }.size
+                it.count { player -> player.isAlive && player.role.side == RoleSide.MAFIA }
             )
             binding.aliveIndependent.text = getString(
                 R.string.independent_count,
-                it.filter { player ->
+                it.count { player ->
                     player.isAlive && player.role.side == RoleSide.INDEPENDENT
-                }.size
+                }
             )
 
             when (mainViewModel.checkWin()) {
