@@ -5,6 +5,7 @@ import android.content.SharedPreferences
 import androidx.core.content.edit
 import com.github.iamrezamousavi.mafia.data.model.Language
 import com.github.iamrezamousavi.mafia.data.model.Player
+import com.github.iamrezamousavi.mafia.data.model.orDefault
 import com.github.iamrezamousavi.mafia.data.model.toLanguage
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
@@ -36,4 +37,5 @@ fun SharedPreferences.saveLanguage(language: Language) = edit {
     putString(PREF_APP_LANGUAGE, language.code)
 }
 
-fun SharedPreferences.getLanguage() = getString(PREF_APP_LANGUAGE, Language.FA.code).toLanguage()!!
+fun SharedPreferences.getLanguage() =
+    getString(PREF_APP_LANGUAGE, Language.FA.code).toLanguage().orDefault()

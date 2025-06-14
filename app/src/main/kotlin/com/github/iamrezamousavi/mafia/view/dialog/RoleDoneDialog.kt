@@ -20,9 +20,7 @@ class RoleDoneDialog(
         binding = DialogRoleDoneBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        if (window != null) {
-            window!!.setBackgroundDrawable(Color.TRANSPARENT.toDrawable())
-        }
+        window?.setBackgroundDrawable(Color.TRANSPARENT.toDrawable())
         setCanceledOnTouchOutside(false)
 
         binding.apply {

@@ -62,12 +62,12 @@ class SettingsFragment : Fragment() {
                     val selectedItem = parent.getItemAtPosition(position).toString()
                     val newLanguage = selectedItem.toNativeLanguage()
                     val currentLang = requireContext().preferences.getLanguage()
-                    if (newLanguage != currentLang) {
-                        if (newLanguage != null) {
-                            requireContext().preferences.saveLanguage(newLanguage)
+                    newLanguage
+                        .takeIf { it != currentLang }
+                        ?.let {
+                            requireContext().preferences.saveLanguage(it)
                             setSelection(0)
                         }
-                    }
                 }
 
                 @Suppress("EmptyFunctionBlock")

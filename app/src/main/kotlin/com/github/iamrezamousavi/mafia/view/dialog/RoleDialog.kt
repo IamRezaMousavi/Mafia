@@ -24,9 +24,7 @@ class RoleDialog(
         binding = DialogRoleBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        if (window != null) {
-            window!!.setBackgroundDrawable(Color.TRANSPARENT.toDrawable())
-        }
+        window?.setBackgroundDrawable(Color.TRANSPARENT.toDrawable())
 
         binding.playerSizeText.text =
             context.getString(R.string.players_size, mainViewModel.playersSize)
