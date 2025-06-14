@@ -27,15 +27,15 @@ class RoleDialog(
         window?.setBackgroundDrawable(Color.TRANSPARENT.toDrawable())
 
         binding.playerSizeText.text =
-            context.getString(R.string.players_size, mainViewModel.playersSize)
+            context.getString(R.string.players_count, mainViewModel.playersCount)
 
         setIndependentSection()
 
-        mainViewModel.citizenSize.observe(this) {
-            binding.citizenCounterText.text = context.getString(R.string.citizen_size, it)
+        mainViewModel.citizenCount.observe(this) {
+            binding.citizenCounterText.text = context.getString(R.string.citizen_count_text, it)
         }
 
-        mainViewModel.mafiaSize.observe(this) {
+        mainViewModel.mafiaCount.observe(this) {
             binding.mafiaCounter.value = it
         }
 
@@ -65,12 +65,12 @@ class RoleDialog(
             it.setCounterListener(object : CounterViewListener {
                 override fun onIncrease() {
                     val newValue = binding.mafiaCounter.value
-                    mainViewModel.setMafiaSize(newValue)
+                    mainViewModel.setMafiaCount(newValue)
                 }
 
                 override fun onDecrease() {
                     val newValue = binding.mafiaCounter.value
-                    mainViewModel.setMafiaSize(newValue)
+                    mainViewModel.setMafiaCount(newValue)
                 }
 
                 @Suppress("EmptyFunctionBlock")
@@ -82,7 +82,7 @@ class RoleDialog(
             it.maxValue = mainViewModel.calculateMaxMafia()
             it.minValue = mainViewModel.calculateMinMafia()
             it.value = mainViewModel.calculateMinMafia()
-            mainViewModel.setMafiaSize(it.value)
+            mainViewModel.setMafiaCount(it.value)
         }
 
         binding.okButton.setOnClickListener {
@@ -99,7 +99,7 @@ class RoleDialog(
             binding.independentCard.visibility = View.GONE
         } else {
             binding.independentCounterText.text =
-                context.getString(R.string.independent_size, independentRoles.size)
+                context.getString(R.string.independent_count_text, independentRoles.size)
             binding.independentRoles.text =
                 independentRoles.map { role ->
                     context.getString(role.name)

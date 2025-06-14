@@ -37,7 +37,7 @@ class RoleFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         binding.roleToolBar.title =
-            getString(R.string.select_roles, mainViewModel.playersSize)
+            getString(R.string.select_roles, mainViewModel.playersCount)
 
         val roles = getSelectedRoles()
         mainViewModel.setSelectedRoles(roles)
@@ -53,7 +53,7 @@ class RoleFragment : Fragment() {
             }
         }
 
-        mainViewModel.selectedRolesSize.observe(viewLifecycleOwner) {
+        mainViewModel.selectedRolesCount.observe(viewLifecycleOwner) {
             binding.button.text = getString(R.string.division_roles, it)
         }
 

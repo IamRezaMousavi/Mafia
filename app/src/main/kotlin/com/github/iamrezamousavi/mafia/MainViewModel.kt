@@ -23,22 +23,22 @@ class MainViewModel : ViewModel() {
         get() = _players
 
     val selectedPlayers = ArrayList<Player>()
-    val playersSize: Int
+    val playersCount: Int
         get() = selectedPlayers.size
 
     val selectedRoles = ArrayList<Role>()
 
-    private val _selectedRolesSize = MutableLiveData(selectedRoles.size)
-    val selectedRolesSize: LiveData<Int>
-        get() = _selectedRolesSize
+    private val _selectedRolesCount = MutableLiveData(selectedRoles.size)
+    val selectedRolesCount: LiveData<Int>
+        get() = _selectedRolesCount
 
-    private val _citizenSize = MutableLiveData(1)
-    val citizenSize: LiveData<Int>
-        get() = _citizenSize
+    private val _citizenCount = MutableLiveData(1)
+    val citizenCount: LiveData<Int>
+        get() = _citizenCount
 
-    private val _mafiaSize = MutableLiveData(1)
-    val mafiaSize: LiveData<Int>
-        get() = _mafiaSize
+    private val _mafiaCount = MutableLiveData(1)
+    val mafiaCount: LiveData<Int>
+        get() = _mafiaCount
 
     private val _roles = MutableLiveData(emptyList<Role>())
     val roles: LiveData<List<Role>>
@@ -95,48 +95,45 @@ class MainViewModel : ViewModel() {
 
     fun isPlayersOk(): Boolean {
         val players = getPlayers()
-        val checkedPlayers = players.filter { it.isChecked }
+        val checkedPlayers = players.count { it.isChecked }
         @Suppress("MagicNumber")
-        return checkedPlayers.size >= 3
+        return checkedPlayers >= 3
     }
 
     fun setSelectedRoles(roles: List<Role>) {
         selectedRoles.clear()
         selectedRoles.addAll(roles)
-        _selectedRolesSize.value = roles.size
+        _selectedRolesCount.value = roles.size
     }
 
     fun calculateMaxMafia(): Int {
-        return if (playersSize % 2 == 1) {
-            playersSize / 2
+        return if (playersCount % 2 == 1) {
+            playersCount / 2
         } else {
-            playersSize / 2 - 1
+            playersCount / 2 - 1
         }
     }
 
     fun calculateMinMafia(): Int {
-        val minMafia = selectedRoles
-            .filter { it.side == RoleSide.MAFIA }
-            .size
+        val minMafia = selectedRoles.count { it.side == RoleSide.MAFIA }
         return if (minMafia > 1) minMafia else 1
     }
 
-    private fun calculateCitizenSize(): Int =
-        playersSize - mafiaSize.value.orDefault(1) - getIndependentSize()
+    private fun calculateCitizenCount() =
+        playersCount - mafiaCount.value.orDefault(1) - getIndependentCount()
 
-    private fun getIndependentSize(): Int =
-        selectedRoles.filter { it.side == RoleSide.INDEPENDENT }.size
+    private fun getIndependentCount() = selectedRoles.count { it.side == RoleSide.INDEPENDENT }
 
     fun checkSelectedRolesIsOk(): ResultType<Boolean, MafiaError> {
         val roles = selectedRoles
-        val mafiaSize = roles.filter { it.side == RoleSide.MAFIA }.size
-        val isMafiaRoleOk = mafiaSize <= calculateMaxMafia()
+        val mafiaCount = roles.count { it.side == RoleSide.MAFIA }
+        val isMafiaRoleOk = mafiaCount <= calculateMaxMafia()
 
-        val isRoleSizeOk = roles.size <= playersSize
+        val isRoleCountOk = roles.size <= playersCount
 
         return when {
-            isMafiaRoleOk && isRoleSizeOk -> ResultType.success(true)
-            isMafiaRoleOk && !isRoleSizeOk -> ResultType.error(MafiaError.SelectedRoleTooMuch)
+            isMafiaRoleOk && isRoleCountOk -> ResultType.success(true)
+            isMafiaRoleOk && !isRoleCountOk -> ResultType.error(MafiaError.SelectedRoleTooMuch)
             else -> ResultType.error(MafiaError.MafiaRoleTooMatch)
         }
     }
@@ -144,29 +141,25 @@ class MainViewModel : ViewModel() {
     private fun generateRoles(): List<Role> {
         val roles = selectedRoles.toMutableList()
 
-        var mafiaSizeInRoles = roles
-            .filter { it.side == RoleSide.MAFIA }
-            .size
-        while (mafiaSizeInRoles < mafiaSize.value.orDefault(1)) {
+        var mafiaCountInRoles = roles.count { it.side == RoleSide.MAFIA }
+        while (mafiaCountInRoles < mafiaCount.value.orDefault(1)) {
             roles.add(Role(name = R.string.simple_mafia, side = RoleSide.MAFIA))
-            mafiaSizeInRoles += 1
+            mafiaCountInRoles += 1
         }
 
-        var citizenSizeInRoles = roles
-            .filter { it.side == RoleSide.CITIZEN }
-            .size
-        while (citizenSizeInRoles < citizenSize.value.orDefault(1)) {
+        var citizenCountInRoles = roles.count { it.side == RoleSide.CITIZEN }
+        while (citizenCountInRoles < citizenCount.value.orDefault(1)) {
             roles.add(Role(name = R.string.simple_citizen, side = RoleSide.CITIZEN))
-            citizenSizeInRoles += 1
+            citizenCountInRoles += 1
         }
 
         roles.sortBy { it.name }
         return roles
     }
 
-    fun setMafiaSize(newMafiaSize: Int) {
-        _mafiaSize.value = newMafiaSize
-        _citizenSize.value = calculateCitizenSize()
+    fun setMafiaCount(newMafiaCount: Int) {
+        _mafiaCount.value = newMafiaCount
+        _citizenCount.value = calculateCitizenCount()
         _roles.value = generateRoles()
     }
 
@@ -188,9 +181,7 @@ class MainViewModel : ViewModel() {
         return role
     }
 
-    fun isAllPlayersGetRoles(): Boolean {
-        return playersRoles.size == playersSize
-    }
+    fun isAllPlayersGetRoles() = playersRoles.size == playersCount
 
     fun createNarratorItems() {
         _narratorList.value = selectedPlayers
@@ -232,9 +223,9 @@ class MainViewModel : ViewModel() {
 
     fun checkWin(): RoleSide? {
         val players = _narratorList.value.orEmpty().filter { it.isAlive }
-        val mafiaCount = players.filter { it.role.side == RoleSide.MAFIA }.size
-        val independentCount = players.filter { it.role.side == RoleSide.INDEPENDENT }.size
-        val citizenCount = players.filter { it.role.side == RoleSide.CITIZEN }.size
+        val mafiaCount = players.count { it.role.side == RoleSide.MAFIA }
+        val independentCount = players.count { it.role.side == RoleSide.INDEPENDENT }
+        val citizenCount = players.count { it.role.side == RoleSide.CITIZEN }
 
         if (mafiaCount + independentCount == 0) {
             return RoleSide.CITIZEN

@@ -8,10 +8,10 @@
     <string name="division_roles_title">تقسیم نقش‌ها</string>
     <string name="more">بیشتر</string>
 
-    <string name="players_size">تعداد بازیکنان: %1$d</string>
-    <string name="independent_size">تعداد نقش‌های مستقل: %1$d</string>
-    <string name="citizen_size">تعداد شهروندان: %1$d</string>
-    <string name="mafia_size">تعداد مافیا</string>
+    <string name="players_count">تعداد بازیکنان: %1$d</string>
+    <string name="independent_count_text">تعداد نقش‌های مستقل: %1$d</string>
+    <string name="citizen_count_text">تعداد شهروندان: %1$d</string>
+    <string name="mafia_count_text">تعداد مافیا</string>
 
     <string name="player_not_enough">حداقل ۳ نفر باید انتخاب کنید</string>
     <string name="roles_not_match">تعداد نقش‌های انتخابی با تعداد بازیکن‌ها مطابقت ندارد</string>

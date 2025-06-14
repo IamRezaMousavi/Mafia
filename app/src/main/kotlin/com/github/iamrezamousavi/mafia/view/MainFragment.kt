@@ -52,7 +52,7 @@ class MainFragment : Fragment() {
         mainViewModel.players.observe(viewLifecycleOwner) { players ->
             playerAdapter.submitList(players)
             binding.button1.text =
-                getString(R.string.select_roles, players.filter { it.isChecked }.size)
+                getString(R.string.select_roles, players.count { it.isChecked })
         }
 
         binding.button1.setOnClickListener {
