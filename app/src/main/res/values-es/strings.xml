@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Mafia</string>
+    <string name="player_name">Nombre del jugador</string>
+    <string name="select_roles">Selección de roles (%1$d)</string>
+    <string name="player_list">Lista de jugadores</string>
+    <string name="division_roles">Distribución de roles (%1$d)</string>
+    <string name="division_roles_title">Distribución de roles</string>
+    <string name="more">Más</string>
+
+    <string name="players_count">Número de jugadores: %1$d</string>
+    <string name="independent_count_text">Número de roles independientes: %1$d</string>
+    <string name="citizen_count_text">Número de roles ciudadanos: %1$d</string>
+    <string name="mafia_count_text">Número de roles de la mafia</string>
+
+    <string name="player_not_enough">Se deben seleccionar al menos 3 jugadores</string>
+    <string name="roles_not_match">El número de roles seleccionados no coincide con el número de jugadores</string>
+    <string name="mafia_roles_too_much">Demasiados roles de mafia</string>
+    <string name="player_help_message">Toca tu nombre para descubrir tu rol secreto. ¡Luego es el turno de otra persona!</string>
+    <string name="goto_narrator_page_desc">Todos los jugadores han visto sus roles.\n¿Quieres ir a la página del Narrador?</string>
+    <string name="select_all">Seleccionar todo</string>
+    <string name="delete_player">Eliminar jugador</string>
+    <string name="role_refresh">Actualizar roles</string>
+    <string name="role_hide">Ocultar roles</string>
+    <string name="goto_narrator_page">Ir a la página del Narrador</string>
+    <string name="ok_button">Entendido</string>
+    <string name="confirm_button">OK</string>
+    <string name="comma">,</string>
+
+    <string name="settings">Configuración</string>
+    <string name="language">Idioma</string>
+
+    <string name="about">Acerca de</string>
+    <string name="source_code">Código fuente</string>
+    <string name="bug_report">Reportar errores</string>
+    <string name="user_guide">Guía del usuario</string>
+
+    <string name="narrator">Narrador</string>
+    <string name="dead_count">Personas muertas: %1$d</string>
+    <string name="alive_count">Personas vivas: %1$d</string>
+    <string name="citizen_count">Ciudadanos: %1$d</string>
+    <string name="mafia_count">Mafia: %1$d</string>
+    <string name="independent_count">Independientes: %1$d</string>
+
+    <string name="citizen_roles">Roles ciudadanos</string>
+    <string name="mafia_roles">Roles de mafia</string>
+    <string name="independent_roles">Roles independientes</string>
+
+    <string name="citizen_side">Ciudadano</string>
+    <string name="simple_citizen">Ciudadano simple</string>
+    <string name="doctor">Doctor</string>
+    <string name="detective">Detective</string>
+    <string name="sniper">Francotirador</string>
+    <string name="mayor">Alcalde</string>
+    <string name="guardian">Guardián</string>
+    <string name="psychologist">Psicólogo</string>
+    <string name="professional">Profesional</string>
+    <string name="gunman">Hombre armado</string>
+    <string name="judge">Juez</string>
+    <string name="champion">Campeón</string>
+    <string name="priest">Sacerdote</string>
+    <string name="hacker">Hacker</string>
+    <string name="angel">Ángel</string>
+    <string name="vigilante">Vigilante</string>
+    <string name="bartender">Cantinero</string>
+
+    <string name="mafia_side">Mafia</string>
+    <string name="simple_mafia">Mafioso simple</string>
+    <string name="godfather">Padrino</string>
+    <string name="dr_lecter">Dr. Lecter</string>
+    <string name="silencer">Silenciador</string>
+    <string name="terrorist">Terrorista</string>
+    <string name="negotiator">Negociador</string>
+    <string name="nato">NATO</string>
+    <string name="vandal">Vándalo</string>
+    <string name="magician">Mago</string>
+    <string name="hostage_taker">Tomador de rehenes</string>
+    <string name="bodyguard">Guardaespaldas</string>
+    <string name="bomber">Bombardero</string>
+
+    <string name="independent_side">Independiente</string>
+    <string name="unknown">Desconocido</string>
+    <string name="wolfs_rain">Hombre lobo</string>
+    <string name="killer">Asesino</string>
+    <string name="thousand_faces">Mil Caras</string>
+    <string name="syndicate">Sindicato</string>
+
+    <string name="simple_citizen_desc">Los ciudadanos deben detectar correctamente a la mafia durante el día, pero no pueden hacer nada durante la noche.</string>
+    <string name="doctor_desc">Puede salvar a una persona que cree que será asesinada durante la noche.</string>
+    <string name="detective_desc">Puede investigar el bando de un jugador durante la noche.</string>
+    <string name="sniper_desc">Es un ciudadano que puede disparar a quienes crea que pertenecen a la mafia.</string>
+    <string name="mayor_desc">Puede vetar la eliminación de un jugador que crea que es ciudadano durante la votación.</string>
+    <string name="guardian_desc">Puede sacrificarse contra una bomba frente a otro jugador. El asesino morirá si ataca al guardián.</string>
+    <string name="psychologist_desc">Puede silenciar a alguien durante el día como su acción nocturna.</string>
+    <string name="professional_desc">No puede ser asesinado durante la noche, a menos que sea emborrachado por el cantinero.</string>
+    <string name="gunman_desc">Tiene armas y puede dárselas a quienes las necesiten.</string>
+    <string name="judge_desc">Puede invalidar el resultado de la votación de eliminación.</string>
+    <string name="champion_desc">Puede proteger a alguien de cualquier daño durante un día, cada dos días.</string>
+    <string name="priest_desc">Puede permitir que una persona silenciada hable. Si ya puede hablar, puede extender su tiempo de discurso.</string>
+    <string name="hacker_desc">En la segunda noche elige tres jugadores y el narrador dirá cuántos mafiosos hay entre ellos.</string>
+    <string name="angel_desc">Puede revivir a alguien que haya muerto, una vez por partida.</string>
+    <string name="vigilante_desc">Puede proteger a los ciudadanos del tomador de rehenes.</string>
+    <string name="bartender_desc">Elige a una persona para emborracharla.</string>
+
+    <string name="simple_mafia_desc">Miembro de la mafia que puede hablar, votar y opinar.</string>
+    <string name="godfather_desc">Líder de la mafia. Toma la decisión final y no revela su bando al detective.</string>
+    <string name="dr_lecter_desc">Puede salvar a miembros de la mafia de disparos cada noche.</string>
+    <string name="silencer_desc">Puede silenciar a un jugador para el día siguiente durante la noche.</string>
+    <string name="terrorist_desc">Si es eliminado durante el día, puede llevarse a alguien más con él.</string>
+    <string name="negotiator_desc">Puede convencer a un ciudadano simple para unirse al equipo de la mafia.</string>
+    <string name="nato_desc">Si adivina el rol de alguien, ese jugador será eliminado de la ciudad.</string>
+    <string name="vandal_desc">Si elige a alguien con arma y esa persona la usa durante el día, será eliminado.</string>
+    <string name="magician_desc">Puede tomar el rol de alguien por un día, cada noche.</string>
+    <string name="hostage_taker_desc">Puede tomar a alguien como rehén e impedir que use su habilidad.</string>
+    <string name="bodyguard_desc">Mientras esté en juego, los ataques al padrino se redirigen a él.</string>
+    <string name="bomber_desc">Puede colocar una bomba frente a un jugador.</string>
+
+    <string name="unknown_desc">Se une al bando del primer jugador que lo seleccione.</string>
+    <string name="wolfs_rain_desc">Convierte a una persona en hombre lobo cada tres noches.</string>
+    <string name="killer_desc">Mata a alguien cada noche.</string>
+    <string name="thousand_faces_desc">Toma el rol de un jugador eliminado por un día.</string>
+    <string name="syndicate_desc">Conoce todos los roles importantes. No puede ser asesinado de noche. Gana si queda entre los últimos tres jugadores.</string>
+</resources>
