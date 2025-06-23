@@ -7,7 +7,8 @@ enum class Language(
     val nativeName: String
 ) {
     FA("fa", "فارسی"),
-    EN("en", "English");
+    EN("en", "English"),
+    ES("es", "Spanish");
 
     fun asSystemLocale() = Locale(code)
 }

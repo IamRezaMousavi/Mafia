@@ -15,5 +15,6 @@ The game continues until a faction achieves its win-condition:
 Supported Languages
 * English
 * Persian
+* Spanish
 
 The app automatically launches in Persian, but you can change the language anytime in the settings.
