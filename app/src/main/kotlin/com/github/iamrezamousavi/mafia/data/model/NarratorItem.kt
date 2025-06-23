@@ -1,7 +1,12 @@
 package com.github.iamrezamousavi.mafia.data.model
 
-data class NarratorItem(
-    val id: Int,
+import kotlin.uuid.ExperimentalUuidApi
+import kotlin.uuid.Uuid
+
+data class NarratorItem
+@OptIn(ExperimentalUuidApi::class)
+constructor(
+    val id: Uuid,
     val player: Player,
     val role: Role,
     var isAlive: Boolean = true,

@@ -14,6 +14,8 @@ import com.github.iamrezamousavi.mafia.data.model.Role
 import com.github.iamrezamousavi.mafia.data.model.RoleSide
 import com.github.iamrezamousavi.mafia.utils.MafiaError
 import com.github.iamrezamousavi.mafia.utils.ResultType
+import kotlin.uuid.ExperimentalUuidApi
+import kotlin.uuid.Uuid
 import kotlinx.coroutines.launch
 
 class MainViewModel : ViewModel() {
@@ -63,13 +65,14 @@ class MainViewModel : ViewModel() {
         )
     }
 
+    @OptIn(ExperimentalUuidApi::class)
     fun addPlayer(name: String) {
         val currentPlayer = getPlayers().toMutableList()
-        val lastIndex = currentPlayer.lastIndex
-        currentPlayer.add(Player(id = lastIndex + 1, name = name))
+        currentPlayer.add(Player(name = name))
         setPlayers(currentPlayer)
     }
 
+    @OptIn(ExperimentalUuidApi::class)
     fun updatePlayer(updatedPlayer: Player) {
         val players = getPlayers().toMutableList()
         val playerIndex = players.indexOfFirst { it.id == updatedPlayer.id }
@@ -79,7 +82,8 @@ class MainViewModel : ViewModel() {
         }
     }
 
-    fun removePlayer(playerId: Int) {
+    @OptIn(ExperimentalUuidApi::class)
+    fun removePlayer(playerId: Uuid) {
         val players = getPlayers().toMutableList()
         players.removeAll { it.id == playerId }
         setPlayers(players)
@@ -183,6 +187,7 @@ class MainViewModel : ViewModel() {
 
     fun isAllPlayersGetRoles() = playersRoles.size == playersCount
 
+    @OptIn(ExperimentalUuidApi::class)
     fun createNarratorItems() {
         _narratorList.value = selectedPlayers
             .map { player ->
@@ -212,6 +217,7 @@ class MainViewModel : ViewModel() {
             .sortedBy { !it.isAlive }
     }
 
+    @OptIn(ExperimentalUuidApi::class)
     fun updateNarratorItem(item: NarratorItem) {
         val updatedItems = _narratorList.value.orEmpty().toMutableList()
         val itemIndex = updatedItems.indexOfFirst { it.id == item.id }
