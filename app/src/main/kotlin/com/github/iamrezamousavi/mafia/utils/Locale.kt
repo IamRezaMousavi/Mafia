@@ -12,7 +12,7 @@ fun getContextWrapper(context: Context): ContextWrapper {
     val configuration = resources.configuration
 
     val language = context.preferences.getLanguage()
-    val locale = Locale(language.code)
+    val locale = language.asSystemLocale()
     Locale.setDefault(locale)
 
     val currentLocale =
