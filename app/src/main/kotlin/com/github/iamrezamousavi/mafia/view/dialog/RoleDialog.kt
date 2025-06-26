@@ -41,24 +41,18 @@ class RoleDialog(
 
         mainViewModel.roles.observe(this) {
             binding.citizenRoles.text =
-                it.filter { role ->
-                    role.side == RoleSide.CITIZEN
-                }.map { role ->
-                    context.getString(role.name)
-                }.toString()
-                    .replace("[", "")
-                    .replace("]", "")
-                    .replace(",", context.getString(R.string.comma))
+                it
+                    .filter { role -> role.side == RoleSide.CITIZEN }
+                    .joinToString(context.getString(R.string.comma) + SPACE) { role ->
+                        context.getString(role.name)
+                    }
 
             binding.mafiaRoles.text =
-                it.filter { role ->
-                    role.side == RoleSide.MAFIA
-                }.map { role ->
-                    context.getString(role.name)
-                }.toString()
-                    .replace("[", "")
-                    .replace("]", "")
-                    .replace(",", context.getString(R.string.comma))
+                it
+                    .filter { role -> role.side == RoleSide.MAFIA }
+                    .joinToString(context.getString(R.string.comma) + SPACE) { role ->
+                        context.getString(role.name)
+                    }
         }
 
         binding.mafiaCounter.also {
@@ -101,12 +95,15 @@ class RoleDialog(
             binding.independentCounterText.text =
                 context.getString(R.string.independent_count_text, independentRoles.size)
             binding.independentRoles.text =
-                independentRoles.map { role ->
-                    context.getString(role.name)
-                }.toString()
-                    .replace("[", "")
-                    .replace("]", "")
-                    .replace(",", context.getString(R.string.comma))
+                independentRoles.joinToString(context.getString(R.string.comma) + SPACE) { role ->
+                    context.getString(
+                        role.name
+                    )
+                }
         }
+    }
+
+    companion object {
+        const val SPACE = " "
     }
 }

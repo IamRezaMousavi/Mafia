@@ -24,11 +24,11 @@ class MainViewModel : ViewModel() {
     val players: LiveData<List<Player>>
         get() = _players
 
-    val selectedPlayers = ArrayList<Player>()
+    val selectedPlayers = mutableListOf<Player>()
     val playersCount: Int
         get() = selectedPlayers.size
 
-    val selectedRoles = ArrayList<Role>()
+    val selectedRoles = mutableListOf<Role>()
 
     private val _selectedRolesCount = MutableLiveData(selectedRoles.size)
     val selectedRolesCount: LiveData<Int>
@@ -47,6 +47,7 @@ class MainViewModel : ViewModel() {
         get() = _roles
 
     private val playersRoles = mutableMapOf<Player, Role>()
+    private var roleViewedCount = 0
 
     private val _narratorList = MutableLiveData(emptyList<NarratorItem>())
     val narratorList: LiveData<List<NarratorItem>>
@@ -55,13 +56,12 @@ class MainViewModel : ViewModel() {
     private fun getPlayers() = players.value.orEmpty()
 
     private fun setPlayers(newPlayers: List<Player>) {
-        val players = newPlayers.toMutableList()
-        players.sortBy { it.name }
-        players.sortBy { !it.isChecked }
-        _players.value = players
+        _players.value = newPlayers
+            .sortedBy { it.name }
+            .sortedBy { !it.isChecked }
         selectedPlayers.clear()
         selectedPlayers.addAll(
-            players.filter { it.isChecked }
+            newPlayers.filter { it.isChecked }
         )
     }
 
@@ -84,13 +84,13 @@ class MainViewModel : ViewModel() {
 
     @OptIn(ExperimentalUuidApi::class)
     fun removePlayer(playerId: Uuid) {
-        val players = getPlayers().toMutableList()
-        players.removeAll { it.id == playerId }
+        val players = getPlayers()
+            .filter { it.id != playerId }
         setPlayers(players)
     }
 
     fun selectAllPlayer() {
-        val players = getPlayers().toMutableList()
+        val players = getPlayers()
         players.forEach { player ->
             player.isChecked = true
         }
@@ -100,8 +100,7 @@ class MainViewModel : ViewModel() {
     fun isPlayersOk(): Boolean {
         val players = getPlayers()
         val checkedPlayers = players.count { it.isChecked }
-        @Suppress("MagicNumber")
-        return checkedPlayers >= 3
+        return checkedPlayers >= MIN_PLAYERS_COUNT
     }
 
     fun setSelectedRoles(roles: List<Role>) {
@@ -129,32 +128,28 @@ class MainViewModel : ViewModel() {
     private fun getIndependentCount() = selectedRoles.count { it.side == RoleSide.INDEPENDENT }
 
     fun checkSelectedRolesIsOk(): ResultType<Boolean, MafiaError> {
-        val roles = selectedRoles
-        val mafiaCount = roles.count { it.side == RoleSide.MAFIA }
-        val isMafiaRoleOk = mafiaCount <= calculateMaxMafia()
-
-        val isRoleCountOk = roles.size <= playersCount
+        val mafiaCount = selectedRoles.count { it.side == RoleSide.MAFIA }
 
         return when {
-            isMafiaRoleOk && isRoleCountOk -> ResultType.success(true)
-            isMafiaRoleOk && !isRoleCountOk -> ResultType.error(MafiaError.SelectedRoleTooMuch)
-            else -> ResultType.error(MafiaError.MafiaRoleTooMatch)
+            selectedRoles.size > playersCount -> ResultType.error(MafiaError.SelectedRoleTooMuch)
+            mafiaCount > calculateMaxMafia() -> ResultType.error(MafiaError.MafiaRoleTooMatch)
+            else -> ResultType.success(true)
         }
     }
 
     private fun generateRoles(): List<Role> {
         val roles = selectedRoles.toMutableList()
 
-        var mafiaCountInRoles = roles.count { it.side == RoleSide.MAFIA }
-        while (mafiaCountInRoles < mafiaCount.value.orDefault(1)) {
+        val mafiaCountInRoles = roles.count { it.side == RoleSide.MAFIA }
+        val targetMafiaCount = mafiaCount.value.orDefault(1)
+        repeat(targetMafiaCount - mafiaCountInRoles) {
             roles.add(Role(name = R.string.simple_mafia, side = RoleSide.MAFIA))
-            mafiaCountInRoles += 1
         }
 
-        var citizenCountInRoles = roles.count { it.side == RoleSide.CITIZEN }
-        while (citizenCountInRoles < citizenCount.value.orDefault(1)) {
+        val citizenCountInRoles = roles.count { it.side == RoleSide.CITIZEN }
+        val targetCitizenCount = citizenCount.value.orDefault(1)
+        repeat(targetCitizenCount - citizenCountInRoles) {
             roles.add(Role(name = R.string.simple_citizen, side = RoleSide.CITIZEN))
-            citizenCountInRoles += 1
         }
 
         roles.sortBy { it.name }
@@ -169,27 +164,37 @@ class MainViewModel : ViewModel() {
 
     fun refreshRoles() {
         val currentRoles = roles.value.orEmpty()
-        var nextRoles: List<Role>
+        val newRoles = currentRoles.toMutableList()
         do {
-            nextRoles = currentRoles.shuffled()
-        } while (nextRoles == currentRoles)
-        _roles.value = nextRoles
+            newRoles.shuffle()
+        } while (currentRoles == newRoles)
+        _roles.value = newRoles
+        assignRoles()
+    }
+
+    private fun assignRoles() {
+        selectedPlayers.shuffle()
         playersRoles.clear()
+        roleViewedCount = 0
+        playersRoles.putAll(
+            selectedPlayers
+                .zip(roles.value.orEmpty())
+                .toMap()
+        )
     }
 
     fun getRole(player: Player): Role {
-        val index = selectedPlayers.indexOf(player)
-        val roles = roles.value.orEmpty()
-        val role = roles[index]
-        playersRoles[player] = role
+        val role = playersRoles.getValue(player)
+        roleViewedCount++
         return role
     }
 
-    fun isAllPlayersGetRoles() = playersRoles.size == playersCount
+    fun isAllPlayersGetRoles() = roleViewedCount == playersCount
 
     @OptIn(ExperimentalUuidApi::class)
     fun createNarratorItems() {
         _narratorList.value = selectedPlayers
+            .sortedBy { it.name }
             .map { player ->
                 NarratorItem(
                     id = player.id,
@@ -200,13 +205,13 @@ class MainViewModel : ViewModel() {
     }
 
     fun refreshNarratorItems() {
-        val items = _narratorList.value.orEmpty().toMutableList()
+        val items = _narratorList.value.orEmpty()
         items.forEach { it.isAlive = true }
         setNarratorList(items)
     }
 
     fun hideNarratorItemRoles() {
-        val items = _narratorList.value.orEmpty().toMutableList()
+        val items = _narratorList.value.orEmpty()
         items.forEach { it.showRole = false }
         setNarratorList(items)
     }
@@ -260,6 +265,10 @@ class MainViewModel : ViewModel() {
             val players = getPlayers()
             context.preferences.savePlayers(players)
         }
+    }
+
+    companion object {
+        const val MIN_PLAYERS_COUNT = 3
     }
 }
 
