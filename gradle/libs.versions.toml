@@ -11,7 +11,7 @@ lifecycle-ktx = "2.8.7"
 activity-ktx = "1.9.3"
 fragment-ktx = "1.5.6"
 
-kotlinx-serialization = "1.8.1"
+kotlinx-serialization = "1.9.0"
 navigation = "2.7.7"
 
 ktlint = "12.3.0"
