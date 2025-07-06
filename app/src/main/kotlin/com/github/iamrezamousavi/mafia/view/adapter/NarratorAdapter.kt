@@ -1,6 +1,5 @@
 package com.github.iamrezamousavi.mafia.view.adapter
 
-import android.annotation.SuppressLint
 import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
@@ -10,18 +9,18 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.github.iamrezamousavi.mafia.R
-import com.github.iamrezamousavi.mafia.data.model.NarratorItem
+import com.github.iamrezamousavi.mafia.data.model.PlayerRole
 import com.github.iamrezamousavi.mafia.databinding.ItemNarratorBinding
 import kotlin.uuid.ExperimentalUuidApi
 
 class NarratorAdapter(
     private val context: Context,
-    private val onOffClicked: (item: NarratorItem) -> Unit
-) : ListAdapter<NarratorItem, NarratorAdapter.ViewHolder>(NarratorDiffUtil()) {
+    private val onOffClicked: (item: PlayerRole) -> Unit
+) : ListAdapter<PlayerRole, NarratorAdapter.ViewHolder>(NarratorDiffUtil()) {
 
     inner class ViewHolder(private val binding: ItemNarratorBinding) :
         RecyclerView.ViewHolder(binding.root) {
-        fun bind(item: NarratorItem) {
+        fun bind(item: PlayerRole) {
             binding.apply {
                 playerName.text = item.player.name
                 playerRole.text = context.getString(item.role.name)
@@ -50,13 +49,13 @@ class NarratorAdapter(
         }
     }
 
-    class NarratorDiffUtil : DiffUtil.ItemCallback<NarratorItem>() {
+    class NarratorDiffUtil : DiffUtil.ItemCallback<PlayerRole>() {
         @OptIn(ExperimentalUuidApi::class)
-        override fun areItemsTheSame(oldItem: NarratorItem, newItem: NarratorItem): Boolean {
+        override fun areItemsTheSame(oldItem: PlayerRole, newItem: PlayerRole): Boolean {
             return oldItem.id == newItem.id
         }
 
-        override fun areContentsTheSame(oldItem: NarratorItem, newItem: NarratorItem): Boolean {
+        override fun areContentsTheSame(oldItem: PlayerRole, newItem: PlayerRole): Boolean {
             return oldItem == newItem
         }
     }
@@ -69,10 +68,5 @@ class NarratorAdapter(
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         holder.bind(getItem(position))
-    }
-
-    @SuppressLint("NotifyDataSetChanged")
-    fun notifyRebuild() {
-        notifyDataSetChanged()
     }
 }

@@ -8,6 +8,7 @@ import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
+import androidx.recyclerview.widget.DefaultItemAnimator
 import androidx.recyclerview.widget.GridLayoutManager
 import com.github.iamrezamousavi.mafia.MainViewModel
 import com.github.iamrezamousavi.mafia.R
@@ -15,6 +16,7 @@ import com.github.iamrezamousavi.mafia.databinding.FragmentPlayerRoleBinding
 import com.github.iamrezamousavi.mafia.view.adapter.PlayerNameAdapter
 import com.github.iamrezamousavi.mafia.view.dialog.PlayerDialog
 import com.github.iamrezamousavi.mafia.view.dialog.RoleDoneDialog
+import kotlin.uuid.ExperimentalUuidApi
 
 class PlayerRoleFragment : Fragment() {
 
@@ -33,15 +35,15 @@ class PlayerRoleFragment : Fragment() {
         return binding.root
     }
 
+    @OptIn(ExperimentalUuidApi::class)
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
         mainViewModel.refreshRoles()
 
         playerNameAdapter = PlayerNameAdapter(
-            mainViewModel.selectedPlayers,
-            onSelect = { player ->
-                val role = mainViewModel.getRole(player)
+            onSelect = { item ->
+                val role = mainViewModel.getRole(item.player)
                 val playerDialog = PlayerDialog(requireContext(), role).also {
                     it.setOnDismissListener {
                         if (mainViewModel.isAllPlayersGetRoles()) {
@@ -65,12 +67,15 @@ class PlayerRoleFragment : Fragment() {
                 playerDialog.show()
             }
         )
-        binding.playerRoleList.adapter = playerNameAdapter
-        @Suppress("MagicNumber")
-        binding.playerRoleList.layoutManager = GridLayoutManager(context, 3)
 
-        mainViewModel.roles.observe(viewLifecycleOwner) { _ ->
-            playerNameAdapter.refresh()
+        binding.playerRoleList.apply {
+            layoutManager = GridLayoutManager(context, 3)
+            itemAnimator = DefaultItemAnimator()
+            adapter = playerNameAdapter
+        }
+
+        mainViewModel.playerRoles.observe(viewLifecycleOwner) { items ->
+            playerNameAdapter.submitList(items)
         }
 
         binding.playerRoleToolBar.setOnMenuItemClickListener { menuItem ->

@@ -69,7 +69,6 @@ class MainFragment : Fragment() {
             val name = binding.textField.editText?.text.toString()
             if (name.isNotEmpty()) {
                 mainViewModel.addPlayer(name)
-                playerAdapter.notifyRebuild()
                 binding.textField.editText?.setText("")
                 Toast.makeText(context, name, Toast.LENGTH_SHORT).show()
             }
@@ -77,7 +76,6 @@ class MainFragment : Fragment() {
 
         binding.mainToolBar.setNavigationOnClickListener {
             mainViewModel.selectAllPlayer()
-            playerAdapter.notifyRebuild()
             Toast.makeText(context, R.string.select_all, Toast.LENGTH_SHORT).show()
         }
 

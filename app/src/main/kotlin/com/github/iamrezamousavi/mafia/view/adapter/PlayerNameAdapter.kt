@@ -1,27 +1,36 @@
 package com.github.iamrezamousavi.mafia.view.adapter
 
-import android.annotation.SuppressLint
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
+import androidx.recyclerview.widget.DiffUtil
+import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
-import com.github.iamrezamousavi.mafia.data.model.Player
+import com.github.iamrezamousavi.mafia.data.model.PlayerRole
 import com.github.iamrezamousavi.mafia.databinding.ItemPlayerNameBinding
+import kotlin.uuid.ExperimentalUuidApi
 
-class PlayerNameAdapter(
-    private var players: List<Player>,
-    private val onSelect: (Player) -> Unit
-) : RecyclerView.Adapter<PlayerNameAdapter.ViewHolder>() {
+class PlayerNameAdapter(private val onSelect: (PlayerRole) -> Unit) :
+    ListAdapter<PlayerRole, PlayerNameAdapter.ViewHolder>(PlayerNameDiffUtil()) {
 
     inner class ViewHolder(private val binding: ItemPlayerNameBinding) :
         RecyclerView.ViewHolder(binding.root) {
-        fun bind(player: Player) {
-            binding.playerName.text = player.name
-            binding.playerRoleItem.visibility = View.VISIBLE
+        fun bind(item: PlayerRole) {
+            binding.playerName.text = item.player.name
             binding.playerRoleItem.setOnClickListener {
-                onSelect(player)
-                binding.playerRoleItem.visibility = View.GONE
+                onSelect(item)
+                notifyItemChanged(adapterPosition)
             }
+        }
+    }
+
+    class PlayerNameDiffUtil : DiffUtil.ItemCallback<PlayerRole>() {
+        @OptIn(ExperimentalUuidApi::class)
+        override fun areItemsTheSame(oldItem: PlayerRole, newItem: PlayerRole): Boolean {
+            return oldItem.id == newItem.id
+        }
+
+        override fun areContentsTheSame(oldItem: PlayerRole, newItem: PlayerRole): Boolean {
+            return oldItem == newItem
         }
     }
 
@@ -32,13 +41,6 @@ class PlayerNameAdapter(
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        holder.bind(players[position])
-    }
-
-    override fun getItemCount(): Int = players.size
-
-    @SuppressLint("NotifyDataSetChanged")
-    fun refresh() {
-        notifyDataSetChanged()
+        holder.bind(getItem(position))
     }
 }
