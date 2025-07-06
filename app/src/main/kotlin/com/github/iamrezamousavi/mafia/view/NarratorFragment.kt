@@ -44,131 +44,22 @@ class NarratorFragment : Fragment() {
             adapter = narratorAdapter
         }
 
-        mainViewModel.narratorList.observe(viewLifecycleOwner) {
-            narratorAdapter.submitList(it)
-            binding.alivePeople.text =
-                getString(R.string.alive_count, it.count { player -> player.isAlive })
-            binding.deadPeople.text =
-                getString(R.string.dead_count, it.count { player -> player.isAlive.not() })
+        mainViewModel.narratorUiState.observe(viewLifecycleOwner) {
+            narratorAdapter.submitList(it.fullList)
 
-            binding.deadCitizen.text = getString(
-                R.string.citizen_count,
-                it.count { player ->
-                    player.isAlive.not() && player.role.side == RoleSide.CITIZEN
-                }
-            )
-            binding.deadMafia.text = getString(
-                R.string.mafia_count,
-                it.count { player ->
-                    player.isAlive.not() && player.role.side == RoleSide.MAFIA
-                }
-            )
-            binding.deadIndependent.text = getString(
-                R.string.independent_count,
-                it.count { player ->
-                    player.isAlive.not() && player.role.side == RoleSide.INDEPENDENT
-                }
-            )
+            binding.apply {
+                alivePeople.text = getString(R.string.alive_count, it.aliveCount)
+                deadPeople.text = getString(R.string.dead_count, it.deadCount)
 
-            binding.aliveCitizen.text = getString(
-                R.string.citizen_count,
-                it.count { player -> player.isAlive && player.role.side == RoleSide.CITIZEN }
-            )
-            binding.aliveMafia.text = getString(
-                R.string.mafia_count,
-                it.count { player -> player.isAlive && player.role.side == RoleSide.MAFIA }
-            )
-            binding.aliveIndependent.text = getString(
-                R.string.independent_count,
-                it.count { player ->
-                    player.isAlive && player.role.side == RoleSide.INDEPENDENT
-                }
-            )
+                aliveCitizen.text = getString(R.string.citizen_count, it.aliveCitizen)
+                aliveMafia.text = getString(R.string.mafia_count, it.aliveMafia)
+                aliveIndependent.text = getString(R.string.independent_count, it.aliveIndependent)
 
-            when (mainViewModel.checkWin()) {
-                RoleSide.CITIZEN -> {
-                    binding.narratorCard.setCardBackgroundColor(
-                        ContextCompat.getColor(
-                            requireContext(),
-                            R.color.citizen_md_theme_primary
-                        )
-                    )
-                    binding.deadPeople.setTextColor(
-                        ContextCompat.getColor(
-                            requireContext(),
-                            R.color.citizen_md_theme_onPrimary
-                        )
-                    )
-                    binding.alivePeople.setTextColor(
-                        ContextCompat.getColor(
-                            requireContext(),
-                            R.color.citizen_md_theme_onPrimary
-                        )
-                    )
-                }
+                deadCitizen.text = getString(R.string.citizen_count, it.deadCitizen)
+                deadMafia.text = getString(R.string.mafia_count, it.deadMafia)
+                deadIndependent.text = getString(R.string.independent_count, it.deadIndependent)
 
-                RoleSide.MAFIA -> {
-                    binding.narratorCard.setCardBackgroundColor(
-                        ContextCompat.getColor(
-                            requireContext(),
-                            R.color.mafia_md_theme_primary
-                        )
-                    )
-                    binding.deadPeople.setTextColor(
-                        ContextCompat.getColor(
-                            requireContext(),
-                            R.color.mafia_md_theme_onPrimary
-                        )
-                    )
-                    binding.alivePeople.setTextColor(
-                        ContextCompat.getColor(
-                            requireContext(),
-                            R.color.mafia_md_theme_onPrimary
-                        )
-                    )
-                }
-
-                RoleSide.INDEPENDENT -> {
-                    binding.narratorCard.setCardBackgroundColor(
-                        ContextCompat.getColor(
-                            requireContext(),
-                            R.color.independent_md_theme_primary
-                        )
-                    )
-                    binding.deadPeople.setTextColor(
-                        ContextCompat.getColor(
-                            requireContext(),
-                            R.color.independent_md_theme_onPrimary
-                        )
-                    )
-                    binding.alivePeople.setTextColor(
-                        ContextCompat.getColor(
-                            requireContext(),
-                            R.color.independent_md_theme_onPrimary
-                        )
-                    )
-                }
-
-                null -> {
-                    binding.narratorCard.setCardBackgroundColor(
-                        ContextCompat.getColor(
-                            requireContext(),
-                            R.color.md_theme_background
-                        )
-                    )
-                    binding.deadPeople.setTextColor(
-                        ContextCompat.getColor(
-                            requireContext(),
-                            R.color.mafia_md_theme_primary
-                        )
-                    )
-                    binding.alivePeople.setTextColor(
-                        ContextCompat.getColor(
-                            requireContext(),
-                            R.color.citizen_md_theme_primary
-                        )
-                    )
-                }
+                updateNarratorCardColors(it.winner)
             }
         }
 
@@ -190,6 +81,40 @@ class NarratorFragment : Fragment() {
                     false
                 }
             }
+        }
+    }
+
+    private fun updateNarratorCardColors(roleSide: RoleSide?) {
+        val (bgColor, aliveColor, deadColor) = when (roleSide) {
+            RoleSide.CITIZEN -> Triple(
+                R.color.citizen_md_theme_primary,
+                R.color.citizen_md_theme_onPrimary,
+                R.color.citizen_md_theme_onPrimary
+            )
+
+            RoleSide.MAFIA -> Triple(
+                R.color.mafia_md_theme_primary,
+                R.color.mafia_md_theme_onPrimary,
+                R.color.mafia_md_theme_onPrimary
+            )
+
+            RoleSide.INDEPENDENT -> Triple(
+                R.color.independent_md_theme_primary,
+                R.color.independent_md_theme_onPrimary,
+                R.color.independent_md_theme_onPrimary
+            )
+
+            null -> Triple(
+                R.color.md_theme_background,
+                R.color.citizen_md_theme_primary,
+                R.color.mafia_md_theme_primary
+            )
+        }
+
+        binding.apply {
+            narratorCard.setCardBackgroundColor(ContextCompat.getColor(requireContext(), bgColor))
+            alivePeople.setTextColor(ContextCompat.getColor(requireContext(), aliveColor))
+            deadPeople.setTextColor(ContextCompat.getColor(requireContext(), deadColor))
         }
     }
 }
