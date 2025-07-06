@@ -34,8 +34,6 @@ class NarratorFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        mainViewModel.createNarratorItems()
-
         val narratorAdapter = NarratorAdapter(requireContext()) {
             mainViewModel.updateNarratorItem(it)
         }
@@ -48,7 +46,6 @@ class NarratorFragment : Fragment() {
 
         mainViewModel.narratorList.observe(viewLifecycleOwner) {
             narratorAdapter.submitList(it)
-            narratorAdapter.notifyRebuild()
             binding.alivePeople.text =
                 getString(R.string.alive_count, it.count { player -> player.isAlive })
             binding.deadPeople.text =
@@ -178,13 +175,13 @@ class NarratorFragment : Fragment() {
         binding.narratorToolBar.setOnMenuItemClickListener { menuItem ->
             when (menuItem.itemId) {
                 R.id.menuItemRefresh -> {
-                    mainViewModel.refreshNarratorItems()
+                    mainViewModel.applyAllPlayerAlive()
                     Toast.makeText(context, R.string.role_refresh, Toast.LENGTH_SHORT).show()
                     true
                 }
 
                 R.id.menuItemReset -> {
-                    mainViewModel.hideNarratorItemRoles()
+                    mainViewModel.hidePlayerRoles()
                     Toast.makeText(context, R.string.role_hide, Toast.LENGTH_SHORT).show()
                     true
                 }

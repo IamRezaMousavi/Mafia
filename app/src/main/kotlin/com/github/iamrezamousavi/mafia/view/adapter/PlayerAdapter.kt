@@ -1,6 +1,5 @@
 package com.github.iamrezamousavi.mafia.view.adapter
 
-import android.annotation.SuppressLint
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
@@ -50,10 +49,5 @@ class PlayerAdapter(
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         holder.bind(getItem(position))
-    }
-
-    @SuppressLint("NotifyDataSetChanged")
-    fun notifyRebuild() {
-        notifyDataSetChanged()
     }
 }

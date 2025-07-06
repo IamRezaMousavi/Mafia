@@ -86,9 +86,10 @@ class RoleDialog(
     }
 
     private fun setIndependentSection() {
-        val independentRoles = mainViewModel.selectedRoles.filter {
-            it.side == RoleSide.INDEPENDENT
-        }
+        val independentRoles = mainViewModel
+            .selectedRoles
+            .filter { it.side == RoleSide.INDEPENDENT }
+
         if (independentRoles.isEmpty()) {
             binding.independentCard.visibility = View.GONE
         } else {
@@ -96,9 +97,7 @@ class RoleDialog(
                 context.getString(R.string.independent_count_text, independentRoles.size)
             binding.independentRoles.text =
                 independentRoles.joinToString(context.getString(R.string.comma) + SPACE) { role ->
-                    context.getString(
-                        role.name
-                    )
+                    context.getString(role.name)
                 }
         }
     }

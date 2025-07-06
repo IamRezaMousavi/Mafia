@@ -8,19 +8,21 @@ import androidx.lifecycle.viewModelScope
 import com.github.iamrezamousavi.mafia.data.local.getPlayers
 import com.github.iamrezamousavi.mafia.data.local.preferences
 import com.github.iamrezamousavi.mafia.data.local.savePlayers
-import com.github.iamrezamousavi.mafia.data.model.NarratorItem
 import com.github.iamrezamousavi.mafia.data.model.Player
+import com.github.iamrezamousavi.mafia.data.model.PlayerRole
 import com.github.iamrezamousavi.mafia.data.model.Role
 import com.github.iamrezamousavi.mafia.data.model.RoleSide
 import com.github.iamrezamousavi.mafia.utils.MafiaError
 import com.github.iamrezamousavi.mafia.utils.ResultType
+import com.github.iamrezamousavi.mafia.utils.SIMPLE_CITIZEN
+import com.github.iamrezamousavi.mafia.utils.SIMPLE_MAFIA
 import kotlin.uuid.ExperimentalUuidApi
 import kotlin.uuid.Uuid
 import kotlinx.coroutines.launch
 
 class MainViewModel : ViewModel() {
 
-    private val _players = MutableLiveData<List<Player>>(mutableListOf())
+    private val _players = MutableLiveData(emptyList<Player>())
     val players: LiveData<List<Player>>
         get() = _players
 
@@ -46,11 +48,12 @@ class MainViewModel : ViewModel() {
     val roles: LiveData<List<Role>>
         get() = _roles
 
-    private val playersRoles = mutableMapOf<Player, Role>()
-    private var roleViewedCount = 0
+    private val _playerRoles = MutableLiveData(emptyList<PlayerRole>())
+    val playerRoles: LiveData<List<PlayerRole>>
+        get() = _playerRoles
 
-    private val _narratorList = MutableLiveData(emptyList<NarratorItem>())
-    val narratorList: LiveData<List<NarratorItem>>
+    private val _narratorList = MutableLiveData(emptyList<PlayerRole>())
+    val narratorList: LiveData<List<PlayerRole>>
         get() = _narratorList
 
     private fun getPlayers() = players.value.orEmpty()
@@ -143,13 +146,13 @@ class MainViewModel : ViewModel() {
         val mafiaCountInRoles = roles.count { it.side == RoleSide.MAFIA }
         val targetMafiaCount = mafiaCount.value.orDefault(1)
         repeat(targetMafiaCount - mafiaCountInRoles) {
-            roles.add(Role(name = R.string.simple_mafia, side = RoleSide.MAFIA))
+            roles.add(SIMPLE_MAFIA)
         }
 
         val citizenCountInRoles = roles.count { it.side == RoleSide.CITIZEN }
         val targetCitizenCount = citizenCount.value.orDefault(1)
         repeat(targetCitizenCount - citizenCountInRoles) {
-            roles.add(Role(name = R.string.simple_citizen, side = RoleSide.CITIZEN))
+            roles.add(SIMPLE_CITIZEN)
         }
 
         roles.sortBy { it.name }
@@ -162,6 +165,7 @@ class MainViewModel : ViewModel() {
         _roles.value = generateRoles()
     }
 
+    @OptIn(ExperimentalUuidApi::class)
     fun refreshRoles() {
         val currentRoles = roles.value.orEmpty()
         val newRoles = currentRoles.toMutableList()
@@ -169,61 +173,60 @@ class MainViewModel : ViewModel() {
             newRoles.shuffle()
         } while (currentRoles == newRoles)
         _roles.value = newRoles
-        assignRoles()
-    }
 
-    private fun assignRoles() {
-        selectedPlayers.shuffle()
-        playersRoles.clear()
-        roleViewedCount = 0
-        playersRoles.putAll(
-            selectedPlayers
-                .zip(roles.value.orEmpty())
-                .toMap()
-        )
-    }
+        _playerRoles.value = selectedPlayers
+            .shuffled()
+            .zip(roles.value.orEmpty())
+            .map { (player, role) ->
+                PlayerRole(id = player.id, player = player, role = role)
+            }
+            .sortedBy { it.player.name }
 
-    fun getRole(player: Player): Role {
-        val role = playersRoles.getValue(player)
-        roleViewedCount++
-        return role
+        setNarratorList(emptyList())
     }
-
-    fun isAllPlayersGetRoles() = roleViewedCount == playersCount
 
     @OptIn(ExperimentalUuidApi::class)
-    fun createNarratorItems() {
-        _narratorList.value = selectedPlayers
-            .sortedBy { it.name }
-            .map { player ->
-                NarratorItem(
-                    id = player.id,
-                    player = player,
-                    role = getRole(player)
-                )
-            }
+    fun getRole(player: Player): Role {
+        val playerRole = playerRoles.value.orEmpty()
+            .find { it.id == player.id }
+            .orDefault()
+        addNarratorListItem(playerRole.copy(showRole = true))
+        deletePlayerRoleItem(playerRole)
+        return playerRole.role
     }
 
-    fun refreshNarratorItems() {
+    @OptIn(ExperimentalUuidApi::class)
+    fun deletePlayerRoleItem(item: PlayerRole) {
+        _playerRoles.value = _playerRoles.value.orEmpty().filter { it.id != item.id }
+    }
+
+    fun isAllPlayersGetRoles() = narratorList.value.orEmpty().size == playersCount
+
+    fun applyAllPlayerAlive() {
         val items = _narratorList.value.orEmpty()
         items.forEach { it.isAlive = true }
         setNarratorList(items)
     }
 
-    fun hideNarratorItemRoles() {
+    fun hidePlayerRoles() {
         val items = _narratorList.value.orEmpty()
         items.forEach { it.showRole = false }
         setNarratorList(items)
     }
 
-    private fun setNarratorList(updatedList: List<NarratorItem>) {
+    private fun addNarratorListItem(item: PlayerRole) {
+        val newList = _narratorList.value.orEmpty() + item
+        setNarratorList(newList)
+    }
+
+    private fun setNarratorList(updatedList: List<PlayerRole>) {
         _narratorList.value = updatedList
             .sortedBy { it.player.name }
             .sortedBy { !it.isAlive }
     }
 
     @OptIn(ExperimentalUuidApi::class)
-    fun updateNarratorItem(item: NarratorItem) {
+    fun updateNarratorItem(item: PlayerRole) {
         val updatedItems = _narratorList.value.orEmpty().toMutableList()
         val itemIndex = updatedItems.indexOfFirst { it.id == item.id }
         if (itemIndex != -1) {
@@ -272,4 +275,15 @@ class MainViewModel : ViewModel() {
     }
 }
 
-fun Int?.orDefault(default: Int) = this ?: default
+fun Int?.orDefault(default: Int = 0) = this ?: default
+
+@OptIn(ExperimentalUuidApi::class)
+fun PlayerRole?.orDefault(): PlayerRole {
+    this?.let { return this }
+    val player = Player(name = "")
+    return PlayerRole(
+        id = player.id,
+        player = player,
+        role = SIMPLE_CITIZEN
+    )
+}

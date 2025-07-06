@@ -6,6 +6,9 @@ import com.github.iamrezamousavi.mafia.R
 import com.github.iamrezamousavi.mafia.data.model.Role
 import com.github.iamrezamousavi.mafia.data.model.RoleSide
 
+val SIMPLE_CITIZEN = Role(name = R.string.simple_citizen, side = RoleSide.CITIZEN)
+val SIMPLE_MAFIA = Role(name = R.string.simple_mafia, side = RoleSide.MAFIA)
+
 @StringRes
 fun Role.sideStringRes(): Int = when (side) {
     RoleSide.CITIZEN -> R.string.citizen_side
