@@ -7,7 +7,6 @@ import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.github.iamrezamousavi.mafia.data.model.Player
 import com.github.iamrezamousavi.mafia.databinding.ItemPlayerBinding
-import kotlin.uuid.ExperimentalUuidApi
 
 class PlayerAdapter(
     private val onSelect: (player: Player, isChecked: Boolean) -> Unit,
@@ -32,7 +31,6 @@ class PlayerAdapter(
     }
 
     class PlayerDiffUtil : DiffUtil.ItemCallback<Player>() {
-        @OptIn(ExperimentalUuidApi::class)
         override fun areItemsTheSame(oldItem: Player, newItem: Player): Boolean {
             return oldItem.id == newItem.id
         }

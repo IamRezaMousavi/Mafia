@@ -11,7 +11,6 @@ import androidx.recyclerview.widget.RecyclerView
 import com.github.iamrezamousavi.mafia.R
 import com.github.iamrezamousavi.mafia.data.model.PlayerRole
 import com.github.iamrezamousavi.mafia.databinding.ItemNarratorBinding
-import kotlin.uuid.ExperimentalUuidApi
 
 class NarratorAdapter(
     private val context: Context,
@@ -50,7 +49,6 @@ class NarratorAdapter(
     }
 
     class NarratorDiffUtil : DiffUtil.ItemCallback<PlayerRole>() {
-        @OptIn(ExperimentalUuidApi::class)
         override fun areItemsTheSame(oldItem: PlayerRole, newItem: PlayerRole): Boolean {
             return oldItem.id == newItem.id
         }

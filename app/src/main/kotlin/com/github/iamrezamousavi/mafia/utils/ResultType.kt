@@ -2,7 +2,6 @@ package com.github.iamrezamousavi.mafia.utils
 
 import java.io.Serializable
 
-@Suppress("SerialVersionUIDInSerializableClass")
 sealed class ResultType<out T, out E> : Serializable {
 
     internal data class Success<out T>(val value: T) : ResultType<T, Nothing>()

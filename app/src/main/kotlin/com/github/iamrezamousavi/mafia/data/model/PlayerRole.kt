@@ -1,12 +1,7 @@
 package com.github.iamrezamousavi.mafia.data.model
 
-import kotlin.uuid.ExperimentalUuidApi
-import kotlin.uuid.Uuid
-
-data class PlayerRole
-@OptIn(ExperimentalUuidApi::class)
-constructor(
-    val id: Uuid,
+data class PlayerRole(
+    val id: String,
     val player: Player,
     val role: Role,
     var isAlive: Boolean = true,

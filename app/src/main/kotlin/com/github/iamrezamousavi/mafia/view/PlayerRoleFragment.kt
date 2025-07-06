@@ -16,7 +16,6 @@ import com.github.iamrezamousavi.mafia.databinding.FragmentPlayerRoleBinding
 import com.github.iamrezamousavi.mafia.view.adapter.PlayerNameAdapter
 import com.github.iamrezamousavi.mafia.view.dialog.PlayerDialog
 import com.github.iamrezamousavi.mafia.view.dialog.RoleDoneDialog
-import kotlin.uuid.ExperimentalUuidApi
 
 class PlayerRoleFragment : Fragment() {
 
@@ -35,7 +34,6 @@ class PlayerRoleFragment : Fragment() {
         return binding.root
     }
 
-    @OptIn(ExperimentalUuidApi::class)
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 

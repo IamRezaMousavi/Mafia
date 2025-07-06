@@ -26,11 +26,9 @@ suspend fun SharedPreferences.savePlayers(players: List<Player>) = withContext(D
 
 suspend fun SharedPreferences.getPlayers(): List<Player> = withContext(Dispatchers.IO) {
     val playersJson = getString(PREF_PLAYERS, null)
-    if (playersJson != null) {
-        Json.decodeFromString<List<Player>>(playersJson)
-    } else {
-        emptyList()
-    }
+    playersJson?.let {
+        Json.decodeFromString<List<Player>>(it)
+    } ?: emptyList()
 }
 
 fun SharedPreferences.saveLanguage(language: Language) = edit {

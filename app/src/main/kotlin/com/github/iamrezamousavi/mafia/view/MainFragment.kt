@@ -14,7 +14,6 @@ import com.github.iamrezamousavi.mafia.MainViewModel
 import com.github.iamrezamousavi.mafia.R
 import com.github.iamrezamousavi.mafia.databinding.FragmentMainBinding
 import com.github.iamrezamousavi.mafia.view.adapter.PlayerAdapter
-import kotlin.uuid.ExperimentalUuidApi
 
 class MainFragment : Fragment() {
 
@@ -31,14 +30,13 @@ class MainFragment : Fragment() {
         return binding.root
     }
 
-    @OptIn(ExperimentalUuidApi::class)
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
         val playerAdapter = PlayerAdapter(
             onSelect = { player, isChecked ->
-                player.isChecked = isChecked
-                mainViewModel.updatePlayer(player)
+                val newPlayer = player.copy(isChecked = isChecked)
+                mainViewModel.updatePlayer(newPlayer)
             },
             onDeleteClicked = { player ->
                 mainViewModel.removePlayer(player.id)

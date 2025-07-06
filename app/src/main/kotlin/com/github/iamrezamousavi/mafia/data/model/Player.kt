@@ -8,7 +8,7 @@ import kotlinx.serialization.Serializable
 data class Player
 @OptIn(ExperimentalUuidApi::class)
 constructor(
-    val id: Uuid = Uuid.random(),
+    val id: String = Uuid.random().toString(),
     val name: String,
-    var isChecked: Boolean = false
+    val isChecked: Boolean = false
 )

@@ -16,8 +16,6 @@ import com.github.iamrezamousavi.mafia.utils.MafiaError
 import com.github.iamrezamousavi.mafia.utils.ResultType
 import com.github.iamrezamousavi.mafia.utils.SIMPLE_CITIZEN
 import com.github.iamrezamousavi.mafia.utils.SIMPLE_MAFIA
-import kotlin.uuid.ExperimentalUuidApi
-import kotlin.uuid.Uuid
 import kotlinx.coroutines.launch
 
 class MainViewModel : ViewModel() {
@@ -68,14 +66,12 @@ class MainViewModel : ViewModel() {
         )
     }
 
-    @OptIn(ExperimentalUuidApi::class)
     fun addPlayer(name: String) {
         val currentPlayer = getPlayers().toMutableList()
         currentPlayer.add(Player(name = name))
         setPlayers(currentPlayer)
     }
 
-    @OptIn(ExperimentalUuidApi::class)
     fun updatePlayer(updatedPlayer: Player) {
         val players = getPlayers().toMutableList()
         val playerIndex = players.indexOfFirst { it.id == updatedPlayer.id }
@@ -85,8 +81,7 @@ class MainViewModel : ViewModel() {
         }
     }
 
-    @OptIn(ExperimentalUuidApi::class)
-    fun removePlayer(playerId: Uuid) {
+    fun removePlayer(playerId: String) {
         val players = getPlayers()
             .filter { it.id != playerId }
         setPlayers(players)
@@ -94,9 +89,7 @@ class MainViewModel : ViewModel() {
 
     fun selectAllPlayer() {
         val players = getPlayers()
-        players.forEach { player ->
-            player.isChecked = true
-        }
+            .map { it.copy(isChecked = true) }
         setPlayers(players)
     }
 
@@ -165,7 +158,6 @@ class MainViewModel : ViewModel() {
         _roles.value = generateRoles()
     }
 
-    @OptIn(ExperimentalUuidApi::class)
     fun refreshRoles() {
         val currentRoles = roles.value.orEmpty()
         val newRoles = currentRoles.toMutableList()
@@ -185,7 +177,6 @@ class MainViewModel : ViewModel() {
         setNarratorList(emptyList())
     }
 
-    @OptIn(ExperimentalUuidApi::class)
     fun getRole(player: Player): Role {
         val playerRole = playerRoles.value.orEmpty()
             .find { it.id == player.id }
@@ -195,7 +186,6 @@ class MainViewModel : ViewModel() {
         return playerRole.role
     }
 
-    @OptIn(ExperimentalUuidApi::class)
     fun deletePlayerRoleItem(item: PlayerRole) {
         _playerRoles.value = _playerRoles.value.orEmpty().filter { it.id != item.id }
     }
@@ -204,13 +194,13 @@ class MainViewModel : ViewModel() {
 
     fun applyAllPlayerAlive() {
         val items = _narratorList.value.orEmpty()
-        items.forEach { it.isAlive = true }
+            .map { it.copy(isAlive = true) }
         setNarratorList(items)
     }
 
     fun hidePlayerRoles() {
         val items = _narratorList.value.orEmpty()
-        items.forEach { it.showRole = false }
+            .map { it.copy(showRole = false) }
         setNarratorList(items)
     }
 
@@ -225,7 +215,6 @@ class MainViewModel : ViewModel() {
             .sortedBy { !it.isAlive }
     }
 
-    @OptIn(ExperimentalUuidApi::class)
     fun updateNarratorItem(item: PlayerRole) {
         val updatedItems = _narratorList.value.orEmpty().toMutableList()
         val itemIndex = updatedItems.indexOfFirst { it.id == item.id }
@@ -277,7 +266,6 @@ class MainViewModel : ViewModel() {
 
 fun Int?.orDefault(default: Int = 0) = this ?: default
 
-@OptIn(ExperimentalUuidApi::class)
 fun PlayerRole?.orDefault(): PlayerRole {
     this?.let { return this }
     val player = Player(name = "")

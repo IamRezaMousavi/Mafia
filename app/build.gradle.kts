@@ -10,12 +10,12 @@ plugins {
 
 android {
     namespace = "com.github.iamrezamousavi.mafia"
-    compileSdk = 34
+    compileSdk = 35
 
     defaultConfig {
         applicationId = "com.github.iamrezamousavi.mafia"
         minSdk = 19
-        targetSdk = 34
+        targetSdk = 35
         versionCode = 20
         versionName = "0.2.0"
 
@@ -42,6 +42,11 @@ android {
     }
 
     buildTypes {
+        debug {
+            applicationIdSuffix = ".debug"
+            versionNameSuffix = "-DEBUG"
+        }
+
         release {
             isMinifyEnabled = true
             isShrinkResources = true
