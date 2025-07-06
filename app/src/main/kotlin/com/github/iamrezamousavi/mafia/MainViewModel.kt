@@ -8,6 +8,7 @@ import androidx.lifecycle.viewModelScope
 import com.github.iamrezamousavi.mafia.data.local.getPlayers
 import com.github.iamrezamousavi.mafia.data.local.preferences
 import com.github.iamrezamousavi.mafia.data.local.savePlayers
+import com.github.iamrezamousavi.mafia.data.model.NarratorUiState
 import com.github.iamrezamousavi.mafia.data.model.Player
 import com.github.iamrezamousavi.mafia.data.model.PlayerRole
 import com.github.iamrezamousavi.mafia.data.model.Role
@@ -16,6 +17,7 @@ import com.github.iamrezamousavi.mafia.utils.MafiaError
 import com.github.iamrezamousavi.mafia.utils.ResultType
 import com.github.iamrezamousavi.mafia.utils.SIMPLE_CITIZEN
 import com.github.iamrezamousavi.mafia.utils.SIMPLE_MAFIA
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
 class MainViewModel : ViewModel() {
@@ -53,6 +55,10 @@ class MainViewModel : ViewModel() {
     private val _narratorList = MutableLiveData(emptyList<PlayerRole>())
     val narratorList: LiveData<List<PlayerRole>>
         get() = _narratorList
+
+    private val _narratorUiState = MutableLiveData(NarratorUiState())
+    val narratorUiState: LiveData<NarratorUiState>
+        get() = _narratorUiState
 
     private fun getPlayers() = players.value.orEmpty()
 
@@ -159,21 +165,24 @@ class MainViewModel : ViewModel() {
     }
 
     fun refreshRoles() {
-        val currentRoles = roles.value.orEmpty()
-        val newRoles = currentRoles.toMutableList()
-        do {
-            newRoles.shuffle()
-        } while (currentRoles == newRoles)
-        _roles.value = newRoles
+        viewModelScope.launch(Dispatchers.Default) {
+            val currentRoles = roles.value.orEmpty()
+            val newRoles = currentRoles.toMutableList()
+            do {
+                newRoles.shuffle()
+            } while (currentRoles == newRoles)
+            _roles.postValue(newRoles)
 
-        _playerRoles.value = selectedPlayers
-            .shuffled()
-            .zip(roles.value.orEmpty())
-            .map { (player, role) ->
-                PlayerRole(id = player.id, player = player, role = role)
-            }
-            .sortedBy { it.player.name }
-
+            _playerRoles.postValue(
+                selectedPlayers
+                    .shuffled()
+                    .zip(roles.value.orEmpty())
+                    .map { (player, role) ->
+                        PlayerRole(id = player.id, player = player, role = role)
+                    }
+                    .sortedBy { it.player.name }
+            )
+        }
         setNarratorList(emptyList())
     }
 
@@ -213,10 +222,11 @@ class MainViewModel : ViewModel() {
         _narratorList.value = updatedList
             .sortedBy { it.player.name }
             .sortedBy { !it.isAlive }
+        updateNarratorUiState()
     }
 
     fun updateNarratorItem(item: PlayerRole) {
-        val updatedItems = _narratorList.value.orEmpty().toMutableList()
+        val updatedItems = narratorList.value.orEmpty().toMutableList()
         val itemIndex = updatedItems.indexOfFirst { it.id == item.id }
         if (itemIndex != -1) {
             updatedItems[itemIndex] = item
@@ -224,25 +234,43 @@ class MainViewModel : ViewModel() {
         }
     }
 
-    fun checkWin(): RoleSide? {
-        val players = _narratorList.value.orEmpty().filter { it.isAlive }
-        val mafiaCount = players.count { it.role.side == RoleSide.MAFIA }
-        val independentCount = players.count { it.role.side == RoleSide.INDEPENDENT }
-        val citizenCount = players.count { it.role.side == RoleSide.CITIZEN }
+    fun updateNarratorUiState() {
+        val currentPlayers = narratorList.value.orEmpty()
 
-        if (mafiaCount + independentCount == 0) {
-            return RoleSide.CITIZEN
+        viewModelScope.launch(Dispatchers.Default) {
+            val alive = currentPlayers.filter { it.isAlive }
+            val dead = currentPlayers.filterNot { it.isAlive }
+
+            val newState = NarratorUiState(
+                aliveCount = alive.size,
+                deadCount = dead.size,
+                aliveCitizen = alive.count { it.role.side == RoleSide.CITIZEN },
+                aliveMafia = alive.count { it.role.side == RoleSide.MAFIA },
+                aliveIndependent = alive.count { it.role.side == RoleSide.INDEPENDENT },
+                deadCitizen = dead.count { it.role.side == RoleSide.CITIZEN },
+                deadMafia = dead.count { it.role.side == RoleSide.MAFIA },
+                deadIndependent = dead.count { it.role.side == RoleSide.INDEPENDENT },
+                winner = checkWin(currentPlayers),
+                fullList = currentPlayers
+            )
+            _narratorUiState.postValue(newState)
         }
-        if (citizenCount <= mafiaCount && independentCount == 0) {
-            return RoleSide.MAFIA
+    }
+
+    fun checkWin(players: List<PlayerRole>): RoleSide? {
+        val alive = players.filter { it.isAlive }
+
+        val mafiaCount = alive.count { it.role.side == RoleSide.MAFIA }
+        val independentCount = alive.count { it.role.side == RoleSide.INDEPENDENT }
+        val citizenCount = alive.count { it.role.side == RoleSide.CITIZEN }
+
+        return when {
+            mafiaCount + independentCount == 0 -> RoleSide.CITIZEN
+            citizenCount <= mafiaCount && independentCount == 0 -> RoleSide.MAFIA
+            independentCount == 1 && mafiaCount == 0 && citizenCount <= 2 -> RoleSide.INDEPENDENT
+            independentCount == 1 && mafiaCount <= 2 && citizenCount == 0 -> RoleSide.INDEPENDENT
+            else -> null
         }
-        if (independentCount == 1 && mafiaCount == 0 && citizenCount <= 2) {
-            return RoleSide.INDEPENDENT
-        }
-        if (independentCount == 1 && mafiaCount <= 2 && citizenCount == 0) {
-            return RoleSide.INDEPENDENT
-        }
-        return null
     }
 
     fun loadPlayers(context: Context) {
