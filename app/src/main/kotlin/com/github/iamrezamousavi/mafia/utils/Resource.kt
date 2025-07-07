@@ -8,6 +8,7 @@ import com.github.iamrezamousavi.mafia.data.model.RoleSide
 
 val SIMPLE_CITIZEN = Role(name = R.string.simple_citizen, side = RoleSide.CITIZEN)
 val SIMPLE_MAFIA = Role(name = R.string.simple_mafia, side = RoleSide.MAFIA)
+val EXAMPLE_INDEPENDENT = Role(name = R.string.unknown, side = RoleSide.INDEPENDENT)
 
 @StringRes
 fun Role.sideStringRes(): Int = when (side) {

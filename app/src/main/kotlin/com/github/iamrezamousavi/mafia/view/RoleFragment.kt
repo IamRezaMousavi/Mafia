@@ -67,11 +67,11 @@ class RoleFragment : Fragment() {
                 roleDialog.show()
             }.onError { error ->
                 when (error) {
-                    MafiaError.SelectedRoleTooMuch ->
+                    MafiaError.SelectedRolesTooMuch ->
                         Toast.makeText(context, R.string.roles_not_match, Toast.LENGTH_SHORT)
                             .show()
 
-                    MafiaError.MafiaRoleTooMatch ->
+                    MafiaError.MafiaRolesTooMuch ->
                         Toast.makeText(context, R.string.mafia_roles_too_much, Toast.LENGTH_SHORT)
                             .show()
                 }
