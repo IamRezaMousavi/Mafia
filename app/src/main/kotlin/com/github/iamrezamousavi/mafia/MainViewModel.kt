@@ -133,8 +133,8 @@ class MainViewModel : ViewModel() {
         val mafiaCount = selectedRoles.count { it.side == RoleSide.MAFIA }
 
         return when {
-            selectedRoles.size > playersCount -> ResultType.error(MafiaError.SelectedRoleTooMuch)
-            mafiaCount > calculateMaxMafia() -> ResultType.error(MafiaError.MafiaRoleTooMatch)
+            selectedRoles.size > playersCount -> ResultType.error(MafiaError.SelectedRolesTooMuch)
+            mafiaCount > calculateMaxMafia() -> ResultType.error(MafiaError.MafiaRolesTooMuch)
             else -> ResultType.success(true)
         }
     }

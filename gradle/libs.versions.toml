@@ -14,12 +14,16 @@ fragment-ktx = "1.5.6"
 kotlinx-serialization = "1.9.0"
 navigation = "2.7.7"
 
+kotlinx-coroutines = "1.10.2"
+
 ktlint = "12.3.0"
 detekt = "1.23.8"
 
 junit = "4.13.2"
 android-junit = "1.2.1"
 core-testing = "2.2.0"
+junit-jupiter = "5.13.3"
+mockk = "1.14.4"
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }
@@ -37,10 +41,15 @@ lifecycle-ktx = { group = "androidx.lifecycle", name = "lifecycle-runtime-ktx", 
 activity-ktx = { group = "androidx.activity", name = "activity-ktx", version.ref = "activity-ktx" }
 fragment-ktx = { group = "androidx.fragment", name = "fragment-ktx", version.ref = "fragment-ktx" }
 
-kotlinx-serialization-json = { group = "org.jetbrains.kotlinx", name = "kotlinx-serialization-json", version.ref = "kotlinx-serialization" }
 navigation-fragment-ktx = { group = "androidx.navigation", name = "navigation-fragment-ktx", version.ref = "navigation" }
 navigation-ui-ktx = { group = "androidx.navigation", name = "navigation-ui-ktx", version.ref = "navigation" }
+
+kotlinx-serialization-json = { group = "org.jetbrains.kotlinx", name = "kotlinx-serialization-json", version.ref = "kotlinx-serialization" }
+kotlinx-coroutines-core = { group = "org.jetbrains.kotlinx", name = "kotlinx-coroutines-core", version.ref = "kotlinx-coroutines" }
+kotlinx-coroutines-test = { group = "org.jetbrains.kotlinx", name = "kotlinx-coroutines-test", version.ref = "kotlinx-coroutines" }
 
 junit = { group = "junit", name = "junit", version.ref = "junit" }
 android-junit = { group = "androidx.test.ext", name = "junit", version.ref = "android-junit" }
 core-testing = { group = "androidx.arch.core", name = "core-testing", version.ref = "core-testing" }
+junit-jupiter = { group = "org.junit.jupiter", name = "junit-jupiter", version.ref = "junit-jupiter" }
+mockk-android = { group = "io.mockk", name = "mockk-android", version.ref = "mockk" }
