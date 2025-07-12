@@ -66,7 +66,7 @@ class NarratorFragment : Fragment() {
         binding.narratorToolBar.setOnMenuItemClickListener { menuItem ->
             when (menuItem.itemId) {
                 R.id.menuItemRefresh -> {
-                    mainViewModel.applyAllPlayerAlive()
+                    mainViewModel.markAllPlayersAlive()
                     Toast.makeText(context, R.string.role_refresh, Toast.LENGTH_SHORT).show()
                     true
                 }
