@@ -13,12 +13,15 @@ import com.github.iamrezamousavi.mafia.data.model.Player
 import com.github.iamrezamousavi.mafia.data.model.PlayerRole
 import com.github.iamrezamousavi.mafia.data.model.Role
 import com.github.iamrezamousavi.mafia.data.model.RoleSide
+import com.github.iamrezamousavi.mafia.data.model.orDefault
 import com.github.iamrezamousavi.mafia.utils.MafiaError
 import com.github.iamrezamousavi.mafia.utils.ResultType
 import com.github.iamrezamousavi.mafia.utils.SIMPLE_CITIZEN
 import com.github.iamrezamousavi.mafia.utils.SIMPLE_MAFIA
+import kotlin.collections.orEmpty
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 
 class MainViewModel : ViewModel() {
 
@@ -60,50 +63,42 @@ class MainViewModel : ViewModel() {
     val narratorUiState: LiveData<NarratorUiState>
         get() = _narratorUiState
 
-    private fun getPlayers() = players.value.orEmpty()
-
-    private fun setPlayers(newPlayers: List<Player>) {
-        _players.value = newPlayers
+    private fun updatePlayers(transfer: (List<Player>) -> List<Player>) {
+        val newPlayers = transfer(players.value.orEmpty())
             .sortedBy { it.name }
             .sortedBy { !it.isChecked }
-        selectedPlayers.clear()
-        selectedPlayers.addAll(
-            newPlayers.filter { it.isChecked }
-        )
+        _players.value = newPlayers
+        selectedPlayers.apply {
+            clear()
+            addAll(newPlayers.filter { it.isChecked })
+        }
     }
 
     fun addPlayer(name: String) {
-        val currentPlayer = getPlayers().toMutableList()
-        currentPlayer.add(Player(name = name))
-        setPlayers(currentPlayer)
+        updatePlayers { players ->
+            players + Player(name = name)
+        }
     }
 
     fun updatePlayer(updatedPlayer: Player) {
-        val players = getPlayers().toMutableList()
-        val playerIndex = players.indexOfFirst { it.id == updatedPlayer.id }
-        if (playerIndex != -1) {
-            players[playerIndex] = updatedPlayer
-            setPlayers(players)
+        updatePlayers { players ->
+            players.map { if (it.id == updatedPlayer.id) updatedPlayer else it }
         }
     }
 
     fun removePlayer(playerId: String) {
-        val players = getPlayers()
-            .filter { it.id != playerId }
-        setPlayers(players)
+        updatePlayers { players ->
+            players.filterNot { it.id == playerId }
+        }
     }
 
     fun selectAllPlayer() {
-        val players = getPlayers()
-            .map { it.copy(isChecked = true) }
-        setPlayers(players)
+        updatePlayers { players ->
+            players.map { it.copy(isChecked = true) }
+        }
     }
 
-    fun isPlayersOk(): Boolean {
-        val players = getPlayers()
-        val checkedPlayers = players.count { it.isChecked }
-        return checkedPlayers >= MIN_PLAYERS_COUNT
-    }
+    fun isPlayersOk() = playersCount >= MIN_PLAYERS_COUNT
 
     fun setSelectedRoles(roles: List<Role>) {
         selectedRoles.clear()
@@ -171,19 +166,21 @@ class MainViewModel : ViewModel() {
             do {
                 newRoles.shuffle()
             } while (currentRoles == newRoles)
-            _roles.postValue(newRoles)
 
-            _playerRoles.postValue(
-                selectedPlayers
-                    .shuffled()
-                    .zip(roles.value.orEmpty())
-                    .map { (player, role) ->
-                        PlayerRole(id = player.id, player = player, role = role)
-                    }
-                    .sortedBy { it.player.name }
-            )
+            val playerRoles = selectedPlayers
+                .shuffled()
+                .zip(roles.value.orEmpty())
+                .map { (player, role) ->
+                    PlayerRole(id = player.id, player = player, role = role)
+                }
+                .sortedBy { it.player.name }
+
+            withContext(Dispatchers.Main) {
+                _roles.value = newRoles
+                _playerRoles.value = playerRoles
+                updateNarratorList { emptyList() }
+            }
         }
-        setNarratorList(emptyList())
     }
 
     fun getRole(player: Player): Role {
@@ -201,36 +198,35 @@ class MainViewModel : ViewModel() {
 
     fun isAllPlayersGetRoles() = narratorList.value.orEmpty().size == playersCount
 
-    fun applyAllPlayerAlive() {
-        val items = _narratorList.value.orEmpty()
-            .map { it.copy(isAlive = true) }
-        setNarratorList(items)
-    }
-
-    fun hidePlayerRoles() {
-        val items = _narratorList.value.orEmpty()
-            .map { it.copy(showRole = false) }
-        setNarratorList(items)
-    }
-
-    private fun addNarratorListItem(item: PlayerRole) {
-        val newList = _narratorList.value.orEmpty() + item
-        setNarratorList(newList)
-    }
-
-    private fun setNarratorList(updatedList: List<PlayerRole>) {
-        _narratorList.value = updatedList
+    private fun updateNarratorList(transfer: (List<PlayerRole>) -> List<PlayerRole>) {
+        val updatedList = transfer(_narratorList.value.orEmpty())
             .sortedBy { it.player.name }
             .sortedBy { !it.isAlive }
+        _narratorList.value = updatedList
         updateNarratorUiState()
     }
 
+    private fun addNarratorListItem(item: PlayerRole) {
+        updateNarratorList { currentList ->
+            currentList + item
+        }
+    }
+
     fun updateNarratorItem(item: PlayerRole) {
-        val updatedItems = narratorList.value.orEmpty().toMutableList()
-        val itemIndex = updatedItems.indexOfFirst { it.id == item.id }
-        if (itemIndex != -1) {
-            updatedItems[itemIndex] = item
-            setNarratorList(updatedItems)
+        updateNarratorList { currentList ->
+            currentList.map { if (it.id == item.id) item else it }
+        }
+    }
+
+    fun markAllPlayersAlive() {
+        updateNarratorList { currentList ->
+            currentList.map { it.copy(isAlive = true) }
+        }
+    }
+
+    fun hidePlayerRoles() {
+        updateNarratorList { currentList ->
+            currentList.map { it.copy(showRole = false) }
         }
     }
 
@@ -253,7 +249,9 @@ class MainViewModel : ViewModel() {
                 winner = checkWin(currentPlayers),
                 fullList = currentPlayers
             )
-            _narratorUiState.postValue(newState)
+            withContext(Dispatchers.Main) {
+                _narratorUiState.value = newState
+            }
         }
     }
 
@@ -276,13 +274,13 @@ class MainViewModel : ViewModel() {
     fun loadPlayers(context: Context) {
         viewModelScope.launch {
             val players = context.preferences.getPlayers()
-            setPlayers(players)
+            updatePlayers { players }
         }
     }
 
     fun savePlayers(context: Context) {
         viewModelScope.launch {
-            val players = getPlayers()
+            val players = players.value.orEmpty()
             context.preferences.savePlayers(players)
         }
     }
@@ -293,13 +291,3 @@ class MainViewModel : ViewModel() {
 }
 
 fun Int?.orDefault(default: Int = 0) = this ?: default
-
-fun PlayerRole?.orDefault(): PlayerRole {
-    this?.let { return this }
-    val player = Player(name = "")
-    return PlayerRole(
-        id = player.id,
-        player = player,
-        role = SIMPLE_CITIZEN
-    )
-}
