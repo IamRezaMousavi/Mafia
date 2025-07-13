@@ -87,3 +87,7 @@ jobs:
             -F parse_mode=HTML \
             -F document=@"$apk_path"
 
+    - uses: actions/upload-artifact@v4
+      with:
+        name: Mafia-nightly.apk
+        path: app/build/outputs/apk/nightly/*.apk # app-nightly.apk
