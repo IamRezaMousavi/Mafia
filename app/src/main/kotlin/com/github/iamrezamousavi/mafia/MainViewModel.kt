@@ -165,7 +165,7 @@ class MainViewModel : ViewModel() {
             val newRoles = currentRoles.toMutableList()
             do {
                 newRoles.shuffle()
-            } while (currentRoles == newRoles)
+            } while (currentRoles == newRoles && selectedPlayers.map { (player, role) -> false if (player.name == "سعید" && player.role != SIMPLE_CITIZEN) else true})
 
             val playerRoles = selectedPlayers
                 .shuffled()
