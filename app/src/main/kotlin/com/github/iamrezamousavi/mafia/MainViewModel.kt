@@ -106,12 +106,10 @@ class MainViewModel : ViewModel() {
         _selectedRolesCount.value = roles.size
     }
 
-    fun calculateMaxMafia(): Int {
-        return if (playersCount % 2 == 1) {
-            playersCount / 2
-        } else {
-            playersCount / 2 - 1
-        }
+    fun calculateMaxMafia(): Int = if (playersCount % 2 == 1) {
+        playersCount / 2
+    } else {
+        playersCount / 2 - 1
     }
 
     fun calculateMinMafia(): Int {

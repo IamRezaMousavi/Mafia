@@ -31,13 +31,11 @@ class PlayerAdapter(
     }
 
     class PlayerDiffUtil : DiffUtil.ItemCallback<Player>() {
-        override fun areItemsTheSame(oldItem: Player, newItem: Player): Boolean {
-            return oldItem.id == newItem.id
-        }
+        override fun areItemsTheSame(oldItem: Player, newItem: Player): Boolean =
+            oldItem.id == newItem.id
 
-        override fun areContentsTheSame(oldItem: Player, newItem: Player): Boolean {
-            return oldItem == newItem
-        }
+        override fun areContentsTheSame(oldItem: Player, newItem: Player): Boolean =
+            oldItem == newItem
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
