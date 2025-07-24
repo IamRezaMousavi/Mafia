@@ -36,7 +36,6 @@ fun Role.descriptionStringRes(): Int = when (name) {
     R.string.angel -> R.string.angel_desc
     R.string.vigilante -> R.string.vigilante_desc
     R.string.bartender -> R.string.bartender_desc
-
     R.string.simple_mafia -> R.string.simple_mafia_desc
     R.string.godfather -> R.string.godfather_desc
     R.string.dr_lecter -> R.string.dr_lecter_desc
@@ -49,13 +48,11 @@ fun Role.descriptionStringRes(): Int = when (name) {
     R.string.hostage_taker -> R.string.hostage_taker_desc
     R.string.bodyguard -> R.string.bodyguard_desc
     R.string.bomber -> R.string.bomber_desc
-
     R.string.unknown -> R.string.unknown_desc
     R.string.wolfs_rain -> R.string.wolfs_rain_desc
     R.string.killer -> R.string.killer_desc
     R.string.thousand_faces -> R.string.thousand_faces_desc
     R.string.syndicate -> R.string.syndicate_desc
-
     else -> R.string.simple_citizen_desc
 }
 
@@ -78,7 +75,6 @@ fun roleNameStringRes(context: Context, roleName: String): Int = when (roleName)
     context.getString(R.string.angel) -> R.string.angel
     context.getString(R.string.vigilante) -> R.string.vigilante
     context.getString(R.string.bartender) -> R.string.bartender
-
     context.getString(R.string.simple_mafia) -> R.string.simple_mafia
     context.getString(R.string.godfather) -> R.string.godfather
     context.getString(R.string.dr_lecter) -> R.string.dr_lecter
@@ -91,12 +87,10 @@ fun roleNameStringRes(context: Context, roleName: String): Int = when (roleName)
     context.getString(R.string.hostage_taker) -> R.string.hostage_taker
     context.getString(R.string.bodyguard) -> R.string.bodyguard
     context.getString(R.string.bomber) -> R.string.bomber
-
     context.getString(R.string.unknown) -> R.string.unknown
     context.getString(R.string.wolfs_rain) -> R.string.wolfs_rain
     context.getString(R.string.killer) -> R.string.killer
     context.getString(R.string.thousand_faces) -> R.string.thousand_faces
     context.getString(R.string.syndicate) -> R.string.syndicate
-
     else -> R.string.simple_citizen
 }
