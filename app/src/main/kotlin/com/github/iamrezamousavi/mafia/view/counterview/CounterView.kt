@@ -74,15 +74,18 @@ class CounterView @JvmOverloads constructor(
         )
 
         minValue = a.getInteger(
-            R.styleable.CounterView_minValue, 0
+            R.styleable.CounterView_minValue,
+            0
         )
 
         maxValue = a.getInteger(
-            R.styleable.CounterView_maxValue, Int.MAX_VALUE
+            R.styleable.CounterView_maxValue,
+            Int.MAX_VALUE
         )
 
         value = a.getInteger(
-            R.styleable.CounterView_value, 0
+            R.styleable.CounterView_value,
+            0
         )
 
         /*decrease*/

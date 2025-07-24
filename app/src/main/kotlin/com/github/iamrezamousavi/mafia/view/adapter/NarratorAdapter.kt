@@ -49,13 +49,11 @@ class NarratorAdapter(
     }
 
     class NarratorDiffUtil : DiffUtil.ItemCallback<PlayerRole>() {
-        override fun areItemsTheSame(oldItem: PlayerRole, newItem: PlayerRole): Boolean {
-            return oldItem.id == newItem.id
-        }
+        override fun areItemsTheSame(oldItem: PlayerRole, newItem: PlayerRole): Boolean =
+            oldItem.id == newItem.id
 
-        override fun areContentsTheSame(oldItem: PlayerRole, newItem: PlayerRole): Boolean {
-            return oldItem == newItem
-        }
+        override fun areContentsTheSame(oldItem: PlayerRole, newItem: PlayerRole): Boolean =
+            oldItem == newItem
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
