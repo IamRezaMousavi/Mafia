@@ -20,7 +20,7 @@ ktlint = "13.0.0"
 detekt = "1.23.8"
 
 junit = "4.13.2"
-android-junit = "1.2.1"
+android-junit = "1.3.0"
 core-testing = "2.2.0"
 junit-jupiter = "5.13.4"
 mockk = "1.14.5"
