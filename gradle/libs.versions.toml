@@ -16,7 +16,7 @@ navigation = "2.7.7"
 
 kotlinx-coroutines = "1.10.2"
 
-ktlint = "13.0.0"
+ktlint = "13.1.0"
 detekt = "1.23.8"
 
 junit = "4.13.2"
