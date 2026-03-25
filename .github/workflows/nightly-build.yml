@@ -48,7 +48,7 @@ jobs:
         cache: gradle
 
     - name: Setup Android SDK
-      uses: android-actions/setup-android@v3
+      uses: android-actions/setup-android@v4
 
     - name: Run android lint
       run: ./gradlew lint
@@ -87,7 +87,7 @@ jobs:
             -F parse_mode=HTML \
             -F document=@"$apk_path"
 
-    - uses: actions/upload-artifact@v6
+    - uses: actions/upload-artifact@v7
       with:
         name: Mafia-nightly.apk
         path: app/build/outputs/apk/nightly/*.apk # app-nightly.apk
