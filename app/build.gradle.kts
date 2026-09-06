@@ -1,4 +1,5 @@
 import io.gitlab.arturbosch.detekt.Detekt
+import org.jetbrains.kotlin.gradle.dsl.JvmTarget
 
 plugins {
     alias(libs.plugins.android.application)
@@ -10,12 +11,12 @@ plugins {
 
 android {
     namespace = "com.github.iamrezamousavi.mafia"
-    compileSdk = 35
+    compileSdk = 36
 
     defaultConfig {
         applicationId = "com.github.iamrezamousavi.mafia"
-        minSdk = 19
-        targetSdk = 35
+        minSdk = 21
+        targetSdk = 36
         versionCode = 30
         versionName = "0.3.0"
 
@@ -66,16 +67,17 @@ android {
         }
     }
     compileOptions {
-        sourceCompatibility = JavaVersion.VERSION_1_8
-        targetCompatibility = JavaVersion.VERSION_1_8
-    }
-    kotlinOptions {
-        jvmTarget = "1.8"
+        sourceCompatibility = JavaVersion.VERSION_17
+        targetCompatibility = JavaVersion.VERSION_17
     }
 }
 
 kotlin {
     jvmToolchain(libs.versions.jdk.get().toInt())
+
+    compilerOptions {
+        jvmTarget.set(JvmTarget.JVM_17)
+    }
 }
 
 detekt {
