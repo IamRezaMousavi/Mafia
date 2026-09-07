@@ -10,7 +10,7 @@ enum class Language(
     EN("en", "English"),
     ES("es", "Spanish");
 
-    fun asSystemLocale() = Locale(code)
+    fun asSystemLocale() = Locale.forLanguageTag(code)
 }
 
 fun String?.toLanguage() = Language.entries.find { it.code == this }
