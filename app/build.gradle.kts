@@ -1,9 +1,9 @@
 import io.gitlab.arturbosch.detekt.Detekt
 import org.jetbrains.kotlin.gradle.dsl.JvmTarget
+import org.jetbrains.kotlin.gradle.dsl.KotlinVersion
 
 plugins {
     alias(libs.plugins.android.application)
-    alias(libs.plugins.kotlin.android)
     alias(libs.plugins.kotlin.serialization)
     alias(libs.plugins.ktlint)
     alias(libs.plugins.detekt)
@@ -76,6 +76,7 @@ kotlin {
     jvmToolchain(libs.versions.jdk.get().toInt())
 
     compilerOptions {
+        languageVersion = KotlinVersion.KOTLIN_2_0
         jvmTarget.set(JvmTarget.JVM_17)
     }
 }
