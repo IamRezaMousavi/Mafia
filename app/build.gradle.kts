@@ -15,7 +15,7 @@ android {
 
     defaultConfig {
         applicationId = "com.github.iamrezamousavi.mafia"
-        minSdk = 21
+        minSdk = 24
         targetSdk = 36
         versionCode = 30
         versionName = "0.3.0"
