@@ -9,7 +9,7 @@ material = "1.14.0"
 constraintlayout = "2.2.2"
 lifecycle-ktx = "2.8.7"
 activity-ktx = "1.9.3"
-fragment-ktx = "1.7.1"
+fragment-ktx = "1.9.0"
 
 kotlinx-serialization = "1.11.0"
 navigation = "2.10.0"
