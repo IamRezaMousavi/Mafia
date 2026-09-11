@@ -14,7 +14,7 @@ fragment-ktx = "1.9.0"
 kotlinx-serialization = "1.11.0"
 navigation = "2.10.0"
 
-kotlinx-coroutines = "1.10.2"
+kotlinx-coroutines = "1.11.0"
 
 ktlint = "14.2.0"
 detekt = "1.23.8"
