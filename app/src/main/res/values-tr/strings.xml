@@ -1,0 +1,124 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Mafya</string>
+    <string name="player_name">Oyuncu Adı</string>
+    <string name="select_roles">Rol Seçimi (%1$d)</string>
+    <string name="player_list">Oyuncu Listesi</string>
+    <string name="division_roles">Rol Dağılımı (%1$d)</string>
+    <string name="division_roles_title">Rol Dağılımı</string>
+    <string name="more">Daha fazla</string>
+
+    <string name="players_count">Oyuncu Sayısı: %1$d</string>
+    <string name="independent_count_text">Bağımsız Rol Sayısı: %1$d</string>
+    <string name="citizen_count_text">Sivil Rollerinin Sayısı: %1$d</string>
+    <string name="mafia_count_text">Mafya Rollerinin Sayısı</string>
+
+    <string name="player_not_enough">En az üç oyuncu seçilmelidir</string>
+    <string name="roles_not_match">Seçilen rol sayısı, oyuncu sayısıyla eşleşmemektedir</string>
+    <string name="mafia_roles_too_much">Çok fazla mafya rolü</string>
+    <string name="player_help_message">Gizli rolünü ortaya çıkarmak için ismine dokun. Sonra sıra diğer oyuncuda!</string>
+    <string name="goto_narrator_page_desc">Bütün oyuncular rollerini inceledi.\nAnlatıcı sayfasına gitmek ister misiniz?</string>
+    <string name="select_all">Hepsini Seç</string>
+    <string name="delete_player">Oyuncuyu Sil</string>
+    <string name="role_refresh">Rolleri Yenile</string>
+    <string name="role_hide">Rolleri Sakla</string>
+    <string name="goto_narrator_page">Anlatıcı Sayfasına Git</string>
+    <string name="ok_button">Anlaşıldı</string>
+    <string name="confirm_button">Tamam</string>
+    <string name="comma">,</string>
+
+    <string name="settings">Ayarlar</string>
+    <string name="language">Dil Seçimi</string>
+
+    <string name="about">Hakkında</string>
+    <string name="source_code">Kaynak Kodu</string>
+    <string name="bug_report">Hata Bildirimi</string>
+    <string name="user_guide">Kullanıcı Rehberi</string>
+
+    <string name="narrator">Anlatıcı</string>
+    <string name="dead_count">Ölü İnsanlar: %1$d</string>
+    <string name="alive_count">Yaşayan İnsanlar: %1$d</string>
+    <string name="citizen_count">Sivil: %1$d</string>
+    <string name="mafia_count">Mafya: %1$d</string>
+    <string name="independent_count">Bağımsız: %1$d</string>
+
+    <string name="citizen_roles">Sivil Rolleri</string>
+    <string name="mafia_roles">Mafya Rolleri</string>
+    <string name="independent_roles">Bağımsız Roller</string>
+
+    <string name="citizen_side">Sivil</string>
+    <string name="simple_citizen">Düz Sivil</string>
+    <string name="doctor">Doktor</string>
+    <string name="detective">Dedektif</string>
+    <string name="sniper">Keskin Nişancı</string>
+    <string name="mayor">Belediye Başkanı</string>
+    <string name="guardian">Koruyucu</string>
+    <string name="psychologist">Psikolog</string>
+    <string name="professional">Profesyonel</string>
+    <string name="gunman">Tüfekçi</string>
+    <string name="judge">Hakim</string>
+    <string name="champion">Şampiyon</string>
+    <string name="priest">Papaz</string>
+    <string name="hacker">Hacker</string>
+    <string name="angel">Melek</string>
+    <string name="vigilante">İntikamcı</string>
+    <string name="bartender">Barmen</string>
+
+    <string name="mafia_side">Mafya</string>
+    <string name="simple_mafia">Düz Mafya</string>
+    <string name="godfather">Mafya Babası</string>
+    <string name="dr_lecter">Dr.Lecter</string>
+    <string name="silencer">Susturucu</string>
+    <string name="terrorist">Terörist</string>
+    <string name="negotiator">Arabulucu</string>
+    <string name="nato">NATO</string>
+    <string name="vandal">Vandal</string>
+    <string name="magician">Büyücü</string>
+    <string name="hostage_taker">Rehin Alıcı</string>
+    <string name="bodyguard">Koruma</string>
+    <string name="bomber">Bombacı</string>
+
+    <string name="independent_side">Bağımsız</string>
+    <string name="unknown">Bilinmeyen</string>
+    <string name="wolfs_rain">Kurt Adam</string>
+    <string name="killer">Katil</string>
+    <string name="thousand_faces">Binbir Surat</string>
+    <string name="syndicate">Kartel</string>
+
+
+    <string name="simple_citizen_desc">Siviller gündüzleri mafyayı doğru tespit etmelidir ancak gece hiçbir eylemde bulunamazlar.</string>
+    <string name="doctor_desc">Gece öldürüleceğine inandığı bir kişiyi kurtarabilir.</string>
+    <string name="detective_desc">Dedektif gece bir oyuncunun tarafını sorgulayabilir.</string>
+    <string name="sniper_desc">Keskin nişancı, mafya olduğunu düşündüklerini vurabilir.</string>
+    <string name="mayor_desc">Oylama sürecinde sivil olduğunu düşündüğü elenen bir oyuncunun elemesini veto edebilir.</string>
+    <string name="guardian_desc">Koruyucu bir oyuncunun önünde bombaya karşı kendini feda edebilir, Katil Koruyucu\'ya saldırırsa ölür.</string>
+    <string name="psychologist_desc">Psikolog, gece eylemi olarak bir oyuncuyu gündüz için susturabilir.</string>
+    <string name="professional_desc">Profesyonel, Barmen tarafından sarhoş edilmediği sürece gece öldürülemez.</string>
+    <string name="gunman_desc">Tüfekçi\'nin silahları vardır ve bunları ihtiyacı olanlara verebilir.</string>
+    <string name="judge_desc">Eleme oylamasının sonucunu değiştirerek geçersiz kılabilir.</string>
+    <string name="champion_desc">Şampiyon iki günde bir birini bir gün boyunca her türlü zarardan koruyabilir.</string>
+    <string name="priest_desc">Papaz susturulmuş bir kişinin konuşmasına izin verebilir; zaten izinleri varsa bu süreyi uzatabilir.</string>
+    <string name="hacker_desc">Hacker, ikinci gece üç oyuncu seçer ve Anlatıcı bu kişiler arasındaki mafya sayısını söyler.</string>
+    <string name="angel_desc">Melek, oyun boyunca bir kez öldürülen birini hayata döndürebilir.</string>
+    <string name="vigilante_desc">İntikamcı, sivilleri rehin alınmaktan koruyabilir.</string>
+    <string name="bartender_desc">Barmen bir kişiyi seçerek sarhoş eder.</string>
+
+    <string name="simple_mafia_desc">Konuşabilen, oy verebilen ve yorum yapabilen standart mafya üyesi.</string>
+    <string name="godfather_desc">Mafya lideri. Son kararı o verir ve Dedektif\'e tarafını belli etmez.</string>
+    <string name="dr_lecter_desc">Mafya üyelerini her gece vurulmaktan kurtarabilir.</string>
+    <string name="silencer_desc">Gece yapacağı eylemle bir oyuncuyu ertesi gün için susturabilir.</string>
+    <string name="terrorist_desc">Terörist gündüz oylamayla elenirse yanında birini daha götürebilir.</string>
+    <string name="negotiator_desc">Arabulucu, bazı standart sivilleri satın alarak mafya takımına katabilir.</string>
+    <string name="nato_desc">Nato, birinin rolünü doğru tahmin ederse o oyuncu şehirden elenir.</string>
+    <string name="vandal_desc">Silahı olan birini seçerse ve o oyuncu gündüz silahını kullanırsa şehirden elenir.</string>
+    <string name="magician_desc">Her gece bir oyuncunun rolünü ertesi gün için kopyalayabilir.</string>
+    <string name="hostage_taker_desc">Birini rehin alabilir ve rehin alınan kişi yeteneğini kullanamaz.</string>
+    <string name="bodyguard_desc">Koruma, oyunda olduğu sürece Mafya Babası\'na yapılan saldırılar ona yönlendirilir.</string>
+    <string name="bomber_desc">Bir oyuncunun önüne bomba yerleştirebilir.</string>
+
+    <string name="unknown_desc">Onu ilk seçen oyuncunun tarafına katılır.</string>
+    <string name="wolfs_rain_desc">Bir kişiyi her üç gecede bir kurt adama dönüştürür.</string>
+    <string name="killer_desc">Her gece birini öldürür.</string>
+    <string name="thousand_faces_desc">Şehirden elenen bir oyuncunun rolünü bir günlüğüne alır.</string>
+    <string name="syndicate_desc">Tüm önemli rolleri bilir. Hiç kimse onu gece öldüremez. Kazanma şartı son üçe kalmaktır.</string>
+</resources>
