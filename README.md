@@ -65,6 +65,7 @@ The game continues until a faction achieves its [win-condition](https://en.wikip
 * English
 * Persian
 * Spanish
+* Turkish
 
 The app automatically launches in Persian, but you can change the language anytime in the settings.
 
