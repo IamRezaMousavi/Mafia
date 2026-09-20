@@ -15,7 +15,7 @@
 
     <string name="player_not_enough">En az üç oyuncu seçilmelidir</string>
     <string name="roles_not_match">Seçilen rol sayısı, oyuncu sayısıyla eşleşmemektedir</string>
-    <string name="mafia_roles_too_much">Çok fazla mafya rolü</string>
+    <string name="mafia_roles_too_much">Çok fazla mafya var</string>
     <string name="player_help_message">Gizli rolünü ortaya çıkarmak için ismine dokun. Sonra sıra diğer oyuncuda!</string>
     <string name="goto_narrator_page_desc">Bütün oyuncular rollerini inceledi.\nAnlatıcı sayfasına gitmek ister misiniz?</string>
     <string name="select_all">Hepsini Seç</string>
