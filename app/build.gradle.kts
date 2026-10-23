@@ -76,7 +76,11 @@ kotlin {
     jvmToolchain(libs.versions.jdk.get().toInt())
 
     compilerOptions {
-        languageVersion = KotlinVersion.KOTLIN_2_0
+        languageVersion.set(
+            KotlinVersion.fromVersion(
+                libs.versions.kotlin.get().substringBeforeLast('.')
+            )
+        )
         jvmTarget.set(JvmTarget.JVM_17)
     }
 }
