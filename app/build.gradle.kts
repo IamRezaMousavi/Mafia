@@ -11,12 +11,12 @@ plugins {
 
 android {
     namespace = "com.github.iamrezamousavi.mafia"
-    compileSdk = 36
+    compileSdk = 37
 
     defaultConfig {
         applicationId = "com.github.iamrezamousavi.mafia"
         minSdk = 24
-        targetSdk = 36
+        targetSdk = 37
         versionCode = 30
         versionName = "0.3.0"
 
