@@ -8,7 +8,8 @@ enum class Language(
 ) {
     FA("fa", "فارسی"),
     EN("en", "English"),
-    ES("es", "Spanish");
+    ES("es", "Español"),
+    TR("tr", "Türkçe");
 
     fun asSystemLocale() = Locale.forLanguageTag(code)
 }
