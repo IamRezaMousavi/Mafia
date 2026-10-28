@@ -17,8 +17,8 @@ android {
         applicationId = "com.github.iamrezamousavi.mafia"
         minSdk = 24
         targetSdk = 37
-        versionCode = 30
-        versionName = "0.3.0"
+        versionCode = 40
+        versionName = "0.4.0-alpha"
 
         multiDexEnabled = true
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
