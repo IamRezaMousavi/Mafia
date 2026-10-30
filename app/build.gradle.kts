@@ -73,8 +73,6 @@ android {
 }
 
 kotlin {
-    jvmToolchain(libs.versions.jdk.get().toInt())
-
     compilerOptions {
         languageVersion.set(
             KotlinVersion.fromVersion(
